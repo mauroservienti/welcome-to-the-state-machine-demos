@@ -4,10 +4,12 @@ namespace NServiceBus
 {
     public static class CommonEndpointSettings
     {
-        public static void ApplyCommonConfiguration(this EndpointConfiguration config, bool asSendOnly = false)
+        public static void ApplyCommonConfiguration(this EndpointConfiguration config, bool asSendOnly = false, Action<RoutingSettings<LearningTransport>> configureRouting = null)
         {
             config.UseSerialization<NewtonsoftSerializer>();
-            config.UseTransport<LearningTransport>();
+            var transportConfig = config.UseTransport<LearningTransport>();
+            configureRouting?.Invoke(transportConfig.Routing());
+
             config.UsePersistence<LearningPersistence>();
 
             config.AuditProcessedMessagesTo("audit");
