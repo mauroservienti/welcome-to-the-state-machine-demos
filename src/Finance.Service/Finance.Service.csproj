@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Finance.Messages.Events\Finance.Messages.Events.csproj" />
+    <ProjectReference Include="..\Finance.PaymentGateway.Messages\Finance.PaymentGateway.Messages.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
     <ProjectReference Include="..\Ticketing.Messages.Events\Ticketing.Messages.Events.csproj" />
   </ItemGroup>

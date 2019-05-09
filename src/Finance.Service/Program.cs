@@ -1,4 +1,5 @@
-﻿using NServiceBus;
+﻿using Finance.PaymentGateway.Messages;
+using NServiceBus;
 using System;
 using System.Threading.Tasks;
 
@@ -12,7 +13,10 @@ namespace Finance.Service
             Console.Title = serviceName;
 
             var config = new EndpointConfiguration(serviceName);
-            config.ApplyCommonConfiguration();
+            config.ApplyCommonConfiguration(configureRouting: routing =>
+            {
+                routing.RouteToEndpoint(typeof(AuthorizeCard), "Finance.PaymentGateway");
+            });
 
             var endpointInstance = await Endpoint.Start(config);
 

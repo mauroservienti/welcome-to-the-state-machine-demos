@@ -2,7 +2,7 @@
 
 namespace Finance.Service.Messages
 {
-    class AuthorizeCard
+    class InitiatePaymentProcessing
     {
         public Guid OrderId { get; set; }
     }
