@@ -55,13 +55,13 @@ namespace Finance.Service.Tests
             await saga.Handle(orderCheckedOut, context);
 
             // assert
-            var authorizeCardMessage = context.SentMessages
+            var initiatePaymentProcessing = context.SentMessages
                 .Select(sm => sm.Message)
-                .OfType<AuthorizeCard>()
+                .OfType<InitiatePaymentProcessing>()
                 .SingleOrDefault();
 
-            Assert.NotNull(authorizeCardMessage);
-            Assert.Equal(authorizeCardMessage.OrderId, saga.Data.OrderId);
+            Assert.NotNull(initiatePaymentProcessing);
+            Assert.Equal(initiatePaymentProcessing.OrderId, saga.Data.OrderId);
         }
     }
 }
