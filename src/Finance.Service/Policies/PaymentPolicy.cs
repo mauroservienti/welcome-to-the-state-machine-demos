@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Finance.Service.Messages;
+﻿using Finance.Service.Messages;
 using NServiceBus;
+using System;
+using System.Threading.Tasks;
 using Ticketing.Messages.Events;
 
 namespace Finance.Service.Policies
