@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Finance.PaymentGateway": {
+      "commandName": "Project"
+    }
+  }
+}
