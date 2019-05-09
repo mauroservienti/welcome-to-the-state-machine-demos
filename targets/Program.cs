@@ -10,9 +10,15 @@ internal class Program
     {
         var sdk = new DotnetSdkManager();
 
-        Target("default", DependsOn("verify-OS-is-suppported"),
+        Target("default", DependsOn("test"));
+
+        Target("build", DependsOn("verify-OS-is-suppported"),
             Directory.EnumerateFiles("src", "*.sln", SearchOption.AllDirectories),
-            solution => Run(sdk.GetDotnetCliPath(), $"build \"{solution}\" --configuration Debug"));
+            solution => Run(sdk.GetDotnetCliPath(), $"build \"{solution}\" --configuration Release"));
+
+        Target("test", DependsOn("build"),
+            Directory.EnumerateFiles("src", "*.Tests.csproj", SearchOption.AllDirectories),
+            proj => Run(sdk.GetDotnetCliPath(), $"test \"{proj}\" --configuration Release --no-build"));
 
         Target(
             "verify-OS-is-suppported",
