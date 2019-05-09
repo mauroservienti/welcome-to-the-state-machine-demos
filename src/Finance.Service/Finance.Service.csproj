@@ -14,10 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Handlers\" />
+    <ProjectReference Include="..\Ticketing.Messages.Events\Ticketing.Messages.Events.csproj" />
   </ItemGroup>
 
 </Project>
