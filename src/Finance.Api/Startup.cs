@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
-using NServiceBus.Shared.Hosting;
-using NServiceBus.Shared.MicrosoftDependencyInjection;
 using System;
 
 namespace Finance.Api
