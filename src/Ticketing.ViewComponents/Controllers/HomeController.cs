@@ -1,20 +1,21 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Ticketing.ViewComponents.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Ticketing.ViewComponents.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            using (var db = Data.TicketingContext.Create())
+            {
+                var allTickets = await db.Tickets.ToListAsync();
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+                return View(allTickets);
+            }
         }
     }
 }
