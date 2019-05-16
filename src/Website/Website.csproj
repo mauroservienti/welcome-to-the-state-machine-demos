@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="ServiceComposer.AspNetCore" Version="0.0.7" />
+    <PackageReference Include="ServiceComposer.AspNetCore.Mvc" Version="0.0.5" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\ITOps.UIComposition.Mvc\ITOps.UIComposition.Mvc.csproj" />
+    <ProjectReference Include="..\NServiceBus.Shared.Hosting\NServiceBus.Shared.Hosting.csproj" />
+    <ProjectReference Include="..\NServiceBus.Shared.MicrosoftDependencyInjection\NServiceBus.Shared.MicrosoftDependencyInjection.csproj" />
+    <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
+    <ProjectReference Include="..\Ticketing.ViewComponents\Ticketing.ViewComponents.csproj" />
+  </ItemGroup>
+
+</Project>

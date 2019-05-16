@@ -1,19 +1,22 @@
 {
-    "Version": 3,
-    "ListAllProjects": false,
-    "MultiProjectConfigurations": {
-        "Demo": {
-          "Projects": {
-          }
-        },
-        "Demo (failed services)": {
-            "Projects": {
-            }
-        },
-        "Demo (Platform)": {
-            "Projects": {
-                "PlatformLauncher": {}
-            }
-        }
+  "Version": 3,
+  "ListAllProjects": false,
+  "MultiProjectConfigurations": {
+    "Demo": {
+      "Projects": {
+        "website": {}
+      }
+    },
+    "Demo (failed services)": {
+      "Projects": {
+        "website": {}
+      }
+    },
+    "Demo (Platform)": {
+      "Projects": {
+        "website": {},
+        "PlatformLauncher": {}
+      }
     }
+  }
 }
