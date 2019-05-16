@@ -10,7 +10,10 @@ namespace NServiceBus
             var transportConfig = config.UseTransport<LearningTransport>();
             configureRouting?.Invoke(transportConfig.Routing());
 
-            config.UsePersistence<LearningPersistence>();
+            if (!asSendOnly)
+            {
+                config.UsePersistence<LearningPersistence>();
+            }
 
             config.AuditProcessedMessagesTo("audit");
             config.SendFailedMessagesTo("error");
