@@ -2,7 +2,7 @@
 using NServiceBus.ObjectBuilder.MSDependencyInjection;
 using System;
 
-namespace NServiceBus.Shared.MicrosoftDependencyInjection
+namespace NServiceBus
 {
     public static class MicrosoftDependencyInjection
     {

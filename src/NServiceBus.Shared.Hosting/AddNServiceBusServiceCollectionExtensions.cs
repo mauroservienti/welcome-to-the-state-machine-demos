@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace NServiceBus.Shared.Hosting
+namespace NServiceBus
 {
     public static class AddNServiceBusServiceCollectionExtensions
     {

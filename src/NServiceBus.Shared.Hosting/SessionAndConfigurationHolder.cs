@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Shared.Hosting
+﻿namespace NServiceBus
 {
     class SessionAndConfigurationHolder
     {

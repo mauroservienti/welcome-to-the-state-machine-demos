@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NServiceBus.Shared.Hosting
+namespace NServiceBus
 {
     class EndpointManagement : IHostedService
     {
