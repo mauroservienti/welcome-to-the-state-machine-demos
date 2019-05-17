@@ -12,11 +12,11 @@ namespace Finance.Service
             var serviceName = typeof(Program).Namespace;
             Console.Title = serviceName;
 
-            var config = new EndpointConfiguration(serviceName);
-            config.ApplyCommonConfiguration(configureRouting: routing =>
-            {
-                routing.RouteToEndpoint(typeof(AuthorizeCard), "Finance.PaymentGateway");
-            });
+            var config = new EndpointConfiguration(serviceName)
+                .ApplyCommonConfiguration(configureRouting: routing =>
+                {
+                    routing.RouteToEndpoint(typeof(AuthorizeCard), "Finance.PaymentGateway");
+                });
 
             var endpointInstance = await Endpoint.Start(config);
 

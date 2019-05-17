@@ -11,8 +11,8 @@ namespace Finance.PaymentGateway
             var serviceName = typeof(Program).Namespace;
             Console.Title = serviceName;
 
-            var config = new EndpointConfiguration(serviceName);
-            config.ApplyCommonConfiguration();
+            var config = new EndpointConfiguration(serviceName)
+                .ApplyCommonConfiguration();
 
             var endpointInstance = await Endpoint.Start(config);
 

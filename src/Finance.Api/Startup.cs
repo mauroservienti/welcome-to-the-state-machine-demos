@@ -23,11 +23,9 @@ namespace Finance.Api
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var serviceProvider = services.AddNServiceBus("Finance.Api", endpointConfiguration =>
-            {
-                endpointConfiguration.ApplyCommonConfiguration(asSendOnly: true);
-                return endpointConfiguration.UseMicrosoftDependencyInjection(services);
-            });
+            var serviceProvider = services.AddNServiceBus("Finance.Api")
+                .ApplyCommonConfiguration(asSendOnly: true)
+                .UseMicrosoftDependencyInjection();
 
             return serviceProvider;
         }
