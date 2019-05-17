@@ -19,7 +19,7 @@ namespace Ticketing.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\welcome-to-the-state-machine;Initial Catalog=Tickets;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\welcome-to-the-state-machine;Initial Catalog=Ticketing;Integrated Security=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
