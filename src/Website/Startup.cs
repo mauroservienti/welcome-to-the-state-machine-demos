@@ -32,11 +32,9 @@ namespace Website
                 options.AddMvcSupport();
             });
 
-            return services.AddNServiceBus("Webapp", endpointConfiguration =>
-            {
-                endpointConfiguration.ApplyCommonConfiguration(asSendOnly: true);
-                return endpointConfiguration.UseMicrosoftDependencyInjection(services);
-            });
+            return services.AddNServiceBus("Webapp")
+                .ApplyCommonConfiguration(asSendOnly: true)
+                .UseMicrosoftDependencyInjection();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

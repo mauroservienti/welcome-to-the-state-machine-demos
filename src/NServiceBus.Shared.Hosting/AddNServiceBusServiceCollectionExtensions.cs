@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace NServiceBus
 {
     public static class AddNServiceBusServiceCollectionExtensions
     {
-        static void AddRequiredInfrastructure(this IServiceCollection services, EndpointConfiguration configuration)
+        static void AddRequiredInfrastructure(IServiceCollection services, EndpointConfiguration configuration)
         {
             var holder = new SessionAndConfigurationHolder(configuration);
             services.AddSingleton(provider => holder.Session);
@@ -13,25 +12,12 @@ namespace NServiceBus
             services.AddHostedService<EndpointManagement>();
         }
 
-        public static IServiceProvider AddNServiceBus(this IServiceCollection services, string endpointName, Func<EndpointConfiguration, IServiceProvider> configuration)
+        public static (IServiceCollection Services, EndpointConfiguration EndpointConfiguration) AddNServiceBus(this IServiceCollection services, string endpointName)
         {
             var endpointConfiguration = new EndpointConfiguration(endpointName);
-            services.AddRequiredInfrastructure(endpointConfiguration);
+            AddRequiredInfrastructure(services, endpointConfiguration);
 
-            return configuration(endpointConfiguration);
-        }
-
-        public static void AddNServiceBus(this IServiceCollection services, string endpointName, Action<EndpointConfiguration> configuration)
-        {
-            var endpointConfiguration = new EndpointConfiguration(endpointName);
-            services.AddRequiredInfrastructure(endpointConfiguration);
-
-            configuration(endpointConfiguration);
-        }
-
-        public static void AddNServiceBus(this IServiceCollection services, EndpointConfiguration endpointConfiguration)
-        {
-            services.AddRequiredInfrastructure(endpointConfiguration);
+            return (services, endpointConfiguration);
         }
     }
 }
