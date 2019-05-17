@@ -1,21 +1,12 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using Ticketing.ViewComponents.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Ticketing.ViewComponents.Controllers
 {
     public class HomeController : Controller
     {
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            using (var db = Data.TicketingContext.Create())
-            {
-                var allTickets = await db.Tickets.ToListAsync();
-
-                return View(allTickets);
-            }
+            return View();
         }
     }
 }

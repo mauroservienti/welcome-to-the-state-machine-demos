@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ITOps.UIComposition.Mvc\ITOps.UIComposition.Mvc.csproj" />
-    <ProjectReference Include="..\Ticketing.Data\Ticketing.Data.csproj" />
   </ItemGroup>
   
 </Project>

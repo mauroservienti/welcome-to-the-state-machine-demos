@@ -1,17 +1,20 @@
-﻿@model List<Ticketing.Data.Models.Ticket>
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Welcome to the (state) Machine</h1>
+    Select available tickets to start the purchase process. At this time, only one ticket at a time can be purchased.
 </div>
 
-<div>
-    <ul>
-        @foreach (var ticket in Model)
-        {
-            <li>@ticket.Description</li>
-        }
-    </ul>
-</div>
+<ul>
+    @foreach (dynamic ticket in Model.AvailableTickets)
+    {
+        <li>
+            <form action="/reservations/@ticket.TicketId" method="post">
+                @ticket.TicketDescription @await Component.InvokeAsync("Finance.ViewComponents.TicketPrice", ticket)<br />
+                <button>Reserve a seat</button>
+            </form>
+        </li>
+    }
+</ul>
