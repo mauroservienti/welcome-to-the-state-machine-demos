@@ -16,11 +16,14 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\Finance.ViewComponents\Finance.ViewComponents.csproj" />
+    <ProjectReference Include="..\Finance.ViewModelComposition\Finance.ViewModelComposition.csproj" />
     <ProjectReference Include="..\ITOps.UIComposition.Mvc\ITOps.UIComposition.Mvc.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared.Hosting\NServiceBus.Shared.Hosting.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared.MicrosoftDependencyInjection\NServiceBus.Shared.MicrosoftDependencyInjection.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
     <ProjectReference Include="..\Ticketing.ViewComponents\Ticketing.ViewComponents.csproj" />
+    <ProjectReference Include="..\Ticketing.ViewModelComposition\Ticketing.ViewModelComposition.csproj" />
   </ItemGroup>
 
 
