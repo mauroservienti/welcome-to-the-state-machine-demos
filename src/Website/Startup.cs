@@ -9,6 +9,7 @@ using NServiceBus;
 using ServiceComposer.AspNetCore;
 using ServiceComposer.AspNetCore.Mvc;
 using ITOps.UIComposition.Mvc;
+using ITOps.Middlewares;
 
 namespace Website
 {
@@ -43,7 +44,7 @@ namespace Website
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseMiddleware<ReservationMiddleware>();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Finance.ViewComponents\Finance.ViewComponents.csproj" />
     <ProjectReference Include="..\Finance.ViewModelComposition\Finance.ViewModelComposition.csproj" />
+    <ProjectReference Include="..\ITOps.Middlewares\ITOps.Middlewares.csproj" />
     <ProjectReference Include="..\ITOps.UIComposition.Mvc\ITOps.UIComposition.Mvc.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared.Hosting\NServiceBus.Shared.Hosting.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared.MicrosoftDependencyInjection\NServiceBus.Shared.MicrosoftDependencyInjection.csproj" />
