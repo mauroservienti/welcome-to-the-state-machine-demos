@@ -10,7 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Finance.Messages.Events\Finance.Messages.Events.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
+    <ProjectReference Include="..\Reservations.Data\Reservations.Data.csproj" />
     <ProjectReference Include="..\Reservations.Messages.Commands\Reservations.Messages.Commands.csproj" />
   </ItemGroup>
 

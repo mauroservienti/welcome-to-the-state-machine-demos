@@ -15,6 +15,8 @@ namespace Reservations.Data
 
         private ReservationsContext() { }
 
+        public DbSet<Reservation> Reservations { get; set; }
+
         public DbSet<AvailableTickets> AvailableTickets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -25,6 +27,16 @@ namespace Reservations.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AvailableTickets>().HasData(Seed.AvailableTickets());
+
+            var reservedTicketEntity = modelBuilder.Entity<ReservedTicket>();
+            var reservationEntity = modelBuilder.Entity<Reservation>();
+
+            reservedTicketEntity
+                .HasOne<Reservation>()
+                .WithMany(r => r.ReservedTickets)
+                .IsRequired()
+                .HasForeignKey(so => so.ReservationId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }
