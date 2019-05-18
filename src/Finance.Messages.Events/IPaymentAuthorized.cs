@@ -4,6 +4,6 @@ namespace Finance.Messages.Events
 {
     public interface IPaymentAuthorized
     {
-        Guid OrderId { get; }
+        Guid ReservationId { get; }
     }
 }
