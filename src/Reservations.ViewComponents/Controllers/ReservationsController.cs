@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NServiceBus;
 using Reservations.Messages.Commands;
+using System;
 using System.Threading.Tasks;
 
 namespace Reservations.ViewComponents.Controllers
@@ -13,12 +14,17 @@ namespace Reservations.ViewComponents.Controllers
         {
             this.messageSession = messageSession;
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Reserve(int id)
         {
+            var message = new ReserveTicket()
+            {
+                TicketId = id,
+                ReservationId = new Guid(ControllerContext.HttpContext.Request.Cookies["reservation-id"])
+            };
             //WARN: destination is hardcoded to reduce demo complexity. In a real project it should not.
-            await messageSession.Send("Reservations.Service", new ReserveTicket() { TicketId = id });
+            await messageSession.Send("Reservations.Service", message);
 
             return View();
         }
