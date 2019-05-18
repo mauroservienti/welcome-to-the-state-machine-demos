@@ -15,6 +15,11 @@ namespace Reservations.ViewComponents.Controllers
             this.messageSession = messageSession;
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Reserve(int id)
         {
@@ -26,6 +31,11 @@ namespace Reservations.ViewComponents.Controllers
             //WARN: destination is hardcoded to reduce demo complexity. In a real project it should not.
             await messageSession.Send("Reservations.Service", message);
 
+            return RedirectToAction("Added");
+        }
+
+        public IActionResult Added()
+        {
             return View();
         }
     }
