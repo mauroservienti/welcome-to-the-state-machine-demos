@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Reservations.Service": {
+      "commandName": "Project"
+    }
+  }
+}

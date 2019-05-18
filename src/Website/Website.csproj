@@ -22,6 +22,8 @@
     <ProjectReference Include="..\NServiceBus.Shared.Hosting\NServiceBus.Shared.Hosting.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared.MicrosoftDependencyInjection\NServiceBus.Shared.MicrosoftDependencyInjection.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
+    <ProjectReference Include="..\Reservations.ViewComponents\Reservations.ViewComponents.csproj" />
+    <ProjectReference Include="..\Reservations.ViewModelComposition\Reservations.ViewModelComposition.csproj" />
     <ProjectReference Include="..\Ticketing.ViewComponents\Ticketing.ViewComponents.csproj" />
     <ProjectReference Include="..\Ticketing.ViewModelComposition\Ticketing.ViewModelComposition.csproj" />
   </ItemGroup>

@@ -4,17 +4,14 @@
   "MultiProjectConfigurations": {
     "Demo": {
       "Projects": {
-        "website": {}
-      }
-    },
-    "Demo (failed services)": {
-      "Projects": {
-        "website": {}
+        "website": {},
+        "Reservations.Service": {}
       }
     },
     "Demo (Platform)": {
       "Projects": {
         "website": {},
+        "Reservations.Service": {},
         "PlatformLauncher": {}
       }
     }

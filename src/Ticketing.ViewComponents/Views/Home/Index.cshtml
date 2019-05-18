@@ -11,8 +11,9 @@
     @foreach (dynamic ticket in Model.AvailableTickets)
     {
         <li>
-            <form action="/reservations/@ticket.TicketId" method="post">
+            <form action="/reservations/reserve/@ticket.TicketId" method="post">
                 @ticket.TicketDescription @await Component.InvokeAsync("Finance.ViewComponents.TicketPrice", ticket)<br />
+                @await Component.InvokeAsync("Reservations.ViewComponents.AvailableTickets", ticket)<br />
                 <button>Reserve a seat</button>
             </form>
         </li>
