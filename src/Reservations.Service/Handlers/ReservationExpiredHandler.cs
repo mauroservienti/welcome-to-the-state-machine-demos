@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NServiceBus;
 using Reservations.Data;
-using Reservations.Service.Messages;
+using Reservations.Messages.Events;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Reservations.Service.Handlers
 {
-    class ReleaseReservedTicketHandler : IHandleMessages<ReleaseReservedTickets>
+    class ReservationExpiredHandler : IHandleMessages<IReservationExpired>
     {
-        public async Task Handle(ReleaseReservedTickets message, IMessageHandlerContext context)
+        public async Task Handle(IReservationExpired message, IMessageHandlerContext context)
         {
             using (var db = ReservationsContext.Create())
             {

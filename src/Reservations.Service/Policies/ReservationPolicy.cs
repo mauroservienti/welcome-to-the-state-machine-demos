@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reservations.Service.Policies
 {
-    class TicketsReservationPolicy : Saga<TicketsReservationPolicy.State>,
+    class ReservationPolicy : Saga<ReservationPolicy.State>,
         IAmStartedByMessages<ReserveTicket>,
         IHandleTimeouts<TicketsReservationTimeout>
     {
@@ -33,14 +33,14 @@ namespace Reservations.Service.Policies
 
             if (!Data.CountdownStarted)
             {
-                await RequestTimeout<TicketsReservationTimeout>(context, TimeSpan.FromSeconds(20));
+                await RequestTimeout<TicketsReservationTimeout>(context, TimeSpan.FromMinutes(1));
                 Data.CountdownStarted = true;
             }
         }
 
         public async Task Timeout(TicketsReservationTimeout state, IMessageHandlerContext context)
         {
-            await context.SendLocal(new ReleaseReservedTickets()
+            await context.Publish(new ReservationExpired()
             {
                 ReservationId = Data.ReservationId
             });
