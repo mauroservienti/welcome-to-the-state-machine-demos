@@ -17,7 +17,13 @@ namespace ITOps.Middlewares
         {
             if (!context.Request.Cookies.ContainsKey("reservation-id"))
             {
-                context.Response.Cookies.Append("reservation-id", Guid.NewGuid().ToString());
+                context.Response.Cookies.Append(
+                    key: "reservation-id",
+                    value: Guid.NewGuid().ToString(),
+                    options: new CookieOptions()
+                    {
+                        Expires = DateTimeOffset.Now.AddHours(1)
+                    });
             }
 
             await _next(context);
