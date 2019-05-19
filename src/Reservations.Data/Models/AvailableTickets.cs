@@ -4,6 +4,5 @@
     {
         public int Id { get; set; }
         public int TotalTickets { get; set; }
-        public int TicketsLeft { get; set; }
     }
 }

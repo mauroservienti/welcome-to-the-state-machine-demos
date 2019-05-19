@@ -50,14 +50,12 @@ namespace Reservations.Data
                     new AvailableTickets()
                     {
                         Id = 1,
-                        TotalTickets= 100,
-                        TicketsLeft = 100
+                        TotalTickets= 100
                     },
                     new AvailableTickets()
                     {
                         Id = 2,
-                        TotalTickets= 200,
-                        TicketsLeft = 200
+                        TotalTickets= 200
                     }
                 };
             }
