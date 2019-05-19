@@ -5,13 +5,15 @@
     "Demo": {
       "Projects": {
         "website": {},
-        "Reservations.Service": {}
+        "Reservations.Service": {},
+        "Finance.Service": {}
       }
     },
     "Demo (Platform)": {
       "Projects": {
         "website": {},
         "Reservations.Service": {},
+        "Finance.Service": {},
         "PlatformLauncher": {}
       }
     }

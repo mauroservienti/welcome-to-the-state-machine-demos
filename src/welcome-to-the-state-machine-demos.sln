@@ -39,21 +39,29 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finance.ViewComponents", "F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finance.Data", "Finance.Data\Finance.Data.csproj", "{B2638542-666E-4A9D-AAD4-CAC77D948871}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservations.ViewComponents", "Reservations.ViewComponents\Reservations.ViewComponents.csproj", "{E794D659-C4F0-4BB4-98F6-E8BEE71D268E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reservations.ViewComponents", "Reservations.ViewComponents\Reservations.ViewComponents.csproj", "{E794D659-C4F0-4BB4-98F6-E8BEE71D268E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservations.Data", "Reservations.Data\Reservations.Data.csproj", "{A0B7A7DB-5474-412F-A4E0-4010132F2CE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reservations.Data", "Reservations.Data\Reservations.Data.csproj", "{A0B7A7DB-5474-412F-A4E0-4010132F2CE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservations.ViewModelComposition", "Reservations.ViewModelComposition\Reservations.ViewModelComposition.csproj", "{FDA6D9B8-9373-4E3A-9F39-3C97BA421470}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reservations.ViewModelComposition", "Reservations.ViewModelComposition\Reservations.ViewModelComposition.csproj", "{FDA6D9B8-9373-4E3A-9F39-3C97BA421470}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservations.Service", "Reservations.Service\Reservations.Service.csproj", "{7D172217-98C8-4311-8318-6900F6F8D50D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reservations.Service", "Reservations.Service\Reservations.Service.csproj", "{7D172217-98C8-4311-8318-6900F6F8D50D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservations.Messages.Commands", "Reservations.Messages.Commands\Reservations.Messages.Commands.csproj", "{02D3071F-EF79-4FD9-9752-4B041099C459}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reservations.Messages.Commands", "Reservations.Messages.Commands\Reservations.Messages.Commands.csproj", "{02D3071F-EF79-4FD9-9752-4B041099C459}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finance.Messages.Events", "Finance.Messages.Events\Finance.Messages.Events.csproj", "{D80CBA22-4E4A-49E5-B875-61558962FD53}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IT Ops", "IT Ops", "{2B3DEF24-189E-442D-8B41-7A49AC46AB7B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITOps.Middlewares", "ITOps.Middlewares\ITOps.Middlewares.csproj", "{FDA39A7B-BD74-4F86-8CD2-81DF6FDC8AE7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reservations.ViewModelComposition.Events", "Reservations.ViewModelComposition.Events\Reservations.ViewModelComposition.Events.csproj", "{03B6E372-5BC9-488B-91F9-C01A7BCAF07A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finance.Service", "Finance.Service\Finance.Service.csproj", "{6A46B867-16ED-4700-AC6E-FBB6FC49B280}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finance.Messages.Commands", "Finance.Messages.Commands\Finance.Messages.Commands.csproj", "{0C6DDAD3-BD78-49AF-AFD3-17FFC8846167}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservations.Messages.Events", "Reservations.Messages.Events\Reservations.Messages.Events.csproj", "{C88C6770-CFF4-48E7-A313-6905A6C14AC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,6 +153,22 @@ Global
 		{FDA39A7B-BD74-4F86-8CD2-81DF6FDC8AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDA39A7B-BD74-4F86-8CD2-81DF6FDC8AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDA39A7B-BD74-4F86-8CD2-81DF6FDC8AE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03B6E372-5BC9-488B-91F9-C01A7BCAF07A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03B6E372-5BC9-488B-91F9-C01A7BCAF07A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03B6E372-5BC9-488B-91F9-C01A7BCAF07A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03B6E372-5BC9-488B-91F9-C01A7BCAF07A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A46B867-16ED-4700-AC6E-FBB6FC49B280}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A46B867-16ED-4700-AC6E-FBB6FC49B280}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A46B867-16ED-4700-AC6E-FBB6FC49B280}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A46B867-16ED-4700-AC6E-FBB6FC49B280}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C6DDAD3-BD78-49AF-AFD3-17FFC8846167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C6DDAD3-BD78-49AF-AFD3-17FFC8846167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C6DDAD3-BD78-49AF-AFD3-17FFC8846167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C6DDAD3-BD78-49AF-AFD3-17FFC8846167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C88C6770-CFF4-48E7-A313-6905A6C14AC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C88C6770-CFF4-48E7-A313-6905A6C14AC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C88C6770-CFF4-48E7-A313-6905A6C14AC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C88C6770-CFF4-48E7-A313-6905A6C14AC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -169,6 +193,10 @@ Global
 		{02D3071F-EF79-4FD9-9752-4B041099C459} = {32C8E39D-93AC-4AF9-981B-152478ADFCA5}
 		{D80CBA22-4E4A-49E5-B875-61558962FD53} = {1D1589DF-CEB2-4B1C-B8BF-A86CD7A7B4A6}
 		{FDA39A7B-BD74-4F86-8CD2-81DF6FDC8AE7} = {2B3DEF24-189E-442D-8B41-7A49AC46AB7B}
+		{03B6E372-5BC9-488B-91F9-C01A7BCAF07A} = {32C8E39D-93AC-4AF9-981B-152478ADFCA5}
+		{6A46B867-16ED-4700-AC6E-FBB6FC49B280} = {1D1589DF-CEB2-4B1C-B8BF-A86CD7A7B4A6}
+		{0C6DDAD3-BD78-49AF-AFD3-17FFC8846167} = {1D1589DF-CEB2-4B1C-B8BF-A86CD7A7B4A6}
+		{C88C6770-CFF4-48E7-A313-6905A6C14AC2} = {32C8E39D-93AC-4AF9-981B-152478ADFCA5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1D0078F3-1E11-49D2-AE2C-6EA7D61E1B06}

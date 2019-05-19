@@ -7,6 +7,6 @@ namespace Finance.Service.Messages
 {
     class PaymentAuthorized : IPaymentAuthorized
     {
-        public Guid OrderId { get; set; }
+        public Guid ReservationId { get; set; }
     }
 }
