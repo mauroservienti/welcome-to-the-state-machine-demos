@@ -4,6 +4,6 @@ namespace Finance.Service.Messages
 {
     class InitiatePaymentProcessing
     {
-        public Guid OrderId { get; set; }
+        public Guid ReservationId { get; set; }
     }
 }
