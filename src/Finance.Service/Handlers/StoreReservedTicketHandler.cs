@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Finance.Service.Handlers
 {
-    class TrackReservedTicketHandler : IHandleMessages<TrackReservedTicket>
+    class StoreReservedTicketHandler : IHandleMessages<StoreReservedTicket>
     {
-        public async Task Handle(TrackReservedTicket message, IMessageHandlerContext context)
+        public async Task Handle(StoreReservedTicket message, IMessageHandlerContext context)
         {
             using (var db = FinanceContext.Create())
             {

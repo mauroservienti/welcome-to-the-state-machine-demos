@@ -2,7 +2,7 @@
 
 namespace Finance.Messages.Commands
 {
-    public class TrackReservedTicket
+    public class StoreReservedTicket
     {
         public int TicketId { get; set; }
         public Guid ReservationId { get; set; }
