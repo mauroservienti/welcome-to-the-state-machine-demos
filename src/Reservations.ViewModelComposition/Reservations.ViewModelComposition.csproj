@@ -6,11 +6,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-    <PackageReference Include="ServiceComposer.AspNetCore" Version="0.0.7" />
+    <PackageReference Include="NServiceBus" Version="7.1.8" />
+    <PackageReference Include="ServiceComposer.AspNetCore" Version="0.0.8" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Reservations.Data\Reservations.Data.csproj" />
+    <ProjectReference Include="..\Reservations.Messages.Commands\Reservations.Messages.Commands.csproj" />
+    <ProjectReference Include="..\Reservations.ViewModelComposition.Events\Reservations.ViewModelComposition.Events.csproj" />
     <ProjectReference Include="..\Ticketing.ViewModelComposition.Events\Ticketing.ViewModelComposition.Events.csproj" />
   </ItemGroup>
 
