@@ -43,7 +43,7 @@ namespace Finance.ViewModelComposition
              * More information: https://milestone.topics.it/2019/05/02/safety-first.html
              */
 
-            var message = new TrackReservedTicket()
+            var message = new StoreReservedTicket()
             {
                 TicketId = int.Parse((string)routeData.Values["id"]),
                 ReservationId = new Guid(request.Cookies["reservation-id"])
