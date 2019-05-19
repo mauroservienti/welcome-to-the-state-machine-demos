@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace ITOps.Middlewares
+namespace Reservations.ViewModelComposition.Middlewares
 {
     public class ReservationMiddleware
     {
