@@ -17,7 +17,14 @@ else
         {
             <li>
                 @reservedTicket.TicketDescription<br />
-                @reservedTicket.Quantity x @reservedTicket.TicketPrice, @reservedTicket.TotalPrice
+                @if (reservedTicket.TicketPrice == 0)
+                {
+                    <span>@reservedTicket.Quantity, Free</span>
+                }
+                else
+                {
+                    <span>@reservedTicket.Quantity x @reservedTicket.TicketPrice, @reservedTicket.TotalPrice</span>
+                }
             </li>
         }
     </ul>

@@ -1,4 +1,4 @@
-namespace Ticketing.ViewComponents.Models
+namespace Website.Models
 {
     public class ErrorViewModel
     {

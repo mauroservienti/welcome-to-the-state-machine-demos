@@ -16,16 +16,12 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Finance.ViewComponents\Finance.ViewComponents.csproj" />
     <ProjectReference Include="..\Finance.ViewModelComposition\Finance.ViewModelComposition.csproj" />
     <ProjectReference Include="..\ITOps.Middlewares\ITOps.Middlewares.csproj" />
-    <ProjectReference Include="..\ITOps.UIComposition.Mvc\ITOps.UIComposition.Mvc.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared.Hosting\NServiceBus.Shared.Hosting.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared.MicrosoftDependencyInjection\NServiceBus.Shared.MicrosoftDependencyInjection.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
-    <ProjectReference Include="..\Reservations.ViewComponents\Reservations.ViewComponents.csproj" />
     <ProjectReference Include="..\Reservations.ViewModelComposition\Reservations.ViewModelComposition.csproj" />
-    <ProjectReference Include="..\Ticketing.ViewComponents\Ticketing.ViewComponents.csproj" />
     <ProjectReference Include="..\Ticketing.ViewModelComposition\Ticketing.ViewModelComposition.csproj" />
   </ItemGroup>
 
@@ -34,6 +30,13 @@
     <Folder Include="wwwroot\lib\bootstrap\dist\css\" />
     <Folder Include="wwwroot\lib\bootstrap\dist\js\" />
     <Folder Include="wwwroot\lib\jquery\dist\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="Views\_ViewImports.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

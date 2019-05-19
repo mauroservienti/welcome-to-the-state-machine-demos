@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Ticketing.ViewComponents.Controllers
+namespace Website.Controllers
 {
     public class HomeController : Controller
     {

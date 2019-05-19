@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Reservations.ViewComponents.Controllers
+namespace Website.Controllers
 {
     public class ReservationsController : Controller
     {

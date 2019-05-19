@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
 using ServiceComposer.AspNetCore;
 using ServiceComposer.AspNetCore.Mvc;
-using ITOps.UIComposition.Mvc;
 using ITOps.Middlewares;
 
 namespace Website
@@ -25,7 +24,6 @@ namespace Website
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
-                .AddUIComposition()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddViewModelComposition(options =>
