@@ -33,7 +33,17 @@ else
         Total due: @Model.Reservation.TotalPrice
     </div>
 
-    <form action="/reservations/checkout/@Model.Reservation.Id" method="post">
-        <button type="submit">Proceed to checkout</button>
+    <form action="/finance/selectPaymentMethod" method="post">
+
+        <div>
+            Select a payment method and proceed to the next step to review your order:
+        </div>
+
+        @foreach (var item in Model.PaymentMethods)
+        {
+            <input id="PaymentMethod_@item.Id" name="PaymentMethod" type="radio" value="@item.Id" /><label for="PaymentMethod_@item.Id">@item.Description</label><br />
+        }
+
+        <button type="submit">Review your order</button>
     </form>
 }

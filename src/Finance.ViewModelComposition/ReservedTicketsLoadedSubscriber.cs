@@ -60,6 +60,9 @@ namespace Finance.ViewModelComposition
                     }
 
                     @event.Reservation.TotalPrice = reservationTotalPrice;
+
+                    var allPaymentMethods = await db.PaymentMethods.ToListAsync();
+                    pageViewModel.PaymentMethods = allPaymentMethods;
                 }
             });
         }
