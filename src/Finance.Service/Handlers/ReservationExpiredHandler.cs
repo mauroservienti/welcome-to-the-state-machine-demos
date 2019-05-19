@@ -13,6 +13,7 @@ namespace Finance.Service.Handlers
         {
             using (var db = FinanceContext.Create())
             {
+                var save = false;
                 //very inefficient way of deleting stuff.
                 var reservations = await db.ReservedTickets
                     .Where(r => r.ReservationId == message.ReservationId)
@@ -20,6 +21,20 @@ namespace Finance.Service.Handlers
                 if (reservations.Any())
                 {
                     db.RemoveRange(reservations);
+                    save = true;
+                }
+
+                var paymentMethods = await db.ReservationsPaymentMethod
+                    .Where(r => r.Id == message.ReservationId)
+                    .ToListAsync();
+                if (paymentMethods.Any())
+                {
+                    db.RemoveRange(paymentMethods);
+                    save = true;
+                }
+
+                if (save)
+                {
                     await db.SaveChangesAsync();
                 }
             }
