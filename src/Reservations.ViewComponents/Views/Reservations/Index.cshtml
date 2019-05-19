@@ -22,6 +22,10 @@ else
         }
     </ul>
 
+    <div>
+        Total due: @Model.Reservation.TotalPrice
+    </div>
+
     <form action="/reservations/checkout/@Model.Reservation.Id" method="post">
         <button>Proceed to checkout</button>
     </form>
