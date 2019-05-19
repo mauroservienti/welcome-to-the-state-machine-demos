@@ -16,6 +16,7 @@ namespace Finance.Data
         private FinanceContext() { }
 
         public DbSet<TicketPrice> TicketPrices { get; set; }
+        public DbSet<ReservedTicket> ReservedTickets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,6 +26,7 @@ namespace Finance.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TicketPrice>().HasData(Seed.TicketPrices());
+            modelBuilder.Entity<ReservedTicket>();
 
             base.OnModelCreating(modelBuilder);
         }
