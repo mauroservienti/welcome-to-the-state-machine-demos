@@ -17,6 +17,8 @@ namespace Finance.Data
 
         public DbSet<TicketPrice> TicketPrices { get; set; }
         public DbSet<ReservedTicket> ReservedTickets { get; set; }
+        public DbSet<ReservationPaymentMethod> ReservationsPaymentMethod { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -26,13 +28,32 @@ namespace Finance.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TicketPrice>().HasData(Seed.TicketPrices());
+            modelBuilder.Entity<PaymentMethod>().HasData(Seed.PaymentMethods());
             modelBuilder.Entity<ReservedTicket>();
+            modelBuilder.Entity<ReservationPaymentMethod>();
 
             base.OnModelCreating(modelBuilder);
         }
 
         private static class Seed
         {
+            internal static PaymentMethod[] PaymentMethods()
+            {
+                return new[] 
+                {
+                    new PaymentMethod()
+                    {
+                        Id = 1,
+                        Description = "Master Card (last 4 digits: 5555)"
+                    },
+                    new PaymentMethod()
+                    {
+                        Id = 2,
+                        Description = "Visa (last 4 digits: 1111)"
+                    }
+                };
+            }
+
             internal static TicketPrice[] TicketPrices()
             {
                 return new[]
