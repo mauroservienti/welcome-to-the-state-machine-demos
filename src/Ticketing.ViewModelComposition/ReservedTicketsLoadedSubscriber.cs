@@ -16,7 +16,7 @@ namespace Ticketing.ViewModelComposition
 
             return HttpMethods.IsGet(httpVerb)
                    && controller.ToLowerInvariant() == "reservations"
-                   && action.ToLowerInvariant() == "index"
+                   && (action.ToLowerInvariant() == "index" || action.ToLowerInvariant() == "review")
                    && !routeData.Values.ContainsKey("id");
         }
 

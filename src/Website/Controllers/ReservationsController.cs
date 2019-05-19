@@ -19,5 +19,16 @@ namespace Website.Controllers
         {
             return View();
         }
+
+        public IActionResult Review()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Checkout()
+        {
+            return View();
+        }
     }
 }
