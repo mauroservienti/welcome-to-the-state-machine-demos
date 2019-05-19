@@ -2,3 +2,27 @@
     ViewData["Title"] = "Your reservations";
 }
 
+<div class="text-center">
+    <h1 class="display-4">My Reservations</h1>
+</div>
+
+@if (Model.Reservation == null)
+{
+    <span>No reservations found.</span>
+}
+else
+{
+    <ul>
+        @foreach (dynamic reservedTicket in Model.Reservation.ReservedTickets)
+        {
+            <li>
+                @reservedTicket.TicketDescription<br />
+                @reservedTicket.Quantity x @reservedTicket.TicketPrice, @reservedTicket.TotalPrice
+            </li>
+        }
+    </ul>
+
+    <form action="/reservations/checkout/@Model.Reservation.Id" method="post">
+        <button>Proceed to checkout</button>
+    </form>
+}
