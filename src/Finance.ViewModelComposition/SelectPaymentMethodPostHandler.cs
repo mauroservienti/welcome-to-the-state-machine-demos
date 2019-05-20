@@ -23,28 +23,12 @@ namespace Finance.ViewModelComposition
                    && action.ToLowerInvariant() == "selectpaymentmethod";
         }
 
-        public async Task Handle(string requestId, dynamic vm, RouteData routeData, HttpRequest request)
+        public Task Handle(string requestId, dynamic vm, RouteData routeData, HttpRequest request)
         {
-            var reservationId = new Guid(request.Cookies["reservation-id"]);
-            using (var db = FinanceContext.Create())
-            {
-                var reservationPaymentMethod = await db.ReservationsPaymentMethod
-                    .Where(rpm => rpm.Id == reservationId)
-                    .SingleOrDefaultAsync();
+            var response = request.HttpContext.Response;
+            response.Cookies.Append("reservation-payment-method-id", request.Form["PaymentMethod"]);
 
-                if (reservationPaymentMethod == null)
-                {
-                    reservationPaymentMethod = new ReservationPaymentMethod()
-                    {
-                        Id = reservationId
-                    };
-                    db.ReservationsPaymentMethod.Add(reservationPaymentMethod);
-                }
-
-                reservationPaymentMethod.PaymentMethod = int.Parse(request.Form["PaymentMethod"]);
-
-                await db.SaveChangesAsync();
-            }
+            return Task.CompletedTask;
         }
     }
 }

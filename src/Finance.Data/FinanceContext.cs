@@ -17,7 +17,6 @@ namespace Finance.Data
 
         public DbSet<TicketPrice> TicketPrices { get; set; }
         public DbSet<ReservedTicket> ReservedTickets { get; set; }
-        public DbSet<ReservationPaymentMethod> ReservationsPaymentMethod { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,7 +29,6 @@ namespace Finance.Data
             modelBuilder.Entity<TicketPrice>().HasData(Seed.TicketPrices());
             modelBuilder.Entity<PaymentMethod>().HasData(Seed.PaymentMethods());
             modelBuilder.Entity<ReservedTicket>();
-            modelBuilder.Entity<ReservationPaymentMethod>();
 
             base.OnModelCreating(modelBuilder);
         }

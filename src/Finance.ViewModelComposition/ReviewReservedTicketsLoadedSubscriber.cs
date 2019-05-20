@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Reservations.ViewModelComposition.Events;
 using ServiceComposer.AspNetCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Finance.ViewModelComposition
@@ -24,7 +23,7 @@ namespace Finance.ViewModelComposition
 
         public void Subscribe(IPublishCompositionEvents publisher)
         {
-            publisher.Subscribe<ReservedTicketsLoaded>(async (requestId, pageViewModel, @event, rd, req) =>
+            publisher.Subscribe<ReservedTicketsLoaded>(async (requestId, viewModel, @event, douteData, httpRequest) =>
             {
                 var ids = @event.ReservedTicketsViewModel.Keys.ToArray();
                 using (var db = Data.FinanceContext.Create())
@@ -61,11 +60,14 @@ namespace Finance.ViewModelComposition
 
                     @event.Reservation.TotalPrice = reservationTotalPrice;
 
-                    var selectedPaymentMethod = await db.ReservationsPaymentMethod.Where(rpm=>rpm.Id==reservationId)
+                    /*
+                     * it's a demo, production code should check for cookie existance
+                     */
+                    var selectedPaymentMethodId = int.Parse(httpRequest.Cookies["reservation-payment-method-id"]);
+                    var paymentMethod = await db.PaymentMethods
+                        .Where(pm => pm.Id == selectedPaymentMethodId)
                         .SingleAsync();
-                    var paymentMethod = await db.PaymentMethods.Where(pm => pm.Id == selectedPaymentMethod.PaymentMethod)
-                        .SingleAsync();
-                    pageViewModel.PaymentMethod = paymentMethod;
+                    viewModel.PaymentMethod = paymentMethod;
                 }
             });
         }
