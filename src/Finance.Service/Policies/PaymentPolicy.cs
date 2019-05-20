@@ -12,7 +12,7 @@ namespace Finance.Service.Policies
         IAmStartedByMessages<IReservationCheckedout>,
         IAmStartedByMessages<InitializeReservationPaymentPolicy>,
         IHandleMessages<InitiatePaymentProcessing>,
-        IHandleMessages<AuthorizeCardResponse>
+        IHandleMessages<CardAuthorizedResponse>
     {
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<PaymentPolicyState> mapper)
         {
@@ -54,10 +54,10 @@ namespace Finance.Service.Policies
         {
             Data.CardAuthorizationRequested = true;
 
-            return context.Send(new AuthorizeCard() { OrderId = Data.ReservationId });
+            return context.Send(new AuthorizeCard() { ReservationId = Data.ReservationId });
         }
 
-        public Task Handle(AuthorizeCardResponse message, IMessageHandlerContext context)
+        public Task Handle(CardAuthorizedResponse message, IMessageHandlerContext context)
         {
             /*
              * Intentionally ignoring authorization failures
@@ -67,7 +67,7 @@ namespace Finance.Service.Policies
              * a couple more messages are needed and one more
              * interaction with Reservation to release tickets.
              */
-            Data.CardAuthorized = message.Succeeded;
+            Data.CardAuthorized = true;
 
             return context.Publish(new PaymentAuthorized() { ReservationId = Data.ReservationId });
         }

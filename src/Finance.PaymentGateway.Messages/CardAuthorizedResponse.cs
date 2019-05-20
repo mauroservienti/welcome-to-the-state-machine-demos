@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Finance.PaymentGateway.Messages
 {
-    public class AuthorizeCardResponse
+    public class CardAuthorizedResponse
     {
-        public bool Succeeded { get; set; }
-        public Guid OrderId { get; set; }
+        public Guid ReservationId { get; set; }
     }
 }
