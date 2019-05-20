@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+using Reservations.ViewModelComposition.Events;
 using ServiceComposer.AspNetCore;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System;
-using Reservations.ViewModelComposition.Events;
 
 namespace Reservations.ViewModelComposition
 {

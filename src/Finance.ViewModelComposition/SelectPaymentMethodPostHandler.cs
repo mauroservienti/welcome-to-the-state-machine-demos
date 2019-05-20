@@ -1,13 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Finance.Data;
-using Finance.Data.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
-using NServiceBus;
 using ServiceComposer.AspNetCore;
+using System.Threading.Tasks;
 
 namespace Finance.ViewModelComposition
 {

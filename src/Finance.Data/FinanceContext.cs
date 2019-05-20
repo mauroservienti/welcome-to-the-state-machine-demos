@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Finance.Data.Models;
+﻿using Finance.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Finance.Data
 {

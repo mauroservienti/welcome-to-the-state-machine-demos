@@ -1,13 +1,12 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
+using Reservations.ViewModelComposition.Middlewares;
 using ServiceComposer.AspNetCore;
 using ServiceComposer.AspNetCore.Mvc;
-using Reservations.ViewModelComposition.Middlewares;
+using System;
 
 namespace Website
 {

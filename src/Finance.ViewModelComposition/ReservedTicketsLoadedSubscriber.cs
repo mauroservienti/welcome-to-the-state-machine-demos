@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Reservations.ViewModelComposition.Events;
 using ServiceComposer.AspNetCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Finance.ViewModelComposition

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using NServiceBus;
 using Reservations.Messages.Commands;
 using ServiceComposer.AspNetCore;
+using System;
+using System.Threading.Tasks;
 
 namespace Reservations.ViewModelComposition
 {

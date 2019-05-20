@@ -1,12 +1,12 @@
-﻿using Ticketing.ViewModelComposition.Events;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using ServiceComposer.AspNetCore;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using Ticketing.ViewModelComposition.Events;
 
 namespace Ticketing.ViewModelComposition
 {

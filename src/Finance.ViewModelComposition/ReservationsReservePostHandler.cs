@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using Finance.Messages.Commands;
+﻿using Finance.Messages.Commands;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using NServiceBus;
 using ServiceComposer.AspNetCore;
+using System;
+using System.Threading.Tasks;
 
 namespace Finance.ViewModelComposition
 {
