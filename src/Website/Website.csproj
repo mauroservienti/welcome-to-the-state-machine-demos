@@ -9,15 +9,15 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.0.48" />
-    <PackageReference Include="ServiceComposer.AspNetCore" Version="0.0.8" />
-    <PackageReference Include="ServiceComposer.AspNetCore.Mvc" Version="0.0.5" />
+    <PackageReference Include="ServiceComposer.AspNetCore" Version="0.0.10" />
+    <PackageReference Include="ServiceComposer.AspNetCore.Mvc" Version="0.0.6" />
   </ItemGroup>
 
 
   <ItemGroup>
     <ProjectReference Include="..\Finance.ViewModelComposition\Finance.ViewModelComposition.csproj" />
-    <ProjectReference Include="..\ITOps.Middlewares\ITOps.Middlewares.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared.Hosting\NServiceBus.Shared.Hosting.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared.MicrosoftDependencyInjection\NServiceBus.Shared.MicrosoftDependencyInjection.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
