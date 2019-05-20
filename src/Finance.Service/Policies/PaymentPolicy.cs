@@ -54,7 +54,11 @@ namespace Finance.Service.Policies
         {
             Data.CardAuthorizationRequested = true;
 
-            return context.Send(new AuthorizeCard() { ReservationId = Data.ReservationId });
+            return context.Send(new AuthorizeCard()
+            {
+                ReservationId = Data.ReservationId,
+                PaymentMethodId = Data.PaymentMethodId
+            });
         }
 
         public Task Handle(CardAuthorizedResponse message, IMessageHandlerContext context)
