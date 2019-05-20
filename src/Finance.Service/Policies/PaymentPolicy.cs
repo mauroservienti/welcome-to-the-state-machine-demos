@@ -1,23 +1,53 @@
-﻿using Finance.PaymentGateway.Messages;
+﻿using Finance.Messages.Commands;
+using Finance.PaymentGateway.Messages;
 using Finance.Service.Messages;
 using NServiceBus;
+using Reservations.Messages.Events;
 using System;
 using System.Threading.Tasks;
-using Ticketing.Messages.Events;
 
 namespace Finance.Service.Policies
 {
     class PaymentPolicy : Saga<PaymentPolicyState>,
-        IAmStartedByMessages<IOrderCheckedOut>,
+        IAmStartedByMessages<IReservationCheckedout>,
+        IAmStartedByMessages<InitializeReservationPaymentPolicy>,
         IHandleMessages<InitiatePaymentProcessing>,
         IHandleMessages<AuthorizeCardResponse>
     {
-        public Task Handle(IOrderCheckedOut message, IMessageHandlerContext context)
+        protected override void ConfigureHowToFindSaga(SagaPropertyMapper<PaymentPolicyState> mapper)
+        {
+            mapper.ConfigureMapping<IReservationCheckedout>(m => m.ReservationId).ToSaga(s => s.ReservationId);
+            mapper.ConfigureMapping<InitializeReservationPaymentPolicy>(m => m.ReservationId).ToSaga(s => s.ReservationId);
+            mapper.ConfigureMapping<InitiatePaymentProcessing>(m => m.ReservationId).ToSaga(s => s.ReservationId);
+        }
+
+        public Task Handle(IReservationCheckedout message, IMessageHandlerContext context)
         {
             Data.ReservationId = message.ReservationId;
-            Data.CustomerId = message.CustomerId;
+            Data.ReservationCheckedOut = true;
 
-            return context.SendLocal(new InitiatePaymentProcessing() { ReservationId = Data.ReservationId });
+            return InitiatePaymentProcessing(context);
+        }
+
+        public Task Handle(InitializeReservationPaymentPolicy message, IMessageHandlerContext context)
+        {
+            Data.PaymentMethodId = message.PaymentMethodId;
+            Data.PaymentMethodSet = true;
+
+            return InitiatePaymentProcessing(context);
+        }
+
+        Task InitiatePaymentProcessing(IMessageHandlerContext context)
+        {
+            if(Data.ReservationCheckedOut && Data.PaymentMethodSet)
+            {
+                return context.SendLocal(new InitiatePaymentProcessing()
+                {
+                    ReservationId = Data.ReservationId
+                });
+            }
+
+            return Task.CompletedTask;
         }
 
         public Task Handle(InitiatePaymentProcessing message, IMessageHandlerContext context)
@@ -29,24 +59,28 @@ namespace Finance.Service.Policies
 
         public Task Handle(AuthorizeCardResponse message, IMessageHandlerContext context)
         {
+            /*
+             * Intentionally ignoring authorization failures
+             * --------------------------------------------------
+             * The demo starts from the assumption that card
+             * authorization never fails. To handle such scenario
+             * a couple more messages are needed and one more
+             * interaction with Reservation to release tickets.
+             */
             Data.CardAuthorized = message.Succeeded;
 
             return context.Publish(new PaymentAuthorized() { ReservationId = Data.ReservationId });
-        }
-
-        protected override void ConfigureHowToFindSaga(SagaPropertyMapper<PaymentPolicyState> mapper)
-        {
-            mapper.ConfigureMapping<IOrderCheckedOut>(m => m.ReservationId).ToSaga(s => s.ReservationId);
-            mapper.ConfigureMapping<InitiatePaymentProcessing>(m => m.ReservationId).ToSaga(s => s.ReservationId);
         }
     }
 
     class PaymentPolicyState : ContainSagaData
     {
         public Guid ReservationId { get; set; }
-        public Guid CustomerId { get; set; }
         public bool CardCharged { get; set; }
         public bool CardAuthorized { get; set; }
         public bool CardAuthorizationRequested { get; set; }
+        public int PaymentMethodId { get; set; }
+        public bool ReservationCheckedOut { get; set; }
+        public bool PaymentMethodSet { get; set; }
     }
 }
