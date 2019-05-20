@@ -5,7 +5,7 @@ namespace NServiceBus
 {
     public static class CommonEndpointSettings
     {
-        public static EndpointConfiguration ApplyCommonConfiguration(this EndpointConfiguration endpointConfiguration, bool asSendOnly = false, Action<RoutingSettings<LearningTransport>> configureRouting = null)
+        public static void ApplyCommonConfiguration(this EndpointConfiguration endpointConfiguration, bool asSendOnly = false, Action<RoutingSettings<LearningTransport>> configureRouting = null)
         {
             endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
             var transportConfig = endpointConfiguration.UseTransport<LearningTransport>();
@@ -40,17 +40,6 @@ namespace NServiceBus
                     serviceControlMetricsAddress: "Particular.Monitoring",
                     interval: TimeSpan.FromSeconds(5));
             }
-
-            return endpointConfiguration;
-        }
-
-        public static (IServiceCollection Services, EndpointConfiguration EndpointConfiguration) ApplyCommonConfiguration(this (IServiceCollection Services, EndpointConfiguration EndpointConfiguration) userConfig, bool asSendOnly = false, Action<RoutingSettings<LearningTransport>> configureRouting = null)
-        {
-            var endpointConfiguration = userConfig.EndpointConfiguration;
-
-            endpointConfiguration.ApplyCommonConfiguration(asSendOnly, configureRouting);
-
-            return userConfig;
         }
     }
 }

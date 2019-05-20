@@ -23,9 +23,11 @@ namespace Website
                 options.AddMvcSupport();
             });
 
-            return services.AddNServiceBus("Webapp")
-                .ApplyCommonConfiguration(asSendOnly: true)
-                .UseMicrosoftDependencyInjection();
+            return services.AddNServiceBus("Webapp", config => 
+            {
+                config.ApplyCommonConfiguration(asSendOnly: true);
+                return config.UseMicrosoftDependencyInjection(services);
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

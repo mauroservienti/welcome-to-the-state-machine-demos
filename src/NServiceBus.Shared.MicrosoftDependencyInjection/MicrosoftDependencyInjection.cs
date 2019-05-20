@@ -6,11 +6,8 @@ namespace NServiceBus
 {
     public static class MicrosoftDependencyInjection
     {
-        public static IServiceProvider UseMicrosoftDependencyInjection(this (IServiceCollection Services, EndpointConfiguration EndpointConfiguration) userConfig)
+        public static IServiceProvider UseMicrosoftDependencyInjection(this EndpointConfiguration endpointConfiguration, IServiceCollection services)
         {
-            var endpointConfiguration = userConfig.EndpointConfiguration;
-            var services = userConfig.Services;
-
             UpdateableServiceProvider container = null;
             endpointConfiguration.UseContainer<ServicesBuilder>(c =>
             {

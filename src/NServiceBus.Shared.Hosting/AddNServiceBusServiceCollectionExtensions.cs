@@ -1,23 +1,22 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace NServiceBus
 {
     public static class AddNServiceBusServiceCollectionExtensions
     {
-        static void AddRequiredInfrastructure(IServiceCollection services, EndpointConfiguration configuration)
-        {
-            var holder = new SessionAndConfigurationHolder(configuration);
-            services.AddSingleton(provider => holder.Session);
-            services.AddSingleton(holder);
-            services.AddHostedService<EndpointManagement>();
-        }
-
-        public static (IServiceCollection Services, EndpointConfiguration EndpointConfiguration) AddNServiceBus(this IServiceCollection services, string endpointName)
+        public static IServiceProvider AddNServiceBus(this IServiceCollection services, string endpointName, Func<EndpointConfiguration, IServiceProvider> configuration)
         {
             var endpointConfiguration = new EndpointConfiguration(endpointName);
-            AddRequiredInfrastructure(services, endpointConfiguration);
 
-            return (services, endpointConfiguration);
+            IMessageSession messageSession = null;
+            services.AddSingleton(di => messageSession);
+
+            var container = configuration(endpointConfiguration);
+
+            messageSession = Endpoint.Start(endpointConfiguration).GetAwaiter().GetResult();
+
+            return container;
         }
     }
 }
