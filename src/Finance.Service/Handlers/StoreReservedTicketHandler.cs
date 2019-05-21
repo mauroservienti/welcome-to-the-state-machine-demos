@@ -2,7 +2,9 @@
 using Finance.Data.Models;
 using Finance.Messages.Commands;
 using NServiceBus;
+using System.Drawing;
 using System.Threading.Tasks;
+using Console = Colorful.Console;
 
 namespace Finance.Service.Handlers
 {
@@ -10,6 +12,8 @@ namespace Finance.Service.Handlers
     {
         public async Task Handle(StoreReservedTicket message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Adding ticket '{message.TicketId}' to reservation '{message.ReservationId}'.", Color.Green);
+
             using (var db = FinanceContext.Create())
             {
                 db.ReservedTickets.Add(new ReservedTicket()
@@ -20,6 +24,8 @@ namespace Finance.Service.Handlers
 
                 await db.SaveChangesAsync();
             }
+
+            Console.WriteLine($"Ticket added.", Color.Green);
         }
     }
 }

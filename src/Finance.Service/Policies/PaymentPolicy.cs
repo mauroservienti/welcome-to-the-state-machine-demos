@@ -5,6 +5,8 @@ using NServiceBus;
 using Reservations.Messages.Events;
 using System;
 using System.Threading.Tasks;
+using System.Drawing;
+using Console = Colorful.Console;
 
 namespace Finance.Service.Policies
 {
@@ -23,6 +25,8 @@ namespace Finance.Service.Policies
 
         public Task Handle(IReservationCheckedout message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Reservation '{message.ReservationId}' checked out.", Color.Green);
+
             Data.ReservationId = message.ReservationId;
             Data.ReservationCheckedOut = true;
 
@@ -31,6 +35,8 @@ namespace Finance.Service.Policies
 
         public Task Handle(InitializeReservationPaymentPolicy message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Adding payment method '{message.PaymentMethodId}' to reservation '{message.ReservationId}'.", Color.Green);
+
             Data.PaymentMethodId = message.PaymentMethodId;
             Data.PaymentMethodSet = true;
 
@@ -39,26 +45,36 @@ namespace Finance.Service.Policies
 
         Task InitiatePaymentProcessing(IMessageHandlerContext context)
         {
-            if(Data.ReservationCheckedOut && Data.PaymentMethodSet)
+            Console.WriteLine($"Going to check if payment processing can be started.", Color.Green);
+
+            if (Data.ReservationCheckedOut && Data.PaymentMethodSet)
             {
+                Console.WriteLine($"All information required to start the payment process have been collected.", Color.Green);
+
                 return context.SendLocal(new InitiatePaymentProcessing()
                 {
                     ReservationId = Data.ReservationId
                 });
             }
 
+            Console.WriteLine($"Not all information are available to start the payment process.", Color.Yellow);
+
             return Task.CompletedTask;
         }
 
-        public Task Handle(InitiatePaymentProcessing message, IMessageHandlerContext context)
+        public async Task Handle(InitiatePaymentProcessing message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Ready to start the payment process for reservation '{message.ReservationId}'. First step is to authorize the credit card with Id '{Data.PaymentMethodId}'.", Color.Green);
+
             Data.CardAuthorizationRequested = true;
 
-            return context.Send(new AuthorizeCard()
+            await context.Send(new AuthorizeCard()
             {
                 ReservationId = Data.ReservationId,
                 PaymentMethodId = Data.PaymentMethodId
             });
+
+            Console.WriteLine($"Authorization requested.", Color.Green);
         }
 
         public Task Handle(CardAuthorizedResponse message, IMessageHandlerContext context)

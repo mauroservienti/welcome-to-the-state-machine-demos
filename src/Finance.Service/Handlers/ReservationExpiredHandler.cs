@@ -4,6 +4,8 @@ using NServiceBus;
 using Reservations.Messages.Events;
 using System.Linq;
 using System.Threading.Tasks;
+using Console = Colorful.Console;
+using System.Drawing;
 
 namespace Finance.Service.Handlers
 {
@@ -11,6 +13,8 @@ namespace Finance.Service.Handlers
     {
         public async Task Handle(IReservationExpired message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Reservation '{message.ReservationId}' expired, releasing reserved tickets.", Color.Green);
+
             using (var db = FinanceContext.Create())
             {
                 //very inefficient way of deleting stuff.
@@ -24,6 +28,8 @@ namespace Finance.Service.Handlers
 
                 await db.SaveChangesAsync();
             }
+
+            Console.WriteLine("Tickets released.", Color.Green);
         }
     }
 }

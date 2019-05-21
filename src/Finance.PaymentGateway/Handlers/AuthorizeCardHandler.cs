@@ -1,7 +1,9 @@
 ﻿using Finance.PaymentGateway.Messages;
 using NServiceBus;
 using System;
+using System.Drawing;
 using System.Threading.Tasks;
+using Console = Colorful.Console;
 
 namespace Finance.PaymentGateway.Handlers
 {
@@ -14,7 +16,8 @@ namespace Finance.PaymentGateway.Handlers
              * information from the Vault and process the
              * authorization request
              */
-            Console.WriteLine("Waiting 5\" before replying...");
+            Console.WriteLine($"Attempt to authorize card with Id '{message.PaymentMethodId}' for reservation '{message.ReservationId}'", Color.Green);
+            Console.WriteLine("Waiting 5\" before replying...", Color.Yellow);
 
             await Task.Delay(5000);
 
@@ -23,7 +26,7 @@ namespace Finance.PaymentGateway.Handlers
                 ReservationId = message.ReservationId
             });
 
-            Console.WriteLine($"Payment for reservation '{message.ReservationId}' authorized.");
+            Console.WriteLine($"Payment for reservation '{message.ReservationId}' authorized.", Color.Green);
         }
     }
 }
