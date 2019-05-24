@@ -31,7 +31,7 @@ namespace Reservations.ViewModelComposition
         public Task Handle(string requestId, dynamic vm, RouteData routeData, HttpRequest request)
         {
             /*
-             * In a production envronment if multiple services are interested in the
+             * In a production environment if multiple services are interested in the
              * same post request the handling logic is much more complex than what we
              * are doing in this demo. In this demo both Finance and Reservations need
              * to handle the POST to /reservations/reserve. The implementation assumes
@@ -49,7 +49,7 @@ namespace Reservations.ViewModelComposition
             };
 
             /*
-             * WARN: destination is hardcoded to reduce demo complexity.
+             * WARN: destination is hard-coded to reduce demo complexity.
              * In a production environment routing should be configured
              * at startup by the host/infrastructure.
              */
