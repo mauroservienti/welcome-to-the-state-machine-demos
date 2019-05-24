@@ -61,7 +61,7 @@ namespace Finance.ViewModelComposition
                     @event.Reservation.TotalPrice = reservationTotalPrice;
 
                     /*
-                     * it's a demo, production code should check for cookie existance
+                     * it's a demo, production code should check for cookie existence
                      */
                     var selectedPaymentMethodId = int.Parse(httpRequest.Cookies["reservation-payment-method-id"]);
                     var paymentMethod = await db.PaymentMethods
