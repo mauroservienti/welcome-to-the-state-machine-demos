@@ -1,5 +1,7 @@
-﻿using NServiceBus;
+﻿using Finance.Messages.Events;
+using NServiceBus;
 using Reservations.Messages.Commands;
+using Reservations.Messages.Events;
 using Reservations.Service.Messages;
 using System;
 using System.Threading.Tasks;
@@ -8,7 +10,7 @@ namespace Reservations.Service.Policies
 {
     class ReservationPolicy : Saga<ReservationPolicy.State>,
         IAmStartedByMessages<ReserveTicket>,
-        IHandleMessages<CheckoutReservation>,
+        IHandleMessages<IReservationCheckedout>,
         IHandleTimeouts<TicketsReservationTimeout>
     {
         public class State : ContainSagaData
@@ -20,7 +22,7 @@ namespace Reservations.Service.Policies
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<State> mapper)
         {
             mapper.ConfigureMapping<ReserveTicket>(m => m.ReservationId).ToSaga(s => s.ReservationId);
-            mapper.ConfigureMapping<CheckoutReservation>(m => m.ReservationId).ToSaga(s => s.ReservationId);
+            mapper.ConfigureMapping<IReservationCheckedout>(m => m.ReservationId).ToSaga(s => s.ReservationId);
         }
 
         public async Task Handle(ReserveTicket message, IMessageHandlerContext context)
@@ -49,22 +51,24 @@ namespace Reservations.Service.Policies
             MarkAsComplete();
         }
 
-        public async Task Handle(CheckoutReservation message, IMessageHandlerContext context)
+        public Task Handle(IReservationCheckedout message, IMessageHandlerContext context)
         {
             /*
-             * The demo ignores that a reservation could be checked out
-             * after the timeout was expired. In such scenario there won't
-             * be any reservation to checkout and the incoming message is 
-             * simply "lost". Reservations Service should have a
-             * IHandleSagaNotFound implementation to catch this scenario
+             * We're done.
              * 
-             * https://docs.particular.net/nservicebus/sagas/saga-not-found
+             * We can debate if this should complete when the payment is authorized
+             * or, as we are doing, a little earlier. By using the IReservationCheckedout
+             * we could fall into the following scenario:
+             * - the reservation is checked out
+             * - the card authorization fails
+             * - the reservation is gone.
+             * 
+             * Poor experience. On the other end by waiting for the card authorization
+             * we're locking tickets for more time. It's a business decision, not a 
+             * technical one.
              */
-            await context.Publish(new ReservationCheckedout()
-            {
-                ReservationId = Data.ReservationId
-            });
             MarkAsComplete();
+            return Task.CompletedTask;
         }
     }
 
