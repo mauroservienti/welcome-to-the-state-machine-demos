@@ -1,6 +1,8 @@
 ﻿using Finance.PaymentGateway.Messages;
 using NServiceBus;
+using System.Drawing;
 using System.Threading.Tasks;
+using Console = Colorful.Console;
 
 namespace Finance.PaymentGateway.Handlers
 {
@@ -14,6 +16,7 @@ namespace Finance.PaymentGateway.Handlers
              * incoming message AuthorizationId.
              */
 
+            Console.WriteLine($"Releasing card authorization '{message.AuthorizationId}' for reservation '{message.ReservationId}'", Color.Green);
             return Task.CompletedTask;
         }
     }

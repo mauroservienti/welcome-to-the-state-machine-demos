@@ -3,7 +3,9 @@ using Reservations.Messages.Commands;
 using Reservations.Messages.Events;
 using Reservations.Service.Messages;
 using System;
+using System.Drawing;
 using System.Threading.Tasks;
+using Console = Colorful.Console;
 
 namespace Reservations.Service.Policies
 {

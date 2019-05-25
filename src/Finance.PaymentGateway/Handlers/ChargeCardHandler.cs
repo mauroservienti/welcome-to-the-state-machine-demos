@@ -1,6 +1,5 @@
 ﻿using Finance.PaymentGateway.Messages;
 using NServiceBus;
-using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using Console = Colorful.Console;
@@ -11,6 +10,7 @@ namespace Finance.PaymentGateway.Handlers
     {
         public async Task Handle(ChargeCard message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Going to charge card for authorization '{message.AuthorizationId}' for reservation '{message.ReservationId}'", Color.Green);
             Console.WriteLine("Waiting 5\" before replying...", Color.Yellow);
 
             await Task.Delay(5000);
