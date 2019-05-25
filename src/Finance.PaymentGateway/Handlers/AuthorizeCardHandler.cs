@@ -1,5 +1,6 @@
 ﻿using Finance.PaymentGateway.Messages;
 using NServiceBus;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using Console = Colorful.Console;
@@ -22,7 +23,8 @@ namespace Finance.PaymentGateway.Handlers
 
             await context.Reply(new CardAuthorizedResponse()
             {
-                ReservationId = message.ReservationId
+                ReservationId = message.ReservationId,
+                TransactionId = Guid.NewGuid()
             });
 
             Console.WriteLine($"Payment for reservation '{message.ReservationId}' authorized.", Color.Green);

@@ -3,6 +3,7 @@ using Finance.PaymentGateway.Messages;
 using Finance.Service.Messages;
 using NServiceBus;
 using Reservations.Messages.Events;
+using Sales.Messages.Events;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -14,7 +15,8 @@ namespace Finance.Service.Policies
         IAmStartedByMessages<IReservationCheckedout>,
         IAmStartedByMessages<InitializeReservationPaymentPolicy>,
         IHandleMessages<InitiatePaymentProcessing>,
-        IHandleMessages<CardAuthorizedResponse>
+        IHandleMessages<CardAuthorizedResponse>,
+        IHandleTimeouts<CardAuthorizationTimeout>
     {
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<PaymentPolicyState> mapper)
         {
@@ -77,7 +79,7 @@ namespace Finance.Service.Policies
             Console.WriteLine($"Authorization requested.", Color.Green);
         }
 
-        public Task Handle(CardAuthorizedResponse message, IMessageHandlerContext context)
+        public async Task Handle(CardAuthorizedResponse message, IMessageHandlerContext context)
         {
             /*
              * Intentionally ignoring authorization failures
@@ -88,10 +90,24 @@ namespace Finance.Service.Policies
              * interaction with Reservation to release tickets.
              */
             Data.CardAuthorized = true;
+            Data.PaymentTransactionId = message.TransactionId;
 
-            return context.Publish(new PaymentAuthorized() { ReservationId = Data.ReservationId });
+            await RequestTimeout<CardAuthorizationTimeout>(context, TimeSpan.FromMinutes(20));
+            await context.Publish(new PaymentAuthorized() { ReservationId = Data.ReservationId });
+        }
+
+        public Task Timeout(CardAuthorizationTimeout state, IMessageHandlerContext context)
+        {
+            MarkAsComplete();
+            return context.Send(new ReleaseCardAuthorization()
+            {
+                TransactionId = Data.PaymentTransactionId,
+                ReservationId = Data.ReservationId
+            });
         }
     }
+
+    class CardAuthorizationTimeout { }
 
     class PaymentPolicyState : ContainSagaData
     {
@@ -102,5 +118,6 @@ namespace Finance.Service.Policies
         public int PaymentMethodId { get; set; }
         public bool ReservationCheckedOut { get; set; }
         public bool PaymentMethodSet { get; set; }
+        public Guid PaymentTransactionId { get; set; }
     }
 }

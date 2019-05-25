@@ -19,6 +19,7 @@
     <ProjectReference Include="..\Finance.PaymentGateway.Messages\Finance.PaymentGateway.Messages.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
     <ProjectReference Include="..\Reservations.Messages.Events\Reservations.Messages.Events.csproj" />
+    <ProjectReference Include="..\Sales.Messages.Events\Sales.Messages.Events.csproj" />
   </ItemGroup>
 
 </Project>
