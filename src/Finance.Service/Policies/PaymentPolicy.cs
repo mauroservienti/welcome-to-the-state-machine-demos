@@ -84,6 +84,7 @@ namespace Finance.Service.Policies
 
         public async Task Handle(CardAuthorizedResponse message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Card authorized.", Color.Green);
             /*
              * Intentionally ignoring authorization failures
              * --------------------------------------------------
@@ -97,10 +98,14 @@ namespace Finance.Service.Policies
 
             await RequestTimeout<CardAuthorizationTimeout>(context, TimeSpan.FromMinutes(20));
             await context.Publish(new PaymentAuthorized() { ReservationId = Data.ReservationId });
+
+            Console.WriteLine($"CardAuthorizationTimeout set, and PaymentAutorized published.", Color.Green);
         }
 
         public Task Timeout(CardAuthorizationTimeout state, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Card Authorization timed out, going to release money.", Color.Green);
+
             MarkAsComplete();
             return context.Send(new ReleaseCardAuthorization()
             {
@@ -111,6 +116,8 @@ namespace Finance.Service.Policies
 
         public Task Handle(IOrderCreated message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Order '{message.OrderId}' for reservation '{message.ReservationId}' created, going to confirm card payment.", Color.Green);
+
             Data.OrderId = message.OrderId;
             return context.Send(new ChargeCard()
             {
@@ -121,6 +128,8 @@ namespace Finance.Service.Policies
 
         public Task Handle(CardChargedResponse message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Card charged, I'm done. Publishing PaymentSucceeded event.", Color.Green);
+
             MarkAsComplete();
             return context.Publish(new PaymentSucceeded()
             {

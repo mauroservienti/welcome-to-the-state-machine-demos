@@ -3,8 +3,11 @@ using Reservations.Messages.Events;
 using Sales.Data;
 using Sales.Data.Models;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using Console = Colorful.Console;
+
 
 namespace Sales.Service.Handlers
 {
@@ -12,6 +15,7 @@ namespace Sales.Service.Handlers
     {
         public async Task Handle(IReservationCheckedout message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Ready to create order for reservation '{message.ReservationId}'.", Color.Green);
             using (var db = SalesContext.Create())
             {
                 var order = new Order
@@ -46,6 +50,8 @@ namespace Sales.Service.Handlers
 
                 db.Orders.Add(order);
                 await db.SaveChangesAsync();
+
+                Console.WriteLine($"Order '{order.Id}' created, IOrderCreated event published.", Color.Green);
             }
         }
     }

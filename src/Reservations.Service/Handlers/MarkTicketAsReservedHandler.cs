@@ -4,7 +4,9 @@ using Reservations.Data;
 using Reservations.Data.Models;
 using Reservations.Service.Messages;
 using System.Linq;
+using System.Drawing;
 using System.Threading.Tasks;
+using Console = Colorful.Console;
 
 namespace Reservations.Service.Handlers
 {
@@ -12,6 +14,8 @@ namespace Reservations.Service.Handlers
     {
         public async Task Handle(MarkTicketAsReserved message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Going to mark ticket '{message.TicketId}' as reserved.", Color.Green);
+            
             using (var db = ReservationsContext.Create())
             {
                 var reservation = await db.Reservations
@@ -35,6 +39,8 @@ namespace Reservations.Service.Handlers
                 });
 
                 await db.SaveChangesAsync();
+
+                Console.WriteLine($"Ticket '{message.TicketId}' reserved to reservation '{message.ReservationId}'.", Color.Green);
             }
         }
     }

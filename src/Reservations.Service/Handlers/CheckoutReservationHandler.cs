@@ -4,7 +4,9 @@ using Reservations.Data;
 using Reservations.Messages.Commands;
 using Reservations.Service.Messages;
 using System.Linq;
+using System.Drawing;
 using System.Threading.Tasks;
+using Console = Colorful.Console;
 
 namespace Reservations.Service.Handlers
 {
@@ -12,6 +14,8 @@ namespace Reservations.Service.Handlers
     {
         public async Task Handle(CheckoutReservation message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Going to check-out reservation '{message.ReservationId}'.", Color.Green);
+
             using (var db = ReservationsContext.Create())
             {
                 var reservation = await db.Reservations
@@ -35,6 +39,8 @@ namespace Reservations.Service.Handlers
 
                 db.Reservations.Remove(reservation);
                 await db.SaveChangesAsync();
+
+                Console.WriteLine($"ReservationCheckedout event published and reservation removed from db.", Color.Green);
             }
         }
     }

@@ -2,6 +2,8 @@
 using Sales.Messages.Events;
 using System;
 using System.Threading.Tasks;
+using System.Drawing;
+using Console = Colorful.Console;
 
 namespace Sales.Service.Policies
 {
@@ -20,6 +22,7 @@ namespace Sales.Service.Policies
 
         public Task Handle(IOrderCreated message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Order policy for order '{message.OrderId}' started.", Color.Green);
             /*
              * We have really nothing to do here we just
              * keep this alive for the life-cycle of the

@@ -3,7 +3,9 @@ using Reservations.Messages.Commands;
 using Reservations.Messages.Events;
 using Reservations.Service.Messages;
 using System;
+using System.Drawing;
 using System.Threading.Tasks;
+using Console = Colorful.Console;
 
 namespace Reservations.Service.Policies
 {
@@ -26,6 +28,8 @@ namespace Reservations.Service.Policies
 
         public async Task Handle(ReserveTicket message, IMessageHandlerContext context)
         {
+            Console.WriteLine($"Adding ticket '{message.TicketId}' to reservation '{message.ReservationId}'.", Color.Green);
+
             Data.ReservationId = message.ReservationId;
 
             await context.SendLocal(new MarkTicketAsReserved()
@@ -34,20 +38,27 @@ namespace Reservations.Service.Policies
                 TicketId = message.TicketId
             });
 
+            Console.WriteLine($"MarkTicketAsReserved request sent.", Color.Green);
+            
             if (!Data.CountdownStarted)
             {
                 await RequestTimeout<TicketsReservationTimeout>(context, TimeSpan.FromMinutes(5));
                 Data.CountdownStarted = true;
+                
+                Console.WriteLine($"TicketsReservationTimeout started for reservation '{message.ReservationId}'.", Color.Green);
             }
         }
 
         public async Task Timeout(TicketsReservationTimeout state, IMessageHandlerContext context)
         {
+            Console.WriteLine($"TicketsReservationTimeout expired.", Color.Green);
             await context.Publish(new ReservationExpired()
             {
                 ReservationId = Data.ReservationId
             });
             MarkAsComplete();
+
+            Console.WriteLine($"I'm done. ReservationExpired event published.", Color.Green);
         }
 
         public Task Handle(IReservationCheckedout message, IMessageHandlerContext context)
@@ -66,6 +77,8 @@ namespace Reservations.Service.Policies
              * we're locking tickets for more time. It's a business decision, not a 
              * technical one.
              */
+
+            Console.WriteLine($"IReservationCheckedout, I'm done.", Color.Green);
             MarkAsComplete();
             return Task.CompletedTask;
         }
