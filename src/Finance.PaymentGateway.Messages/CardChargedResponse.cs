@@ -2,9 +2,8 @@
 
 namespace Finance.PaymentGateway.Messages
 {
-    public class ReleaseCardAuthorization
+    public class CardChargedResponse
     {
         public Guid ReservationId { get; set; }
-        public Guid AuthorizationId { get; set; }
     }
 }

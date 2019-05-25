@@ -11,7 +11,7 @@ namespace Finance.PaymentGateway.Handlers
             /*
              * contact the credit card provider and release
              * the authorized transaction identified by the
-             * incoming message TransactionId.
+             * incoming message AuthorizationId.
              */
 
             return Task.CompletedTask;

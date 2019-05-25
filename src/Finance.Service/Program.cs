@@ -17,6 +17,7 @@ namespace Finance.Service
             {
                 routing.RouteToEndpoint(typeof(AuthorizeCard), "Finance.PaymentGateway");
                 routing.RouteToEndpoint(typeof(ReleaseCardAuthorization), "Finance.PaymentGateway");
+                routing.RouteToEndpoint(typeof(ChargeCard), "Finance.PaymentGateway");
             });
 
             var endpointInstance = await Endpoint.Start(config);

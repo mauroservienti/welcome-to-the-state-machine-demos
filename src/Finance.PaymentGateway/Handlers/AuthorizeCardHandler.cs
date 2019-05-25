@@ -24,7 +24,7 @@ namespace Finance.PaymentGateway.Handlers
             await context.Reply(new CardAuthorizedResponse()
             {
                 ReservationId = message.ReservationId,
-                TransactionId = Guid.NewGuid()
+                AuthorizationId = Guid.NewGuid()
             });
 
             Console.WriteLine($"Payment for reservation '{message.ReservationId}' authorized.", Color.Green);

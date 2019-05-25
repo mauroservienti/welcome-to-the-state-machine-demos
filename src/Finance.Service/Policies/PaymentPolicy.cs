@@ -16,13 +16,16 @@ namespace Finance.Service.Policies
         IAmStartedByMessages<InitializeReservationPaymentPolicy>,
         IHandleMessages<InitiatePaymentProcessing>,
         IHandleMessages<CardAuthorizedResponse>,
-        IHandleTimeouts<CardAuthorizationTimeout>
+        IHandleTimeouts<CardAuthorizationTimeout>,
+        IHandleMessages<IOrderCreated>,
+        IHandleMessages<CardChargedResponse>
     {
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<PaymentPolicyState> mapper)
         {
             mapper.ConfigureMapping<IReservationCheckedout>(m => m.ReservationId).ToSaga(s => s.ReservationId);
             mapper.ConfigureMapping<InitializeReservationPaymentPolicy>(m => m.ReservationId).ToSaga(s => s.ReservationId);
             mapper.ConfigureMapping<InitiatePaymentProcessing>(m => m.ReservationId).ToSaga(s => s.ReservationId);
+            mapper.ConfigureMapping<IOrderCreated>(m => m.ReservationId).ToSaga(s => s.ReservationId);
         }
 
         public Task Handle(IReservationCheckedout message, IMessageHandlerContext context)
@@ -90,7 +93,7 @@ namespace Finance.Service.Policies
              * interaction with Reservation to release tickets.
              */
             Data.CardAuthorized = true;
-            Data.PaymentTransactionId = message.TransactionId;
+            Data.PaymentAuthorizationId = message.AuthorizationId;
 
             await RequestTimeout<CardAuthorizationTimeout>(context, TimeSpan.FromMinutes(20));
             await context.Publish(new PaymentAuthorized() { ReservationId = Data.ReservationId });
@@ -101,7 +104,27 @@ namespace Finance.Service.Policies
             MarkAsComplete();
             return context.Send(new ReleaseCardAuthorization()
             {
-                TransactionId = Data.PaymentTransactionId,
+                AuthorizationId = Data.PaymentAuthorizationId,
+                ReservationId = Data.ReservationId
+            });
+        }
+
+        public Task Handle(IOrderCreated message, IMessageHandlerContext context)
+        {
+            Data.OrderId = message.OrderId;
+            return context.Send(new ChargeCard()
+            {
+                AuthorizationId = Data.PaymentAuthorizationId,
+                ReservationId = Data.ReservationId
+            });
+        }
+
+        public Task Handle(CardChargedResponse message, IMessageHandlerContext context)
+        {
+            MarkAsComplete();
+            return context.Publish(new PaymentSucceeded()
+            {
+                OrderId = Data.OrderId,
                 ReservationId = Data.ReservationId
             });
         }
@@ -118,6 +141,7 @@ namespace Finance.Service.Policies
         public int PaymentMethodId { get; set; }
         public bool ReservationCheckedOut { get; set; }
         public bool PaymentMethodSet { get; set; }
-        public Guid PaymentTransactionId { get; set; }
+        public Guid PaymentAuthorizationId { get; set; }
+        public Guid OrderId { get; set; }
     }
 }
