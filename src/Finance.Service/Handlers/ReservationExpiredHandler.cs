@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using NServiceBus;
 using Reservations.Messages.Events;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Console = Colorful.Console;
-using System.Drawing;
 
 namespace Finance.Service.Handlers
 {

@@ -1,5 +1,4 @@
-﻿using Finance.Messages.Events;
-using NServiceBus;
+﻿using NServiceBus;
 using Reservations.Messages.Commands;
 using Reservations.Messages.Events;
 using Reservations.Service.Messages;

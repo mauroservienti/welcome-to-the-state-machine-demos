@@ -3,9 +3,7 @@ using Reservations.Messages.Events;
 using Sales.Data;
 using Sales.Data.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sales.Service.Handlers

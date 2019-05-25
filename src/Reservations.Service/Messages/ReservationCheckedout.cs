@@ -1,6 +1,5 @@
 ﻿using Reservations.Messages.Events;
 using System;
-using System.Collections.Generic;
 
 namespace Reservations.Service.Messages
 {

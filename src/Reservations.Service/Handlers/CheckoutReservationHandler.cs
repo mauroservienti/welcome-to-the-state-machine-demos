@@ -3,7 +3,6 @@ using NServiceBus;
 using Reservations.Data;
 using Reservations.Messages.Commands;
 using Reservations.Service.Messages;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 

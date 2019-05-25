@@ -4,8 +4,8 @@ using Finance.Service.Messages;
 using NServiceBus;
 using Reservations.Messages.Events;
 using System;
-using System.Threading.Tasks;
 using System.Drawing;
+using System.Threading.Tasks;
 using Console = Colorful.Console;
 
 namespace Finance.Service.Policies

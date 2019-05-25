@@ -1,6 +1,5 @@
 ﻿using Finance.PaymentGateway.Messages;
 using NServiceBus;
-using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using Console = Colorful.Console;
