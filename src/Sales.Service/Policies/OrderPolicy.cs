@@ -20,7 +20,14 @@ namespace Sales.Service.Policies
 
         public Task Handle(IOrderCreated message, IMessageHandlerContext context)
         {
-            throw new NotImplementedException();
+            /*
+             * We have really nothing to do here we just
+             * keep this alive for the life-cycle of the
+             * order, this is it.
+             */
+            Data.OrderId = message.OrderId;
+
+            return Task.CompletedTask;
         }
     }
 }
