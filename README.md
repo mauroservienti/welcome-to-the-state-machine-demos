@@ -1,6 +1,15 @@
 # Welcome to the (state) machine - Demos
 
-A microservices powered tickets booking system - based on SOA principles.
+A tickets booking system - based on SOA principles.
+
+This demo aims to demonstrate how to use sagas to overcome the architectural limitations of Process Managers in distributed systems. This is the support demo of my [Welcome to the (state) machine](https://milestone.topics.it/talks/welcome-to-the-state-machine.html) talk.
+
+The demo assumes some knowledge of what `service boundaries` are and what's the role `ViewModel Composition` in SOA based systems. I recommend you watch the following 2 talks, by [@adamralph](https://twitter.com/adamralph) and [@mauroservienti](https://twitter.com/mauroservienti) (myself), to find out more about how to figure out your service boundaries, and how to deal with UI/ViewModel aspects in a microservices/SOA system without reintroducing coupling by doing request/response between the services.
+
+- [Finding your service boundaries - a practical guide](https://www.youtube.com/watch?v=tVnIUZbsxWI)
+- [All Our Aggregates Are Wrong](https://www.youtube.com/watch?v=KkzvQSuYd5I)
+
+An exhaustive dissertation about `ViewModel Composition` is available on my blog in the [ViewModel Composition series](https://milestone.topics.it/categories/view-model-composition).
 
 ## How to get the sample working locally
 
@@ -35,12 +44,12 @@ NOTE: On a clean machine do not install latest version, as of this writing 13.1,
 
 To simplify `LocalDB` instance setup 2 PowerShell scripts, in the [scripts](scripts) folder, are provided for your convenience. Both need to be run from an elevated PowerShell console.
 
-- Run `Setup-Databases.ps1`, with elevation, to create the `LocalDB` instance and all the required databases
-- Run `Teardown-Databases.ps1`, with elevation, to drop all the databases and delete the `LocalDB` instance
+- Run `Setup-LocalDB-Instance.ps1`, with elevation, to create the `LocalDB` instance and all the required databases
+- Run `Teardown-LocalDB-Instance.ps1`, with elevation, to drop all the databases and delete the `LocalDB` instance
 
-The created `LocalDB` instance is named `(localdb)\all-our-aggregates-are-wrong`.
+The created `LocalDB` instance is named `(localdb)\welcome-to-the-state-machine`. To only recreate databases run the `Recreate-Databases.ps1`, with elevation, against an already created `LocalDB` instance.
 
-NOTE: If you receive errors regarding "Microsoft ODBC Driver", you can work around these by connecting to the `(localdb)\(localdb)\microservices-done-right` database using, for example, Visual Studio or SQL Managerment Studio, and running the SQL contained in the `.sql` file (`Setup-Databases.sql` or `Teardown-Databases.sql`) corresponding to the `.ps1` file which raised the error.
+NOTE: If you receive errors regarding "Microsoft ODBC Driver", you can work around these by connecting to the `(localdb)\welcome-to-the-state-machine` database using, for example, Visual Studio or SQL Managerment Studio, and running the SQL contained in the `.sql` file (`Setup-Databases.sql` or `Teardown-Databases.sql`) corresponding to the `.ps1` file which raised the error.
 
 NOTE: In case the database setup script fails with a "sqllocaldb command not found" error it is possible to install `LocalDb` as a standalone package by downloading it separately at [https://www.microsoft.com/en-us/download/details.aspx?id=29062](https://www.microsoft.com/en-us/download/details.aspx?id=29062)
 
@@ -50,12 +59,18 @@ Solutions is configured to use the [SwitchStartupProject](https://marketplace.vi
 
 Ensure the following projects are set as startup projects:
 
--- to be defined
+- `Webapp`
+- `Reservations.Service`
+- `Finance.Service`
 
 ## NServiceBus configuration
 
-This sample has no [NServiceBus](https://particular.net/nservicebus) related pre-requisites as it's configured to use the new [Learning Transport](https://docs.particular.net/nservicebus/learning-transport/) and [Learning Persistence](https://docs.particular.net/nservicebus/learning-persistence/) explicitly designed for short term learning and experimentation purposes.
+This sample has no [NServiceBus](https://particular.net/nservicebus) related pre-requisites as it's configured to use [Learning Transport](https://docs.particular.net/nservicebus/learning-transport/) and [Learning Persistence](https://docs.particular.net/nservicebus/learning-persistence/), both explicitly designed for short term learning and experimentation purposes.
 
 They should also not be used for longer-term development, i.e. the same transport and persistence used in production should be used in development and debug scenarios. Select a production [transport](https://docs.particular.net/transports/) and [persistence](https://docs.particular.net/persistence/) before developing features. 
 
-NOTE: Do not use the learning transport or learning persistence to perform any kind of performance analysis.
+> NOTE: Do not use the learning transport or learning persistence to perform any kind of performance analysis.
+
+### Disclaimer
+
+This demo is built using [NServiceBus Sagas](https://docs.particular.net/nservicebus/sagas/), I work for [Particular Software](https://particular.net/), the makers of NServiceBus.

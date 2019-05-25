@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to the (state) Machine</h1>
+    Select available tickets to start the purchase process.
+</div>
+
+<ul>
+    @foreach (dynamic ticket in Model.AvailableTickets)
+    {
+        <li>
+            <form action="/reservations/reserve/@ticket.TicketId" method="post">
+                @ticket.TicketDescription @if (ticket.TicketPrice == 0)
+                {
+                    <span>Free</span>
+                }
+                else
+                {
+                    <span>$@ticket.TicketPrice</span>
+                }
+
+                <br />
+
+                @if (ticket.TicketsLeft == 0)
+                {
+                    <span>Sold out!</span>
+                }
+                else if (ticket.TicketsLeft == 1)
+                {
+                    <span>There is @ticket.TicketsLeft ticket left.</span>
+                }
+                else
+                {
+                    <span>There are @ticket.TicketsLeft tickets left.</span>
+                }
+
+                <br />
+                <button>Reserve a seat</button>
+            </form>
+        </li>
+    }
+</ul>

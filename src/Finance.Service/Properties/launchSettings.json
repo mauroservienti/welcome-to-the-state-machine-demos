@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Finance.Service": {
+      "commandName": "Project"
+    }
+  }
+}

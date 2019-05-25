@@ -1,0 +1,25 @@
+{
+  "Version": 3,
+  "ListAllProjects": false,
+  "MultiProjectConfigurations": {
+    "Demo": {
+      "Projects": {
+        "website": {},
+        "Reservations.Service": {},
+        "Finance.Service": {},
+        "Finance.PaymentGateway": {},
+        "Sales.Service": {}
+      }
+    },
+    "Demo (Platform)": {
+      "Projects": {
+        "website": {},
+        "Reservations.Service": {},
+        "Finance.Service": {},
+        "Finance.PaymentGateway": {},
+        "Sales.Service": {},
+        "PlatformLauncher": {}
+      }
+    }
+  }
+}

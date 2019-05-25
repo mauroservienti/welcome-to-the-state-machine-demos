@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Your reservations : review";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Review your reservation before checkout</h1>
+</div>
+
+@if (Model.Reservation == null)
+{
+    <span>No reservations found.</span>
+}
+else
+{
+    <ul>
+        @foreach (dynamic reservedTicket in Model.Reservation.ReservedTickets)
+        {
+            <li>
+                @reservedTicket.TicketDescription<br />
+                @if (reservedTicket.TicketPrice == 0)
+                {
+                    <span>@reservedTicket.Quantity, Free</span>
+                }
+                else
+                {
+                    <span>@reservedTicket.Quantity x @reservedTicket.TicketPrice, @reservedTicket.TotalPrice</span>
+                }
+            </li>
+        }
+    </ul>
+
+    <div>
+        Total due: @Model.Reservation.TotalPrice
+    </div>
+
+    <div>
+        Selected Payment Method: @Model.PaymentMethod.Description
+    </div>
+
+    <form action="/reservations/checkout" method="post">
+        <button type="submit">Checkout!</button>
+    </form>
+}

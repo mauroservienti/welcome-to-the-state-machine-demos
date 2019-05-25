@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Colorful.Console" Version="1.2.9" />
+    <PackageReference Include="NServiceBus" Version="7.1.8" />
+    <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Finance.Data\Finance.Data.csproj" />
+    <ProjectReference Include="..\Finance.Messages.Commands\Finance.Messages.Commands.csproj" />
+    <ProjectReference Include="..\Finance.Messages.Events\Finance.Messages.Events.csproj" />
+    <ProjectReference Include="..\Finance.PaymentGateway.Messages\Finance.PaymentGateway.Messages.csproj" />
+    <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
+    <ProjectReference Include="..\Reservations.Messages.Events\Reservations.Messages.Events.csproj" />
+    <ProjectReference Include="..\Sales.Messages.Events\Sales.Messages.Events.csproj" />
+  </ItemGroup>
+
+</Project>

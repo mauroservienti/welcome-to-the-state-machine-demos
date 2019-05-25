@@ -5,7 +5,7 @@
 .db/
 .logs/
 
-# Bower components
+# Front-end libs
 **/wwwroot/lib/
 
 # User-specific files

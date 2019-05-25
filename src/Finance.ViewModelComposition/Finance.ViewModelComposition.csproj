@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Include="NServiceBus" Version="7.1.8" />
+    <PackageReference Include="ServiceComposer.AspNetCore" Version="0.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Finance.Data\Finance.Data.csproj" />
+    <ProjectReference Include="..\Finance.Messages.Commands\Finance.Messages.Commands.csproj" />
+    <ProjectReference Include="..\Reservations.ViewModelComposition.Events\Reservations.ViewModelComposition.Events.csproj" />
+    <ProjectReference Include="..\Ticketing.ViewModelComposition.Events\Ticketing.ViewModelComposition.Events.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NServiceBus" Version="7.1.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Finance.Messages.Events\Finance.Messages.Events.csproj" />
+    <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
+    <ProjectReference Include="..\Reservations.Data\Reservations.Data.csproj" />
+    <ProjectReference Include="..\Reservations.Messages.Commands\Reservations.Messages.Commands.csproj" />
+    <ProjectReference Include="..\Reservations.Messages.Events\Reservations.Messages.Events.csproj" />
+  </ItemGroup>
+
+</Project>
