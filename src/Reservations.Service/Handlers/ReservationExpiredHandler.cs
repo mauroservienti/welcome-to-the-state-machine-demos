@@ -13,7 +13,7 @@ namespace Reservations.Service.Handlers
     {
         public async Task Handle(IReservationExpired message, IMessageHandlerContext context)
         {
-            Console.WriteLine($"IReservationExpired received for resevation '{message.ReservationId}'.", Color.Green);
+            Console.WriteLine($"IReservationExpired received for reservation'{message.ReservationId}'.", Color.Green);
             
             using (var db = ReservationsContext.Create())
             {
