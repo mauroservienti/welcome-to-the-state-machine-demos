@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NServiceBus" Version="7.1.8" />
+    <PackageReference Include="NServiceBus" Version="7.1.9" />
     <PackageReference Include="Colorful.Console" Version="1.2.9" />
   </ItemGroup>
 
