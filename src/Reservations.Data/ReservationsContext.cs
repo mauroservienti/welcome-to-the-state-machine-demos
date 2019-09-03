@@ -19,6 +19,8 @@ namespace Reservations.Data
 
         public DbSet<AvailableTickets> AvailableTickets { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Data Source=(localdb)\welcome-to-the-state-machine;Initial Catalog=Reservations;Integrated Security=True");
@@ -36,6 +38,16 @@ namespace Reservations.Data
                 .WithMany(r => r.ReservedTickets)
                 .IsRequired()
                 .HasForeignKey(so => so.ReservationId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            var orderedTicketEntity = modelBuilder.Entity<OrderedTicket>();
+            var orderEntity = modelBuilder.Entity<Order>();
+
+            orderedTicketEntity
+                .HasOne<Order>()
+                .WithMany(r => r.OrderedTickets)
+                .IsRequired()
+                .HasForeignKey(so => so.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);

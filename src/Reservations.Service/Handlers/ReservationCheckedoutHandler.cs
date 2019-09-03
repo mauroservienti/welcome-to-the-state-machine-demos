@@ -1,7 +1,7 @@
 ﻿using NServiceBus;
 using Reservations.Messages.Events;
-using Sales.Data;
-using Sales.Data.Models;
+using Reservations.Data;
+using Reservations.Data.Models;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -9,14 +9,26 @@ using System.Threading.Tasks;
 using Console = Colorful.Console;
 
 
-namespace Sales.Service.Handlers
+namespace Reservations.Service.Handlers
 {
     class ReservationCheckedoutHandler : IHandleMessages<IReservationCheckedout>
     {
         public async Task Handle(IReservationCheckedout message, IMessageHandlerContext context)
         {
+            /*
+             * Creation of an order is not a Reservations responsibility.
+             * It's probably much more a Sales responsibility, in which case
+             * having this handler here is a clear boundaries violation.
+             * The only reason to keep it here is that an Order does nothing
+             * in this demo. Its creation completes the payment process and
+             * nothing else. It made little sense to increase even more the
+             * complexity of the demo, creating a Sales endpoint just for the
+             * purpose of hosting this message handler. If Sales had more
+             * responsibilities in the demo it would have deserved its own
+             * endpoint.
+             */
             Console.WriteLine($"Ready to create order for reservation '{message.ReservationId}'.", Color.Green);
-            using (var db = SalesContext.Create())
+            using (var db = ReservationsContext.Create())
             {
                 var order = new Order
                 {

@@ -1,7 +1,7 @@
-﻿using Sales.Messages.Events;
+﻿using Reservations.Messages.Events;
 using System;
 
-namespace Sales.Service.Messages
+namespace Reservations.Service.Messages
 {
     class OrderCreated : IOrderCreated
     {

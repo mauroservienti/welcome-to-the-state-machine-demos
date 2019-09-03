@@ -12,7 +12,3 @@ GO
 IF  NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'Reservations')
 CREATE DATABASE [Reservations]
 GO
-
-IF  NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'Sales')
-CREATE DATABASE [Sales]
-GO

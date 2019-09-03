@@ -3,7 +3,6 @@ using Finance.PaymentGateway.Messages;
 using Finance.Service.Messages;
 using NServiceBus;
 using Reservations.Messages.Events;
-using Sales.Messages.Events;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
