@@ -85,6 +85,7 @@ namespace Finance.Service.Policies
         public async Task Handle(CardAuthorizedResponse message, IMessageHandlerContext context)
         {
             Console.WriteLine($"Card authorized.", Color.Green);
+
             /*
              * Intentionally ignoring authorization failures
              * --------------------------------------------------
@@ -92,6 +93,8 @@ namespace Finance.Service.Policies
              * authorization never fails. To handle such scenario
              * a couple more messages are needed and one more
              * interaction with Reservation to release tickets.
+             * Or a timeout in Reservation to handle payment
+             * missing events.
              */
             Data.CardAuthorized = true;
             Data.PaymentAuthorizationId = message.AuthorizationId;
