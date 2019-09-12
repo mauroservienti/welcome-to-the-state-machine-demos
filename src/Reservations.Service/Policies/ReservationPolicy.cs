@@ -11,13 +11,11 @@ namespace Reservations.Service.Policies
 {
     class ReservationPolicy : Saga<ReservationPolicy.State>,
         IAmStartedByMessages<ReserveTicket>,
-        IHandleMessages<IReservationCheckedout>,
-        IHandleTimeouts<TicketsReservationTimeout>
+        IHandleMessages<IReservationCheckedout>
     {
         public class State : ContainSagaData
         {
             public Guid ReservationId { get; set; }
-            public bool CountdownStarted { get; set; }
         }
 
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<State> mapper)
@@ -32,6 +30,16 @@ namespace Reservations.Service.Policies
 
             Data.ReservationId = message.ReservationId;
 
+            /*
+             * Tickets are reserved indefinitely. Usually tickets booking websites
+             * Allow people to reserve a ticket, or keep it in the shopping cart for
+             * a fixed amount of time, e.g. 10 minutes. After 10 minutes if tickets
+             * are not purchased they are automatically released back to the pool
+             * of available tickets. This can be easily achieved using a timeout in
+             * this reservation saga. The timeout should be kicked of once the first
+             * time a ticket is reserved. If the timeout expires and the reservation
+             * is still existing all reserved tickets can be released.
+             */
             await context.SendLocal(new MarkTicketAsReserved()
             {
                 ReservationId = message.ReservationId,
@@ -39,26 +47,6 @@ namespace Reservations.Service.Policies
             });
 
             Console.WriteLine($"MarkTicketAsReserved request sent.", Color.Green);
-            
-            if (!Data.CountdownStarted)
-            {
-                await RequestTimeout<TicketsReservationTimeout>(context, TimeSpan.FromMinutes(5));
-                Data.CountdownStarted = true;
-                
-                Console.WriteLine($"TicketsReservationTimeout started for reservation '{message.ReservationId}'.", Color.Green);
-            }
-        }
-
-        public async Task Timeout(TicketsReservationTimeout state, IMessageHandlerContext context)
-        {
-            Console.WriteLine($"TicketsReservationTimeout expired.", Color.Green);
-            await context.Publish(new ReservationExpired()
-            {
-                ReservationId = Data.ReservationId
-            });
-            MarkAsComplete();
-
-            Console.WriteLine($"I'm done. ReservationExpired event published.", Color.Green);
         }
 
         public Task Handle(IReservationCheckedout message, IMessageHandlerContext context)
@@ -82,10 +70,5 @@ namespace Reservations.Service.Policies
             MarkAsComplete();
             return Task.CompletedTask;
         }
-    }
-
-    class TicketsReservationTimeout
-    {
-
     }
 }

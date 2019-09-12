@@ -24,8 +24,11 @@ namespace Reservations.Service.Handlers
                     .SingleOrDefaultAsync();
 
                 /*
-                 * The demo ignores that a reservation could be checked out
-                 * after the timeout is expired. In such scenario there won't
+                 * In case reservations expires the demo ignores that.
+                 * A description of reservations expiration can be found
+                 * in the ReservationsPolicy class.
+                 * A reservation could be checked out after the Reservation
+                 * expiration timeout is expired. In such scenario there won't
                  * be any reservation to checkout and the incoming message is 
                  * simply "lost", or leads to a failure.
                  */

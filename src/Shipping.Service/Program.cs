@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Sales.Service
+namespace Shipping.Service
 {
     class Program
     {

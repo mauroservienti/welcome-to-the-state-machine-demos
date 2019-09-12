@@ -37,6 +37,10 @@ else
         Selected Payment Method: @Model.PaymentMethod.Description
     </div>
 
+    <div>
+        Selected Delivery Option: @Model.DeliveryOption.Description
+    </div>
+
     <form action="/reservations/checkout" method="post">
         <button type="submit">Checkout!</button>
     </form>

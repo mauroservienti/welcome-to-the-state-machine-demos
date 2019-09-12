@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Sales.Service": {
+    "Finance.Service": {
       "commandName": "Project"
     }
   }

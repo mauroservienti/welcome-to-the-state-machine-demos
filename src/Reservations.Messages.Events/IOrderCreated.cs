@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sales.Messages.Events
+namespace Reservations.Messages.Events
 {
     public interface IOrderCreated
     {
