@@ -1,14 +1,17 @@
 USE [master]
 GO
 
-IF  NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'Ticketing')
-CREATE DATABASE [Ticketing]
+:setvar DatabaseName "Ticketing"
+IF  NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'$(DatabaseName)')
+CREATE DATABASE [N'$(DatabaseName)'] ON ( NAME = N'$(DatabaseName)', FILENAME = N'$(UserPath)\$(DatabaseName).mdf' )
 GO
 
-IF  NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'Finance')
-CREATE DATABASE [Finance]
+:setvar DatabaseName "Finance"
+IF  NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'$(DatabaseName)')
+CREATE DATABASE [N'$(DatabaseName)'] ON ( NAME = N'$(DatabaseName)', FILENAME = N'$(UserPath)\$(DatabaseName).mdf' )
 GO
 
-IF  NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'Reservations')
-CREATE DATABASE [Reservations]
+:setvar DatabaseName "Reservations"
+IF  NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'$(DatabaseName)')
+CREATE DATABASE [N'$(DatabaseName)'] ON ( NAME = N'$(DatabaseName)', FILENAME = N'$(UserPath)\$(DatabaseName).mdf' )
 GO
