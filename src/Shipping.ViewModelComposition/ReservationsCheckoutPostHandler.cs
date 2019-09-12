@@ -1,12 +1,13 @@
-﻿using Finance.Messages.Commands;
+﻿using Shipping.Messages.Commands;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using NServiceBus;
 using ServiceComposer.AspNetCore;
 using System;
 using System.Threading.Tasks;
+using Shipping.Data;
 
-namespace Finance.ViewModelComposition
+namespace Shipping.ViewModelComposition
 {
     class ReservationsCheckoutPostHandler : IHandleRequests
     {
@@ -42,10 +43,10 @@ namespace Finance.ViewModelComposition
              * More information: https://milestone.topics.it/2019/05/02/safety-first.html
              */
 
-            var message = new InitializeReservationPaymentPolicy()
+            var message = new InitializeReservationShippingPolicy()
             {
                 ReservationId = new Guid(request.Cookies["reservation-id"]),
-                PaymentMethodId = int.Parse(request.Cookies["reservation-payment-method-id"])
+                DeliveryOption = (DeliveryOptions)Enum.Parse(typeof(DeliveryOptions), request.Cookies["reservation-delivery-option-id"])
             };
 
             /*
@@ -53,7 +54,7 @@ namespace Finance.ViewModelComposition
              * In a production environment routing should be configured
              * at startup by the host/infrastructure.
              */
-            return messageSession.Send("Finance.Service", message);
+            return messageSession.Send("Shipping.Service", message);
         }
     }
 }

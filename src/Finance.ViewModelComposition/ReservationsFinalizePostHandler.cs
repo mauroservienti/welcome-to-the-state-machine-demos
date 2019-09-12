@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Finance.ViewModelComposition
 {
-    class SelectPaymentMethodPostHandler : IHandleRequests
+    class ReservationsFinalizePostHandler : IHandleRequests
     {
         public bool Matches(RouteData routeData, string httpVerb, HttpRequest request)
         {
@@ -13,8 +13,8 @@ namespace Finance.ViewModelComposition
             var action = (string)routeData.Values["action"];
 
             return HttpMethods.IsPost(httpVerb)
-                   && controller.ToLowerInvariant() == "finance"
-                   && action.ToLowerInvariant() == "selectpaymentmethod";
+                   && controller.ToLowerInvariant() == "reservations"
+                   && action.ToLowerInvariant() == "finalize";
         }
 
         public Task Handle(string requestId, dynamic vm, RouteData routeData, HttpRequest request)

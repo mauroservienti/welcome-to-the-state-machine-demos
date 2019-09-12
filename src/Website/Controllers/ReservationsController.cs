@@ -26,9 +26,9 @@ namespace Website.Controllers
         }
 
         [HttpPost]
-        public IActionResult Confirm()
+        public IActionResult Finalize()
         {
-            return RedirectToAction("CheckedOut");
+            return RedirectToAction("Review");
         }
 
         [HttpPost]
@@ -39,10 +39,6 @@ namespace Website.Controllers
 
         public IActionResult CheckedOut()
         {
-            //we should delete the reservation cookie and the 
-            //payment-id one so to let infrastructure create
-            //a new reservation
-
             return View();
         }
     }

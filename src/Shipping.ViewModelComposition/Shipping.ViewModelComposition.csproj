@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Reservations.ViewModelComposition.Events\Reservations.ViewModelComposition.Events.csproj" />
     <ProjectReference Include="..\Shipping.Data\Shipping.Data.csproj" />
+    <ProjectReference Include="..\Shipping.Messages.Commands\Shipping.Messages.Commands.csproj" />
   </ItemGroup>
 
 </Project>

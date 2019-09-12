@@ -16,6 +16,7 @@
     <ProjectReference Include="..\Finance.Messages.Events\Finance.Messages.Events.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
     <ProjectReference Include="..\Reservations.Messages.Events\Reservations.Messages.Events.csproj" />
+    <ProjectReference Include="..\Shipping.Messages.Commands\Shipping.Messages.Commands.csproj" />
     <ProjectReference Include="..\Shipping.Messages.Events\Shipping.Messages.Events.csproj" />
   </ItemGroup>
 
