@@ -7,8 +7,7 @@
         "website": {},
         "Reservations.Service": {},
         "Finance.Service": {},
-        "Finance.PaymentGateway": {},
-        "Sales.Service": {}
+        "Finance.PaymentGateway": {}
       }
     },
     "Demo (Platform)": {
@@ -17,7 +16,6 @@
         "Reservations.Service": {},
         "Finance.Service": {},
         "Finance.PaymentGateway": {},
-        "Sales.Service": {},
         "PlatformLauncher": {}
       }
     }
