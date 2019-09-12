@@ -59,9 +59,11 @@ Solutions is configured to use the [SwitchStartupProject](https://marketplace.vi
 
 Ensure the following projects are set as startup projects:
 
-- `Webapp`
+- `website": {},
 - `Reservations.Service`
 - `Finance.Service`
+- `Finance.PaymentGateway`
+- `Shipping.Service`
 
 ## NServiceBus configuration
 
