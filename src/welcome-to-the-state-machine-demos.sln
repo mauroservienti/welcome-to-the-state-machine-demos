@@ -59,6 +59,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipping.Service", "Shippin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipping.Messages.Events", "Shipping.Messages.Events\Shipping.Messages.Events.csproj", "{47A17268-A0B1-48C9-93FD-7DB05D472FA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipping.ViewModelComposition", "Shipping.ViewModelComposition\Shipping.ViewModelComposition.csproj", "{6C0D692C-4CD3-4C3F-83FF-476F59CCEE17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipping.Data", "Shipping.Data\Shipping.Data.csproj", "{94A40C0D-51B6-4CA7-842D-52136B21C4F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,6 +161,14 @@ Global
 		{47A17268-A0B1-48C9-93FD-7DB05D472FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47A17268-A0B1-48C9-93FD-7DB05D472FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47A17268-A0B1-48C9-93FD-7DB05D472FA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C0D692C-4CD3-4C3F-83FF-476F59CCEE17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C0D692C-4CD3-4C3F-83FF-476F59CCEE17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C0D692C-4CD3-4C3F-83FF-476F59CCEE17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C0D692C-4CD3-4C3F-83FF-476F59CCEE17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94A40C0D-51B6-4CA7-842D-52136B21C4F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94A40C0D-51B6-4CA7-842D-52136B21C4F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94A40C0D-51B6-4CA7-842D-52136B21C4F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94A40C0D-51B6-4CA7-842D-52136B21C4F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -183,6 +195,8 @@ Global
 		{165570E1-C782-47F4-AA6D-00546682AC13} = {1D1589DF-CEB2-4B1C-B8BF-A86CD7A7B4A6}
 		{5F07AED9-3A33-4A54-80D1-A0164C886EF8} = {1EFDBC80-D09C-4B00-9984-6E21E6422D74}
 		{47A17268-A0B1-48C9-93FD-7DB05D472FA4} = {1EFDBC80-D09C-4B00-9984-6E21E6422D74}
+		{6C0D692C-4CD3-4C3F-83FF-476F59CCEE17} = {1EFDBC80-D09C-4B00-9984-6E21E6422D74}
+		{94A40C0D-51B6-4CA7-842D-52136B21C4F1} = {1EFDBC80-D09C-4B00-9984-6E21E6422D74}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1D0078F3-1E11-49D2-AE2C-6EA7D61E1B06}

@@ -26,6 +26,12 @@ namespace Website.Controllers
         }
 
         [HttpPost]
+        public IActionResult Confirm()
+        {
+            return RedirectToAction("CheckedOut");
+        }
+
+        [HttpPost]
         public IActionResult Checkout()
         {
             return RedirectToAction("CheckedOut");
