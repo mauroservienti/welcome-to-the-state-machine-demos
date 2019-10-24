@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
 using Reservations.ViewModelComposition.Middlewares;
 using ServiceComposer.AspNetCore;
 using ServiceComposer.AspNetCore.Mvc;
-using System;
 
 namespace Website
 {
@@ -13,7 +11,7 @@ namespace Website
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddControllersWithViews();
 
             services.AddViewModelComposition(options =>
             {
