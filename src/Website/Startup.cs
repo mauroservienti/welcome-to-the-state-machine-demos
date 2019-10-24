@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
 using Reservations.ViewModelComposition.Middlewares;
@@ -12,7 +11,7 @@ namespace Website
 {
     public class Startup
     {
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
 
@@ -21,10 +20,9 @@ namespace Website
                 options.AddMvcSupport();
             });
 
-            return services.AddNServiceBus("Webapp", config => 
+            services.AddNServiceBus("Webapp", endpointConfiguration =>
             {
-                config.ApplyCommonConfiguration(asSendOnly: true);
-                return config.UseMicrosoftDependencyInjection(services);
+                endpointConfiguration.ApplyCommonConfiguration(asSendOnly: true);
             });
         }
 
