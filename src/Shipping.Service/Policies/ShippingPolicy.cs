@@ -67,6 +67,7 @@ namespace Shipping.Service.Policies
                          * gateway to request a pick-up. And finally
                          * publish the OrderShipped event.
                          */
+                        Console.WriteLine($"Order '{Data.OrderId}' will be shipped ASAP...", Color.Green);
                         return context.Publish(new OrderShipped()
                         {
                             ShipmentId = Guid.NewGuid(),
@@ -89,6 +90,7 @@ namespace Shipping.Service.Policies
                          * In this demo this message is never handled and
                          * goes nowhere.
                          */
+                        Console.WriteLine($"Order '{Data.OrderId}' will be shipped at the venue...", Color.Green);
                         return context.SendLocal(new StoreReservationForVenueDelivery()
                         {
                             OrderId = Data.OrderId,
@@ -96,6 +98,8 @@ namespace Shipping.Service.Policies
                         });
                 }
             }
+
+            Console.WriteLine($"Shipment for Order '{Data.OrderId}' cannot be started yet...", Color.Yellow);
 
             return Task.CompletedTask;
         }
