@@ -1,0 +1,4 @@
+{
+	"name": ".NET Core 3.0 development environment",
+	"dockerFile": "Dockerfile"
+}
