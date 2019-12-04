@@ -6,6 +6,7 @@ using Shipping.Data;
 using System;
 using System.Dynamic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Shipping.ViewModelComposition
 {
@@ -24,7 +25,7 @@ namespace Shipping.ViewModelComposition
 
         public void Subscribe(IPublishCompositionEvents publisher)
         {
-            publisher.Subscribe<ReservedTicketsLoaded>(async (requestId, viewModel, @event, douteData, httpRequest) =>
+            publisher.Subscribe<ReservedTicketsLoaded>((requestId, viewModel, @event, douteData, httpRequest) =>
             {
                 /*
                  * it's a demo, production code should check for cookie existence
@@ -44,6 +45,8 @@ namespace Shipping.ViewModelComposition
                 }
 
                 viewModel.DeliveryOption = deliveryOption;
+
+                return Task.CompletedTask;
             });
         }
     }
