@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="NServiceBus" Version="7.2.0" />
-    <PackageReference Include="Colorful.Console" Version="1.2.9" />
+    <PackageReference Include="Colorful.Console" Version="1.2.10" />
   </ItemGroup>
 
   <ItemGroup>
