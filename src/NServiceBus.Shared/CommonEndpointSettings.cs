@@ -23,6 +23,9 @@ namespace NServiceBus
                 frequency: TimeSpan.FromSeconds(10),
                 timeToLive: TimeSpan.FromSeconds(5));
 
+            endpointConfiguration.AuditSagaStateChanges(
+                serviceControlQueue: "Particular.ServiceControl");
+
             var messageConventions = endpointConfiguration.Conventions();
             messageConventions.DefiningMessagesAs(t => t.Namespace != null && t.Namespace.EndsWith(".Messages"));
             messageConventions.DefiningEventsAs(t => t.Namespace != null && t.Namespace.EndsWith(".Messages.Events"));
