@@ -17,11 +17,6 @@ namespace Website
             {
                 options.AddMvcSupport();
             });
-
-            services.AddNServiceBus("Webapp", endpointConfiguration =>
-            {
-                endpointConfiguration.ApplyCommonConfiguration(asSendOnly: true);
-            });
         }
 
         public void Configure(IApplicationBuilder app)
