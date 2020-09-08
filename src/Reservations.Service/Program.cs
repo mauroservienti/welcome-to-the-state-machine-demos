@@ -1,25 +1,37 @@
 ﻿using NServiceBus;
 using System;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Reservations.Service
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             var serviceName = typeof(Program).Namespace;
             Console.Title = serviceName;
 
-            var config = new EndpointConfiguration(serviceName);
-            config.ApplyCommonConfiguration();
+            CreateHostBuilder(serviceName, args).Build().Run();
+        }
 
-            var endpointInstance = await Endpoint.Start(config);
+        static IHostBuilder CreateHostBuilder(string serviceName, string[] args)
+        {
+            var builder = Host.CreateDefaultBuilder(args)
+                .ConfigureLogging((ctx, logging) =>
+                {
+                    logging.AddConfiguration(ctx.Configuration.GetSection("Logging"));
+                    logging.AddConsole();
+                })
+                .UseNServiceBus(ctx =>
+                {
+                    var config = new EndpointConfiguration(serviceName);
+                    config.ApplyCommonConfiguration();
 
-            Console.WriteLine($"{serviceName} started. Press any key to stop.");
-            Console.ReadLine();
+                    return config;
+                });
 
-            await endpointInstance.Stop();
+            return builder;
         }
     }
 }
