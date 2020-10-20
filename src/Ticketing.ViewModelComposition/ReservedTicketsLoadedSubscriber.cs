@@ -1,28 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Reservations.ViewModelComposition.Events;
 using ServiceComposer.AspNetCore;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ticketing.ViewModelComposition
 {
-    class ReservedTicketsLoadedSubscriber : ISubscribeToCompositionEvents
+    class ReservedTicketsLoadedSubscriber : ICompositionEventsSubscriber
     {
-        public bool Matches(RouteData routeData, string httpVerb, HttpRequest request)
+        [HttpGet("/reservations")]
+        [HttpGet("/reservations/review")]
+        public void Subscribe(ICompositionEventsPublisher publisher)
         {
-            var controller = (string)routeData.Values["controller"];
-            var action = (string)routeData.Values["action"];
-
-            return HttpMethods.IsGet(httpVerb)
-                   && controller.ToLowerInvariant() == "reservations"
-                   && (action.ToLowerInvariant() == "index" || action.ToLowerInvariant() == "review")
-                   && !routeData.Values.ContainsKey("id");
-        }
-
-        public void Subscribe(IPublishCompositionEvents publisher)
-        {
-            publisher.Subscribe<ReservedTicketsLoaded>(async (requestId, pageViewModel, @event, rd, req) =>
+            publisher.Subscribe<ReservedTicketsLoaded>(async (@event, request) =>
             {
                 var ids = @event.ReservedTicketsViewModel.Keys.ToArray();
                 using (var db = Data.TicketingContext.Create())
