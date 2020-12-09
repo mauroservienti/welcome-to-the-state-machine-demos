@@ -5,25 +5,16 @@ using Reservations.ViewModelComposition.Events;
 using ServiceComposer.AspNetCore;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Finance.ViewModelComposition
 {
-    class ReservedTicketsLoadedSubscriber : ISubscribeToCompositionEvents
+    class ReservedTicketsLoadedSubscriber : ICompositionEventsSubscriber
     {
-        public bool Matches(RouteData routeData, string httpVerb, HttpRequest request)
+        [HttpGet("/reservations/index")]
+        public void Subscribe(ICompositionEventsPublisher publisher)
         {
-            var controller = (string)routeData.Values["controller"];
-            var action = (string)routeData.Values["action"];
-
-            return HttpMethods.IsGet(httpVerb)
-                   && controller.ToLowerInvariant() == "reservations"
-                   && action.ToLowerInvariant() == "index"
-                   && !routeData.Values.ContainsKey("id");
-        }
-
-        public void Subscribe(IPublishCompositionEvents publisher)
-        {
-            publisher.Subscribe<ReservedTicketsLoaded>(async (requestId, pageViewModel, @event, rd, req) =>
+            publisher.Subscribe<ReservedTicketsLoaded>(async (@event, request) =>
             {
                 var ids = @event.ReservedTicketsViewModel.Keys.ToArray();
                 using (var db = Data.FinanceContext.Create())
@@ -34,13 +25,13 @@ namespace Finance.ViewModelComposition
 
                     Guid reservationId = @event.Reservation.Id;
                     var reservedTickets =
-                    (
-                        await db.ReservedTickets
-                            .Where(r => r.ReservationId == reservationId)
-                            .ToListAsync()
-                    )
-                    .GroupBy(t => t.TicketId)
-                    .ToDictionary(g=>g.Key, g=>g.Count());
+                        (
+                            await db.ReservedTickets
+                                .Where(r => r.ReservationId == reservationId)
+                                .ToListAsync()
+                        )
+                        .GroupBy(t => t.TicketId)
+                        .ToDictionary(g=>g.Key, g=>g.Count());
 
                     var reservationTotalPrice = 0m;
 
@@ -61,6 +52,7 @@ namespace Finance.ViewModelComposition
                     @event.Reservation.TotalPrice = reservationTotalPrice;
 
                     var allPaymentMethods = await db.PaymentMethods.ToListAsync();
+                    var pageViewModel = request.GetComposedResponseModel();
                     pageViewModel.PaymentMethods = allPaymentMethods;
                 }
             });

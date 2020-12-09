@@ -5,25 +5,16 @@ using Reservations.ViewModelComposition.Events;
 using ServiceComposer.AspNetCore;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Finance.ViewModelComposition
 {
-    class ReviewReservedTicketsLoadedSubscriber : ISubscribeToCompositionEvents
+    class ReviewReservedTicketsLoadedSubscriber : ICompositionEventsSubscriber
     {
-        public bool Matches(RouteData routeData, string httpVerb, HttpRequest request)
+        [HttpGet("/reservations/review")]
+        public void Subscribe(ICompositionEventsPublisher publisher)
         {
-            var controller = (string)routeData.Values["controller"];
-            var action = (string)routeData.Values["action"];
-
-            return HttpMethods.IsGet(httpVerb)
-                   && controller.ToLowerInvariant() == "reservations"
-                   && action.ToLowerInvariant() == "review"
-                   && !routeData.Values.ContainsKey("id");
-        }
-
-        public void Subscribe(IPublishCompositionEvents publisher)
-        {
-            publisher.Subscribe<ReservedTicketsLoaded>(async (requestId, viewModel, @event, douteData, httpRequest) =>
+            publisher.Subscribe<ReservedTicketsLoaded>(async (@event,request) =>
             {
                 var ids = @event.ReservedTicketsViewModel.Keys.ToArray();
                 using (var db = Data.FinanceContext.Create())
@@ -63,10 +54,12 @@ namespace Finance.ViewModelComposition
                     /*
                      * it's a demo, production code should check for cookie existence
                      */
-                    var selectedPaymentMethodId = int.Parse(httpRequest.Cookies["reservation-payment-method-id"]);
+                    var selectedPaymentMethodId = int.Parse(request.Cookies["reservation-payment-method-id"]);
                     var paymentMethod = await db.PaymentMethods
                         .Where(pm => pm.Id == selectedPaymentMethodId)
                         .SingleAsync();
+
+                    var viewModel = request.GetComposedResponseModel();
                     viewModel.PaymentMethod = paymentMethod;
                 }
             });

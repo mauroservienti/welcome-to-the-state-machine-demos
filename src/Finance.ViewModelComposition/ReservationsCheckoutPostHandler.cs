@@ -1,14 +1,14 @@
 ﻿using Finance.Messages.Commands;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using NServiceBus;
 using ServiceComposer.AspNetCore;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Finance.ViewModelComposition
 {
-    class ReservationsCheckoutPostHandler : IHandleRequests
+    class ReservationsCheckoutPostHandler : ICompositionRequestsHandler
     {
         private readonly IMessageSession messageSession;
 
@@ -17,17 +17,8 @@ namespace Finance.ViewModelComposition
             this.messageSession = messageSession;
         }
 
-        public bool Matches(RouteData routeData, string httpVerb, HttpRequest request)
-        {
-            var controller = (string)routeData.Values["controller"];
-            var action = (string)routeData.Values["action"];
-
-            return HttpMethods.IsPost(httpVerb)
-                   && controller.ToLowerInvariant() == "reservations"
-                   && action.ToLowerInvariant() == "checkout";
-        }
-
-        public Task Handle(string requestId, dynamic vm, RouteData routeData, HttpRequest request)
+        [HttpPost("/reservations/checkout")]
+        public Task Handle(HttpRequest request)
         {
             /*
              * In a production environment if multiple services are interested in the
@@ -38,7 +29,7 @@ namespace Finance.ViewModelComposition
              * production environment. In order to make this part safe, which is not the
              * scope of this demo asynchronous messaging should be introduced earlier in
              * the processing pipeline.
-             * 
+             *
              * More information: https://milestone.topics.it/2019/05/02/safety-first.html
              */
 
