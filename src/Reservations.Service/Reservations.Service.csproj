@@ -9,7 +9,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="NServiceBus" Version="7.4.4" />
     <PackageReference Include="NServiceBus.Extensions.Hosting" Version="1.1.0" />
-    <PackageReference Include="Colorful.Console" Version="1.2.11" />
+    <PackageReference Include="Colorful.Console" Version="1.2.15" />
     <PackageReference Include="NServiceBus.SagaAudit" Version="3.0.1" />
   </ItemGroup>
 
