@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using NServiceBus;
 using Reservations.ViewModelComposition.Middlewares;
 using ServiceComposer.AspNetCore;
-using ServiceComposer.AspNetCore.Mvc;
 
 namespace Website
 {
@@ -11,11 +9,13 @@ namespace Website
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRouting();
             services.AddControllersWithViews();
 
             services.AddViewModelComposition(options =>
             {
-                options.AddMvcSupport();
+                options.EnableCompositionOverControllers(true);
+                options.EnableWriteSupport();
             });
         }
 
@@ -32,6 +32,7 @@ namespace Website
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapCompositionHandlers();
             });
         }
     }

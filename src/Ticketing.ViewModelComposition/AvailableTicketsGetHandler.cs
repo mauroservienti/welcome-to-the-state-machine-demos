@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using ServiceComposer.AspNetCore;
 using System.Collections.Generic;
@@ -7,29 +6,21 @@ using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Ticketing.ViewModelComposition.Events;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ticketing.ViewModelComposition
 {
-    class AvailableTicketsGetHandler : IHandleRequests
+    class AvailableTicketsGetHandler : ICompositionRequestsHandler
     {
-        public bool Matches(RouteData routeData, string httpVerb, HttpRequest request)
-        {
-            var controller = (string)routeData.Values["controller"];
-            var action = (string)routeData.Values["action"];
-
-            return HttpMethods.IsGet(httpVerb)
-                   && controller.ToLowerInvariant() == "home"
-                   && action.ToLowerInvariant() == "index"
-                   && !routeData.Values.ContainsKey("id");
-        }
-
-        public async Task Handle(string requestId, dynamic vm, RouteData routeData, HttpRequest request)
+        [HttpGet("/")]
+        public async Task Handle(HttpRequest request)
         {
             using (var db = Data.TicketingContext.Create())
             {
                 var allTickets = await db.Tickets.ToListAsync();
                 var availableProductsViewModel = MapToDictionary(allTickets);
 
+                var vm = request.GetComposedResponseModel();
                 await vm.RaiseEvent(new AvailableTicketsLoaded()
                 {
                     AvailableTicketsViewModel = availableProductsViewModel
