@@ -7,7 +7,7 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />
     <PackageReference Include="ServiceComposer.AspNetCore" Version="1.7.1" />
     <PackageReference Include="ServiceComposer.AspNetCore.Mvc" Version="1.0.0" />
