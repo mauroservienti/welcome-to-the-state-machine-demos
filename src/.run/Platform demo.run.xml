@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Platform demo" type="CompoundRunConfigurationType">
+    <toRun name="Finance.PaymentGateway" type="LaunchSettings" />
+    <toRun name="Finance.Service" type="LaunchSettings" />
+    <toRun name="PlatformLauncher" type="LaunchSettings" />
+    <toRun name="Reservations.Service" type="LaunchSettings" />
+    <toRun name="Shipping.Service" type="LaunchSettings" />
+    <toRun name="Website" type="LaunchSettings" />
+    <method v="2" />
+  </configuration>
+</component>
