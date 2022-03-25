@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 
 namespace NServiceBus
 {
@@ -9,8 +10,6 @@ namespace NServiceBus
             endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
             var transportConfig = endpointConfiguration.UseTransport<LearningTransport>();
             configureRouting?.Invoke(transportConfig.Routing());
-
-            endpointConfiguration.UsePersistence<LearningPersistence>();
 
             endpointConfiguration.AuditProcessedMessagesTo("audit");
             endpointConfiguration.SendFailedMessagesTo("error");
@@ -32,6 +31,19 @@ namespace NServiceBus
             metrics.SendMetricDataToServiceControl(
                 serviceControlMetricsAddress: "Particular.Monitoring",
                 interval: TimeSpan.FromSeconds(5));
+        }
+
+        public static void ApplyCommonConfigurationWithPersistence(this EndpointConfiguration endpointConfiguration, string sqlPersistenceConnectionString, Action<RoutingSettings<LearningTransport>> configureRouting = null)
+        {
+            ApplyCommonConfiguration(endpointConfiguration, configureRouting);
+
+            endpointConfiguration.EnableInstallers();
+
+            var persistence = endpointConfiguration.UsePersistence<SqlPersistence>();
+            persistence.SqlDialect<SqlDialect.MsSqlServer>();
+            persistence.ConnectionBuilder(() => new SqlConnection(sqlPersistenceConnectionString));
+
+            endpointConfiguration.EnableOutbox();
         }
     }
 }

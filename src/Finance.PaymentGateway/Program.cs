@@ -12,7 +12,7 @@ namespace Finance.PaymentGateway
             Console.Title = serviceName;
 
             var config = new EndpointConfiguration(serviceName);
-            config.ApplyCommonConfiguration();
+            config.ApplyCommonConfigurationWithPersistence(@"Data Source=(localdb)\welcome-to-the-state-machine;Initial Catalog=Finance;Integrated Security=True");
 
             var endpointInstance = await Endpoint.Start(config);
 

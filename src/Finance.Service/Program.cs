@@ -27,7 +27,7 @@ namespace Finance.Service
                 .UseNServiceBus(ctx =>
                 {
                     var config = new EndpointConfiguration(serviceName);
-                    config.ApplyCommonConfiguration(configureRouting: routing =>
+                    config.ApplyCommonConfigurationWithPersistence(@"Data Source=(localdb)\welcome-to-the-state-machine;Initial Catalog=Finance;Integrated Security=True", configureRouting: routing =>
                     {
                         routing.RouteToEndpoint(typeof(AuthorizeCard), "Finance.PaymentGateway");
                         routing.RouteToEndpoint(typeof(ReleaseCardAuthorization), "Finance.PaymentGateway");

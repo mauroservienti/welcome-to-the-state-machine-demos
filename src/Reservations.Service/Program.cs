@@ -26,7 +26,7 @@ namespace Reservations.Service
                 .UseNServiceBus(ctx =>
                 {
                     var config = new EndpointConfiguration(serviceName);
-                    config.ApplyCommonConfiguration();
+                    config.ApplyCommonConfigurationWithPersistence(@"Data Source=(localdb)\welcome-to-the-state-machine;Initial Catalog=Reservations;Integrated Security=True");
 
                     return config;
                 });
