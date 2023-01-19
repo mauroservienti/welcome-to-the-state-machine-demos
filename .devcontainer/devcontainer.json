@@ -1,10 +1,10 @@
 {
-	"name": ".NET Core 3.0 development environment",
-	"dockerFile": "Dockerfile",
-	"settings": { 
-		"terminal.integrated.shell.linux": "/bin/bash"
-	},
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "demo",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"forwardPorts": [ 15672 ],
 	"extensions": [
-		"ms-vscode.csharp"
+		"ms-dotnettools.csharp",
+		"ckolkman.vscode-postgres"
 	]
 }
