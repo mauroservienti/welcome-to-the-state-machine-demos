@@ -4,10 +4,10 @@ A tickets booking system - based on SOA principles.
 
 This demo aims to demonstrate how to use sagas to overcome the architectural limitations of Process Managers in distributed systems. This is the support demo of my [Welcome to the (state) machine](https://milestone.topics.it/talks/welcome-to-the-state-machine.html) talk.
 
-The demo assumes some knowledge of what `service boundaries` are and what's the role `ViewModel Composition` in SOA based systems. I recommend you watch the following 2 talks, by [@adamralph](https://twitter.com/adamralph) and [@mauroservienti](https://twitter.com/mauroservienti) (myself), to find out more about how to figure out your service boundaries, and how to deal with UI/ViewModel aspects in a microservices/SOA system without reintroducing coupling by doing request/response between the services.
+The demo assumes some knowledge of what `service boundaries` are and what the role of `ViewModel Composition` is in SOA based systems. I recommend watching the following 2 talks to find out more about figuring out service boundaries, and how to deal with UI/ViewModel aspects in a microservices/SOA system without reintroducing coupling by doing request/response between the services.
 
-- [Finding your service boundaries - a practical guide](https://www.youtube.com/watch?v=tVnIUZbsxWI)
-- [All Our Aggregates Are Wrong](https://www.youtube.com/watch?v=KkzvQSuYd5I)
+- [Finding your service boundaries - a practical guide](https://www.youtube.com/watch?v=tVnIUZbsxWI) by [@adamralph](https://twitter.com/adamralph)
+- [All Our Aggregates Are Wrong](https://www.youtube.com/watch?v=KkzvQSuYd5I) by [@mauroservienti](https://twitter.com/mauroservienti) (myself)
 
 An exhaustive dissertation about `ViewModel Composition` is available on my blog in the [ViewModel Composition series](https://milestone.topics.it/categories/view-model-composition).
 
@@ -15,7 +15,7 @@ An exhaustive dissertation about `ViewModel Composition` is available on my blog
 
 ### Get a copy of this repository
 
-Clone or download this repo locally on your machine. If you're downloading a zip copy of the repo please be sure the zip file is unblocked before decompressing it. In order to unblock the zip file:
+Clone or download this repo locally on your machine. On Windows, if you're downloading a zip copy of the repo please be sure the zip file is unblocked before decompressing it. In order to unblock the zip file:
 
 - Right-click on the downloaded copy
 - Choose Property
@@ -26,14 +26,8 @@ Clone or download this repo locally on your machine. If you're downloading a zip
 
 In order to run the sample the following machine configuration is required:
 
-- PowerShell execution policy to allow script execution, from an elevated PowerShell run the following:
-
-```powershell
-Set-ExecutionPolicy Unrestricted
-```
-
-- Visual Studio 2019 with [.NET 5](https://dotnet.microsoft.com/download/dotnet/5.0) support (Community Edition is supported), available for download at [https://www.visualstudio.com/downloads/](https://www.visualstudio.com/downloads/)
-
+- PowerShell execution policy to allow script execution, from an elevated PowerShell run the following: `Set-ExecutionPolicy Unrestricted`
+- [.NET 7](https://dotnet.microsoft.com/download/dotnet/7.0)
 - A SQL Server edition or the `LocalDb` instance installed by Visual Studio, in case of a clean machine with `LocalDb`only please install:
   - Microsoft ODBC Driver 11 for SQL Server, available for download at [https://www.microsoft.com/en-us/download/details.aspx?id=36434](https://www.microsoft.com/en-us/download/details.aspx?id=36434)
   - Microsoft ODBC Command Line Utilities 11 for SQL Server, available for download at [https://www.microsoft.com/en-us/download/details.aspx?id=36433](https://www.microsoft.com/en-us/download/details.aspx?id=36433)
@@ -55,7 +49,7 @@ NOTE: In case the database setup script fails with a "sqllocaldb command not fou
 
 ## Startup projects
 
-Solutions is configured to use the [SwitchStartupProject](https://marketplace.visualstudio.com/items?itemName=vs-publisher-141975.SwitchStartupProject) Visual Studio Extension to manage startup projects. The extension is not a requirement, it's handy.
+The solution is configured to use the [SwitchStartupProject](https://marketplace.visualstudio.com/items?itemName=vs-publisher-141975.SwitchStartupProject) Visual Studio Extension to manage startup projects. The extension is not a requirement, it's handy.
 
 Ensure the following projects are set as startup projects:
 
