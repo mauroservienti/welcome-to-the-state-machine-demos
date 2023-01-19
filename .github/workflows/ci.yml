@@ -29,4 +29,4 @@ jobs:
             7.0.x
             6.0.x
       - name: Build solution
-        run: dotnet build /src/welcome-to-the-state-machine-demos.sln --configuration Release
+        run: dotnet build "src/welcome-to-the-state-machine-demos.sln" --configuration Release
