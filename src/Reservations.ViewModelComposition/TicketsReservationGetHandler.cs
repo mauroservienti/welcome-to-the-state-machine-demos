@@ -13,7 +13,7 @@ namespace Reservations.ViewModelComposition
 {
     class TicketsReservationGetHandler : ICompositionRequestsHandler
     {
-        [HttpGet("/reservations/index")]
+        [HttpGet("/reservations")]
         [HttpGet("/reservations/review")]
         public async Task Handle(HttpRequest request)
         {
