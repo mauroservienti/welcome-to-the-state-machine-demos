@@ -28,7 +28,7 @@ namespace Finance.Service
                 {
                     const string connectionString = @"Host=localhost;Port=7432;Username=db_user;Password=P@ssw0rd;Database=finance_service_database";
                     var config = new EndpointConfiguration(serviceName);
-                    config.ApplyCommonConfigurationWithPersistence(connectionString, configureRouting: routing =>
+                    config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix:"Finance", configureRouting: routing =>
                     {
                         routing.RouteToEndpoint(typeof(AuthorizeCard), "Finance.PaymentGateway");
                         routing.RouteToEndpoint(typeof(ReleaseCardAuthorization), "Finance.PaymentGateway");

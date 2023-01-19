@@ -27,7 +27,7 @@ namespace Shipping.Service
                 {
                     const string connectionString = @"Host=localhost;Port=10432;Username=db_user;Password=P@ssw0rd;Database=shipping_service_database";
                     var config = new EndpointConfiguration(serviceName);
-                    config.ApplyCommonConfigurationWithPersistence(connectionString);
+                    config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix:"Shipping");
 
                     return config;
                 });

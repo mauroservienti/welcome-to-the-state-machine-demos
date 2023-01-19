@@ -28,12 +28,17 @@ namespace NServiceBus
             messageConventions.DefiningCommandsAs(t => t.Namespace != null && t.Namespace.EndsWith(".Messages.Commands"));
         }
 
-        public static void ApplyCommonConfigurationWithPersistence(this EndpointConfiguration endpointConfiguration, string sqlPersistenceConnectionString, Action<RoutingSettings<RabbitMQTransport>> configureRouting = null)
+        public static void ApplyCommonConfigurationWithPersistence(this EndpointConfiguration endpointConfiguration, string sqlPersistenceConnectionString, string tablePrefix = null, Action<RoutingSettings<RabbitMQTransport>> configureRouting = null)
         {
             ApplyCommonConfiguration(endpointConfiguration, configureRouting);
 
             var persistence = endpointConfiguration.UsePersistence<SqlPersistence>();
             var dialect = persistence.SqlDialect<SqlDialect.PostgreSql>();
+            if (!string.IsNullOrWhiteSpace(tablePrefix))
+            {
+                persistence.TablePrefix(tablePrefix);
+            }
+
             dialect.JsonBParameterModifier(
                 modifier: parameter =>
                 {

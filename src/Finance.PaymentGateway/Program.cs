@@ -13,7 +13,7 @@ namespace Finance.PaymentGateway
 
             const string connectionString = @"Host=localhost;Port=7432;Username=db_user;Password=P@ssw0rd;Database=finance_service_database";
             var config = new EndpointConfiguration(serviceName);
-            config.ApplyCommonConfigurationWithPersistence(connectionString);
+            config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix:"FinPayGate");
             
             var endpointInstance = await Endpoint.Start(config);
 

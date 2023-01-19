@@ -27,7 +27,7 @@ namespace Reservations.Service
                 {
                     const string connectionString = @"Host=localhost;Port=9432;Username=db_user;Password=P@ssw0rd;Database=reservations_service_database";
                     var config = new EndpointConfiguration(serviceName);
-                    config.ApplyCommonConfigurationWithPersistence(connectionString);
+                    config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix: "reservations");
 
                     return config;
                 });
