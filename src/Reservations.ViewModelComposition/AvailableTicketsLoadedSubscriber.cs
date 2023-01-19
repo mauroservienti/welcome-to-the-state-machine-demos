@@ -12,7 +12,7 @@ namespace Reservations.ViewModelComposition
 {
     class AvailableTicketsLoadedSubscriber : ICompositionEventsSubscriber
     {
-        [HttpGet("/home/index")]
+        [HttpGet("/")]
         public void Subscribe(ICompositionEventsPublisher publisher)
         {
             publisher.Subscribe<AvailableTicketsLoaded>(async (@event, request) =>
