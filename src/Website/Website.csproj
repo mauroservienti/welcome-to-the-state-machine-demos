@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Finance.ViewModelComposition\Finance.ViewModelComposition.csproj" />
-    <ProjectReference Include="..\NServiceBus.Shared.Hosting\NServiceBus.Shared.Hosting.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
     <ProjectReference Include="..\Reservations.ViewModelComposition\Reservations.ViewModelComposition.csproj" />
     <ProjectReference Include="..\Shipping.ViewModelComposition\Shipping.ViewModelComposition.csproj" />
