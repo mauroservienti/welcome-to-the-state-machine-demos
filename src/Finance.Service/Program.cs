@@ -26,8 +26,9 @@ namespace Finance.Service
                 })
                 .UseNServiceBus(ctx =>
                 {
+                    const string connectionString = @"Host=localhost;Port=7432;Username=db_user;Password=P@ssw0rd;Database=finance_service_database";
                     var config = new EndpointConfiguration(serviceName);
-                    config.ApplyCommonConfigurationWithPersistence(@"Data Source=(localdb)\welcome-to-the-state-machine;Initial Catalog=Finance.Service;Integrated Security=True", configureRouting: routing =>
+                    config.ApplyCommonConfigurationWithPersistence(connectionString, configureRouting: routing =>
                     {
                         routing.RouteToEndpoint(typeof(AuthorizeCard), "Finance.PaymentGateway");
                         routing.RouteToEndpoint(typeof(ReleaseCardAuthorization), "Finance.PaymentGateway");

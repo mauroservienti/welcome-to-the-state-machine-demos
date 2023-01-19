@@ -25,8 +25,9 @@ namespace Reservations.Service
                 })
                 .UseNServiceBus(ctx =>
                 {
+                    const string connectionString = @"Host=localhost;Port=9432;Username=db_user;Password=P@ssw0rd;Database=reservations_service_database";
                     var config = new EndpointConfiguration(serviceName);
-                    config.ApplyCommonConfigurationWithPersistence(@"Data Source=(localdb)\welcome-to-the-state-machine;Initial Catalog=Reservations.Service;Integrated Security=True");
+                    config.ApplyCommonConfigurationWithPersistence(connectionString);
 
                     return config;
                 });
