@@ -11,61 +11,64 @@ The demo assumes some knowledge of what `service boundaries` are and what the ro
 
 An exhaustive dissertation about `ViewModel Composition` is available on my blog in the [ViewModel Composition series](https://milestone.topics.it/categories/view-model-composition).
 
-## How to get the sample working locally
+## Requirements
 
-### Get a copy of this repository
+The following requirements must be met in order to successfully run the demos:
 
-Clone or download this repo locally on your machine. On Windows, if you're downloading a zip copy of the repo please be sure the zip file is unblocked before decompressing it. In order to unblock the zip file:
+- [Visual Studio Code](https://code.visualstudio.com/) and the [Dev containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
+- [Docker](https://www.docker.com/get-started) must be pre-installed on the machine.
+- The repository `devcontainer` setup requires `docker-compose` to be installed on the machine.
 
-- Right-click on the downloaded copy
-- Choose Property
-- On the Property page tick the unblock checkbox
-- Press OK
+## How to configure Visual Studio Code to run the demos
 
-### Check your machine is correctly configured
+- Clone the repository
+  - On Windows make sure to clone on short path, e.g. `c:\dev`, to avoid any "path too long" error
+- Open one of the demos folder in Visual Studio Code
+- Make sure Docker is running
+  - If you're using Docker for Windows with Hyper-V make sure that the cloned folder, or a parent folder, is mapped in Docker
+- Open the Visual Studio Code command palette (`F1` on all supported operating systems, for more information on VS Code keyboard shortcuts refer to [this page](https://www.arungudelli.com/microsoft/visual-studio-code-keyboard-shortcut-cheat-sheet-windows-mac-linux/))
+- Type `Reopen in Container`, the command palette supports auto-completion, the command should be available by typing `reop`
 
-In order to run the sample the following machine configuration is required:
+Wait for Visual Studio Code Dev containers extension to:
 
-- PowerShell execution policy to allow script execution, from an elevated PowerShell run the following: `Set-ExecutionPolicy Unrestricted`
-- [.NET 7](https://dotnet.microsoft.com/download/dotnet/7.0)
-- A SQL Server edition or the `LocalDb` instance installed by Visual Studio, in case of a clean machine with `LocalDb`only please install:
-  - Microsoft ODBC Driver 11 for SQL Server, available for download at [https://www.microsoft.com/en-us/download/details.aspx?id=36434](https://www.microsoft.com/en-us/download/details.aspx?id=36434)
-  - Microsoft ODBC Command Line Utilities 11 for SQL Server, available for download at [https://www.microsoft.com/en-us/download/details.aspx?id=36433](https://www.microsoft.com/en-us/download/details.aspx?id=36433)
+- download the required container images
+- configure the docker environment
+- configure the remote Visual Studio Code instance with the required extensions
 
-NOTE: On a clean machine do not install latest version, as of this writing 13.1, of Microsoft ODBC Driver and Microsoft ODBC Command Line Utilities as the latter is affected by a bug that prevents the `LocalDb` instance to be accessible at configuration time.
+> Note: no changes will be made to your Visual Studio Code installation, all changes will be applied to the VS Code instance running in the remote container
 
-### Databases setup
+The repository `devcontainer` configuration will:
 
-To simplify `LocalDB` instance setup 2 PowerShell scripts, in the [scripts](scripts) folder, are provided for your convenience. Both need to be run from an elevated PowerShell console.
+- One or more container instances:
+  - One RabbitMQ instance with management plugin support
+  - One .NET enabled container where the repository source code will be mapped
+  - A few PostgreSQL instances
+- Configure the VS Code remote instance with:
+  - The C# extension (`ms-dotnettools.csharp`)
+  - The PostgreSQL Explorer extension (`ckolkman.vscode-postgres`)
 
-- Run `Setup-LocalDB-Instance.ps1`, with elevation, to create the `LocalDB` instance and all the required databases
-- Run `Teardown-LocalDB-Instance.ps1`, with elevation, to drop all the databases and delete the `LocalDB` instance
+Once configuration is completed VS Code will show a new `Ports` tab, in the bottom-docked terminal area. The `Ports` tab will list all the ports exposed by the remote containers.
 
-The created `LocalDB` instance is named `(localdb)\welcome-to-the-state-machine`. To only recreate databases run the `Recreate-Databases.ps1`, with elevation, against an already created `LocalDB` instance.
+## Containers connection information
 
-NOTE: If you receive errors regarding "Microsoft ODBC Driver", you can work around these by connecting to the `(localdb)\welcome-to-the-state-machine` database using, for example, Visual Studio or SQL Managerment Studio, and running the SQL contained in the `Setup-Databases.sql` to manually create databases.
+The default RabbitMQ credentials are:
 
-NOTE: In case the database setup script fails with a "sqllocaldb command not found" error it is possible to install `LocalDb` as a standalone package by downloading it separately at [https://www.microsoft.com/en-us/download/details.aspx?id=29062](https://www.microsoft.com/en-us/download/details.aspx?id=29062)
+- Username: `guest`
+- Password: `guest`
 
-## Startup projects
+The deafult PostgreSQL credentials are:
 
-The solution is configured to use the [SwitchStartupProject](https://marketplace.visualstudio.com/items?itemName=vs-publisher-141975.SwitchStartupProject) Visual Studio Extension to manage startup projects. The extension is not a requirement, it's handy.
+- User: `db_user`
+- Password: `P@ssw0rd`
 
-Ensure the following projects are set as startup projects:
+## How to run the demos
 
-- `Website`
-- `Reservations.Service`
-- `Finance.Service`
-- `Finance.PaymentGateway`
-- `Shipping.Service`
+To execute the demo open the root folder in VS Code, press `F1` and search for `Reopen in container`. Wait for the Dev Container to complete the setup process.
 
-## NServiceBus configuration
+Once the demo content has been reopened in the dev container:
 
-This sample has no [NServiceBus](https://particular.net/nservicebus) related pre-requisites as it's configured to use [Learning Transport](https://docs.particular.net/nservicebus/learning-transport/) and [SQL Persistence](https://docs.particular.net/persistence/sql/).
-
-The Learning Transport is explicitly designed for short term learning and experimentation purposes. It should also not be used for longer-term development, i.e. the same transport and persistence used in production should be used in development and debug scenarios. Select a production [transport](https://docs.particular.net/transports/) and [persistence](https://docs.particular.net/persistence/) before developing features.
-
-> NOTE: Do not use the learning transport or learning persistence to perform any kind of performance analysis.
+1. Press `F1`, search for `Run task`, and execute the desired task to build the solution or to build the solution and deploy the required data
+2. Go to the `Run and Debug` VS Code section to select the desired compund to execute.
 
 ### Disclaimer
 
