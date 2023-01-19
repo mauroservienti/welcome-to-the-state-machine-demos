@@ -14,13 +14,13 @@ namespace NServiceBus
             endpointConfiguration.AuditProcessedMessagesTo("audit");
             endpointConfiguration.SendFailedMessagesTo("error");
 
-            endpointConfiguration.SendHeartbeatTo(
-                serviceControlQueue: "Particular.ServiceControl",
-                frequency: TimeSpan.FromSeconds(10),
-                timeToLive: TimeSpan.FromSeconds(5));
-
-            endpointConfiguration.AuditSagaStateChanges(
-                serviceControlQueue: "Particular.ServiceControl");
+            // endpointConfiguration.SendHeartbeatTo(
+            //     serviceControlQueue: "Particular.ServiceControl",
+            //     frequency: TimeSpan.FromSeconds(10),
+            //     timeToLive: TimeSpan.FromSeconds(5));
+            //
+            // endpointConfiguration.AuditSagaStateChanges(
+            //     serviceControlQueue: "Particular.ServiceControl");
 
             var messageConventions = endpointConfiguration.Conventions();
             messageConventions.DefiningMessagesAs(t => t.Namespace != null && t.Namespace.EndsWith(".Messages"));
