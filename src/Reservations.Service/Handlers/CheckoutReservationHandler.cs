@@ -16,14 +16,13 @@ namespace Reservations.Service.Handlers
         {
             Console.WriteLine($"Going to check-out reservation '{message.ReservationId}'.", Color.Green);
 
-            using (var db = ReservationsContext.Create())
-            {
-                var reservation = await db.Reservations
-                    .Where(r => r.Id == message.ReservationId)
-                    .Include(r => r.ReservedTickets)
-                    .SingleOrDefaultAsync();
+            await using var db = new ReservationsContext();
+            var reservation = await db.Reservations
+                .Where(r => r.Id == message.ReservationId)
+                .Include(r => r.ReservedTickets)
+                .SingleOrDefaultAsync(context.CancellationToken);
 
-                /*
+            /*
                  * In case reservations expires the demo ignores that.
                  * A description of reservations expiration can be found
                  * in the ReservationsPolicy class.
@@ -32,19 +31,18 @@ namespace Reservations.Service.Handlers
                  * be any reservation to checkout and the incoming message is 
                  * simply "lost", or leads to a failure.
                  */
-                await context.Publish(new ReservationCheckedout()
-                {
-                    ReservationId = message.ReservationId,
-                    Tickets = reservation.ReservedTickets
-                        .Select(rt => rt.TicketId)
-                        .ToArray()
-                });
+            await context.Publish(new ReservationCheckedout()
+            {
+                ReservationId = message.ReservationId,
+                Tickets = reservation.ReservedTickets
+                    .Select(rt => rt.TicketId)
+                    .ToArray()
+            });
 
-                db.Reservations.Remove(reservation);
-                await db.SaveChangesAsync();
+            db.Reservations.Remove(reservation);
+            await db.SaveChangesAsync(context.CancellationToken);
 
-                Console.WriteLine($"ReservationCheckedout event published and reservation removed from db.", Color.Green);
-            }
+            Console.WriteLine($"ReservationCheckedout event published and reservation removed from db.", Color.Green);
         }
     }
 }

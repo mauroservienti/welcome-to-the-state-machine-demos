@@ -26,7 +26,7 @@ namespace Reservations.ViewModelComposition
             }
 
             var reservationId = new Guid(request.Cookies["reservation-id"]);
-            await using var db = Data.ReservationsContext.Create();
+            await using var db = new Data.ReservationsContext();
             var reservation = await db.Reservations
                 .Where(r => r.Id == reservationId)
                 .Include(r => r.ReservedTickets)

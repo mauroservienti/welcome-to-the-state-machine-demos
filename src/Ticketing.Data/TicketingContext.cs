@@ -5,16 +5,6 @@ namespace Ticketing.Data
 {
     public class TicketingContext : DbContext
     {
-        public static TicketingContext Create()
-        {
-            var db = new TicketingContext();
-            db.Database.EnsureCreated();
-
-            return db;
-        }
-
-        private TicketingContext() { }
-
         public DbSet<Ticket> Tickets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

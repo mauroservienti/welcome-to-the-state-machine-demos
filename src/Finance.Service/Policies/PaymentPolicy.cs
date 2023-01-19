@@ -21,10 +21,11 @@ namespace Finance.Service.Policies
     {
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<PaymentPolicyState> mapper)
         {
-            mapper.ConfigureMapping<IReservationCheckedout>(m => m.ReservationId).ToSaga(s => s.ReservationId);
-            mapper.ConfigureMapping<InitializeReservationPaymentPolicy>(m => m.ReservationId).ToSaga(s => s.ReservationId);
-            mapper.ConfigureMapping<InitiatePaymentProcessing>(m => m.ReservationId).ToSaga(s => s.ReservationId);
-            mapper.ConfigureMapping<IOrderCreated>(m => m.ReservationId).ToSaga(s => s.ReservationId);
+            mapper.MapSaga(saga => saga.ReservationId)
+                .ToMessage<IReservationCheckedout>(m => m.ReservationId)
+                .ToMessage<InitializeReservationPaymentPolicy>(m => m.ReservationId)
+                .ToMessage<InitiatePaymentProcessing>(m => m.ReservationId)
+                .ToMessage<IOrderCreated>(m => m.ReservationId);
         }
 
         public Task Handle(IReservationCheckedout message, IMessageHandlerContext context)

@@ -28,23 +28,22 @@ namespace Reservations.Service.Handlers
              * endpoint.
              */
             Console.WriteLine($"Ready to create order for reservation '{message.ReservationId}'.", Color.Green);
-            using (var db = ReservationsContext.Create())
+            await using var db = new ReservationsContext();
+            var order = new Order
             {
-                var order = new Order
+                Id = Guid.NewGuid(),
+                ReservationId = message.ReservationId
+            };
+            order.OrderedTickets = message.Tickets
+                .GroupBy(t => t)
+                .Select(g => new OrderedTicket()
                 {
-                    Id = Guid.NewGuid(),
-                    ReservationId = message.ReservationId
-                };
-                order.OrderedTickets = message.Tickets
-                    .GroupBy(t => t)
-                    .Select(g => new OrderedTicket()
-                    {
-                        OrderId = order.Id,
-                        TicketId = g.Key,
-                        Quantity = g.Count(),
-                    }).ToList();
+                    OrderId = order.Id,
+                    TicketId = g.Key,
+                    Quantity = g.Count(),
+                }).ToList();
 
-                /*
+            /*
                  * Demo utilizes LearningTransport and SQL, with no
                  * Outbox configured to simplify the F5 experience.
                  * This, however, means that the Publish operation
@@ -54,17 +53,16 @@ namespace Reservations.Service.Handlers
                  * to fail, but in production Outbox should be used when
                  * using transports with no support for transactions.
                  */
-                await context.Publish(new Messages.OrderCreated()
-                {
-                    OrderId = order.Id,
-                    ReservationId = message.ReservationId
-                });
+            await context.Publish(new Messages.OrderCreated()
+            {
+                OrderId = order.Id,
+                ReservationId = message.ReservationId
+            });
 
-                db.Orders.Add(order);
-                await db.SaveChangesAsync();
+            db.Orders.Add(order);
+            await db.SaveChangesAsync(context.CancellationToken);
 
-                Console.WriteLine($"Order '{order.Id}' created, IOrderCreated event published.", Color.Green);
-            }
+            Console.WriteLine($"Order '{order.Id}' created, IOrderCreated event published.", Color.Green);
         }
     }
 }

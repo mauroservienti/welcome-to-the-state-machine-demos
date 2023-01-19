@@ -20,8 +20,9 @@ namespace Reservations.Service.Policies
 
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<State> mapper)
         {
-            mapper.ConfigureMapping<ReserveTicket>(m => m.ReservationId).ToSaga(s => s.ReservationId);
-            mapper.ConfigureMapping<IReservationCheckedout>(m => m.ReservationId).ToSaga(s => s.ReservationId);
+            mapper.MapSaga(saga => saga.ReservationId)
+                .ToMessage<ReserveTicket>(m => m.ReservationId)
+                .ToMessage<IReservationCheckedout>(m => m.ReservationId);
         }
 
         public async Task Handle(ReserveTicket message, IMessageHandlerContext context)

@@ -14,16 +14,10 @@ namespace Finance.Service.Handlers
         {
             Console.WriteLine($"Adding ticket '{message.TicketId}' to reservation '{message.ReservationId}'.", Color.Green);
 
-            using (var db = FinanceContext.Create())
-            {
-                db.ReservedTickets.Add(new ReservedTicket()
-                {
-                    ReservationId = message.ReservationId,
-                    TicketId = message.TicketId
-                });
+            await using var db = new FinanceContext();
+            db.ReservedTickets.Add(new ReservedTicket() { ReservationId = message.ReservationId, TicketId = message.TicketId });
+            await db.SaveChangesAsync(context.CancellationToken);
 
-                await db.SaveChangesAsync();
-            }
 
             Console.WriteLine($"Ticket added.", Color.Green);
         }

@@ -5,16 +5,6 @@ namespace Reservations.Data
 {
     public class ReservationsContext : DbContext
     {
-        public static ReservationsContext Create()
-        {
-            var db = new ReservationsContext();
-            db.Database.EnsureCreated();
-
-            return db;
-        }
-
-        private ReservationsContext() { }
-
         public DbSet<Reservation> Reservations { get; set; }
 
         public DbSet<AvailableTickets> AvailableTickets { get; set; }

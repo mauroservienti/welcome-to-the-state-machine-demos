@@ -18,9 +18,10 @@ namespace Shipping.Service.Policies
     {
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<ShippingPolicyState> mapper)
         {
-            mapper.ConfigureMapping<InitializeReservationShippingPolicy>(m => m.ReservationId).ToSaga(s => s.ReservationId);
-            mapper.ConfigureMapping<IPaymentSucceeded>(m => m.ReservationId).ToSaga(s => s.ReservationId);
-            mapper.ConfigureMapping<IOrderCreated>(m => m.ReservationId).ToSaga(s => s.ReservationId);
+            mapper.MapSaga(saga => saga.ReservationId)
+                .ToMessage<InitializeReservationShippingPolicy>(m => m.ReservationId)
+                .ToMessage<IPaymentSucceeded>(m => m.ReservationId)
+                .ToMessage<IOrderCreated>(m => m.ReservationId);
         }
 
         public Task Handle(InitializeReservationShippingPolicy message, IMessageHandlerContext context)

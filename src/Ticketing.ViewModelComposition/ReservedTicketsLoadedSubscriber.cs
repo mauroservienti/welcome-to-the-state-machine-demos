@@ -15,16 +15,14 @@ namespace Ticketing.ViewModelComposition
             publisher.Subscribe<ReservedTicketsLoaded>(async (@event, request) =>
             {
                 var ids = @event.ReservedTicketsViewModel.Keys.ToArray();
-                using (var db = Data.TicketingContext.Create())
-                {
-                    var reservedTickets = await db.Tickets
-                        .Where(ticket => ids.Contains(ticket.Id))
-                        .ToListAsync();
+                await using var db = new Data.TicketingContext();
+                var reservedTickets = await db.Tickets
+                    .Where(ticket => ids.Contains(ticket.Id))
+                    .ToListAsync();
 
-                    foreach (var ticket in reservedTickets)
-                    {
-                        @event.ReservedTicketsViewModel[(int)ticket.Id].TicketDescription = ticket.Description;
-                    }
+                foreach (var ticket in reservedTickets)
+                {
+                    @event.ReservedTicketsViewModel[(int)ticket.Id].TicketDescription = ticket.Description;
                 }
             });
         }
