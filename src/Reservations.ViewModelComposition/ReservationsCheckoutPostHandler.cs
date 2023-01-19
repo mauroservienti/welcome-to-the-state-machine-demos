@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using NServiceBus;
 using Reservations.Messages.Commands;
 using ServiceComposer.AspNetCore;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Reservations.ViewModelComposition
 {
-    class ReservationsCheckoutPostHandler : IHandleRequests
+    class ReservationsCheckoutPostHandler : ICompositionRequestsHandler
     {
         private readonly IMessageSession messageSession;
 
@@ -17,20 +17,11 @@ namespace Reservations.ViewModelComposition
             this.messageSession = messageSession;
         }
 
-        public bool Matches(RouteData routeData, string httpVerb, HttpRequest request)
-        {
-            var controller = (string)routeData.Values["controller"];
-            var action = (string)routeData.Values["action"];
-
-            return HttpMethods.IsPost(httpVerb)
-                   && controller.ToLowerInvariant() == "reservations"
-                   && action.ToLowerInvariant() == "checkout";
-        }
-
-        public Task Handle(string requestId, dynamic vm, RouteData routeData, HttpRequest request)
+        [HttpPost("/reservations/checkedout")]
+        public Task Handle(HttpRequest request)
         {
             /*
-             * In a production envronment if multiple services are interested in the
+             * In a production environment if multiple services are interested in the
              * same post request the handling logic is much more complex than what we
              * are doing in this demo. In this demo both Finance and Reservations need
              * to handle the POST to /reservations/checkout. The implementation assumes
@@ -38,7 +29,7 @@ namespace Reservations.ViewModelComposition
              * production environment. In order to make this part safe, which is not the
              * scope of this demo asynchronous messaging should be introduced earlier in
              * the processing pipeline.
-             * 
+             *
              * More information: https://milestone.topics.it/2019/05/02/safety-first.html
              */
 

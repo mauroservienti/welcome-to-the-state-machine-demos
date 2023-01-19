@@ -7,25 +7,16 @@ using System;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Shipping.ViewModelComposition
 {
-    class ReviewReservedTicketsLoadedSubscriber : ISubscribeToCompositionEvents
+    class ReviewReservedTicketsLoadedSubscriber : ICompositionEventsSubscriber
     {
-        public bool Matches(RouteData routeData, string httpVerb, HttpRequest request)
+        [HttpGet("/reservations/review")]
+        public void Subscribe(ICompositionEventsPublisher publisher)
         {
-            var controller = (string)routeData.Values["controller"];
-            var action = (string)routeData.Values["action"];
-
-            return HttpMethods.IsGet(httpVerb)
-                   && controller.ToLowerInvariant() == "reservations"
-                   && action.ToLowerInvariant() == "review"
-                   && !routeData.Values.ContainsKey("id");
-        }
-
-        public void Subscribe(IPublishCompositionEvents publisher)
-        {
-            publisher.Subscribe<ReservedTicketsLoaded>((requestId, viewModel, @event, douteData, httpRequest) =>
+            publisher.Subscribe<ReservedTicketsLoaded>((@event, httpRequest) =>
             {
                 /*
                  * it's a demo, production code should check for cookie existence
@@ -34,16 +25,14 @@ namespace Shipping.ViewModelComposition
                 dynamic deliveryOption = new ExpandoObject();
                 deliveryOption.Id = selectedDeliveryOption;
 
-                switch (selectedDeliveryOption)
+                deliveryOption.Description = selectedDeliveryOption switch
                 {
-                    case DeliveryOptions.ShipAtHome:
-                        deliveryOption.Description = "Ship at Home.";
-                        break;
-                    case DeliveryOptions.CollectAtTheVenue:
-                        deliveryOption.Description = "Collect at the Venue.";
-                        break;
-                }
+                    DeliveryOptions.ShipAtHome => "Ship at Home.",
+                    DeliveryOptions.CollectAtTheVenue => "Collect at the Venue.",
+                    _ => deliveryOption.Description
+                };
 
+                var viewModel = httpRequest.GetComposedResponseModel();
                 viewModel.DeliveryOption = deliveryOption;
 
                 return Task.CompletedTask;
