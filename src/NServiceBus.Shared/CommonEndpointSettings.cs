@@ -7,7 +7,7 @@ namespace NServiceBus
     {
         public static void ApplyCommonConfiguration(this EndpointConfiguration endpointConfiguration, Action<RoutingSettings<LearningTransport>> configureRouting = null)
         {
-            endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
+            endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
             var transportConfig = endpointConfiguration.UseTransport<LearningTransport>();
             configureRouting?.Invoke(transportConfig.Routing());
 
