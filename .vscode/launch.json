@@ -1,0 +1,109 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Finance.PaymentGateway",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/Finance.PaymentGateway/bin/Debug/net7.0/Finance.PaymentGateway.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Finance.PaymentGateway",
+            "stopAtEntry": false,
+            "console": "integratedTerminal",
+        },
+        {
+            "name": "Finance.Service",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/Finance.Service/bin/Debug/net7.0/Finance.Service.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Finance.Service",
+            "stopAtEntry": false,
+            "console": "integratedTerminal",
+        },
+        {
+            "name": "Reservations.Service",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/Reservations.Service/bin/Debug/net7.0/Reservations.Service.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Reservations.Service",
+            "stopAtEntry": false,
+            "console": "integratedTerminal",
+        },
+        {
+            "name": "Shipping.Service",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/Shipping.Service/bin/Debug/net7.0/Shipping.Service.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Shipping.Service",
+            "stopAtEntry": false,
+            "console": "integratedTerminal",
+        },
+        {
+            "name": "Website",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/Website/bin/Debug/net7.0/Website.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Website",
+            "stopAtEntry": false,
+            "console": "integratedTerminal",
+            "launchBrowser": {
+                "enabled": true,
+                "args": "${auto-detect-url}",
+                "windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start ${auto-detect-url}"
+                },
+                "osx": {
+                    "command": "open"
+                },
+                "linux": {
+                    "command": "xdg-open"
+                }
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/src/Website/Views"
+            }
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Demo - (build)",
+            "preLaunchTask": "Build solution",
+            "configurations": [
+                "Finance.PaymentGateway", 
+                "Finance.Service",
+                "Reservations.Service", 
+                "Shipping.Service",
+                "Website"]
+        },
+        {
+            "name": "Demo - (build & deploy data)",
+            "preLaunchTask": "Build & create databases",
+            "configurations": [
+                "Finance.PaymentGateway", 
+                "Finance.Service",
+                "Reservations.Service", 
+                "Shipping.Service",
+                "Website"]
+        },
+        {
+            "name": "Demo - (no build)",
+            "configurations": [
+                "Finance.PaymentGateway", 
+                "Finance.Service",
+                "Reservations.Service", 
+                "Shipping.Service",
+                "Website"]
+        }
+    ]
+}
