@@ -59,6 +59,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipping.Data", "Shipping.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipping.Messages.Commands", "Shipping.Messages.Commands\Shipping.Messages.Commands.csproj", "{3EE401ED-9AE7-4AB5-B017-9CBAE39B1C1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateRequiredDatabases", "CreateRequiredDatabases\CreateRequiredDatabases.csproj", "{0C31BB6B-27BD-4081-AB3F-3096E5CFFAD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,6 +159,10 @@ Global
 		{3EE401ED-9AE7-4AB5-B017-9CBAE39B1C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EE401ED-9AE7-4AB5-B017-9CBAE39B1C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EE401ED-9AE7-4AB5-B017-9CBAE39B1C1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C31BB6B-27BD-4081-AB3F-3096E5CFFAD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C31BB6B-27BD-4081-AB3F-3096E5CFFAD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C31BB6B-27BD-4081-AB3F-3096E5CFFAD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C31BB6B-27BD-4081-AB3F-3096E5CFFAD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
