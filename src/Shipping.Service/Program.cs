@@ -25,8 +25,9 @@ namespace Shipping.Service
                 })
                 .UseNServiceBus(ctx =>
                 {
+                    const string connectionString = @"Host=localhost;Port=10432;Username=db_user;Password=P@ssw0rd;Database=shipping_service_database";
                     var config = new EndpointConfiguration(serviceName);
-                    config.ApplyCommonConfigurationWithPersistence(@"Data Source=(localdb)\welcome-to-the-state-machine;Initial Catalog=Shipping.Service;Integrated Security=True");
+                    config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix:"Shipping");
 
                     return config;
                 });

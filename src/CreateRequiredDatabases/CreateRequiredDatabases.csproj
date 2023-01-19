@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Finance.Data\Finance.Data.csproj" />
+      <ProjectReference Include="..\Reservations.Data\Reservations.Data.csproj" />
+      <ProjectReference Include="..\Shipping.Data\Shipping.Data.csproj" />
+      <ProjectReference Include="..\Ticketing.Data\Ticketing.Data.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -9,50 +9,48 @@ namespace Finance.ViewModelComposition
 {
     class ReservedTicketsLoadedSubscriber : ICompositionEventsSubscriber
     {
-        [HttpGet("/reservations/index")]
+        [HttpGet("/reservations")]
         public void Subscribe(ICompositionEventsPublisher publisher)
         {
             publisher.Subscribe<ReservedTicketsLoaded>(async (@event, request) =>
             {
                 var ids = @event.ReservedTicketsViewModel.Keys.ToArray();
-                using (var db = Data.FinanceContext.Create())
+                await using var db = new Data.FinanceContext();
+                var ticketPrices = await db.TicketPrices
+                    .Where(ticketPrice => ids.Contains(ticketPrice.Id))
+                    .ToListAsync();
+
+                Guid reservationId = @event.Reservation.Id;
+                var reservedTickets =
+                    (
+                        await db.ReservedTickets
+                            .Where(r => r.ReservationId == reservationId)
+                            .ToListAsync()
+                    )
+                    .GroupBy(t => t.TicketId)
+                    .ToDictionary(g=>g.Key, g=>g.Count());
+
+                var reservationTotalPrice = 0m;
+
+                foreach (var ticketPrice in ticketPrices)
                 {
-                    var ticketPrices = await db.TicketPrices
-                        .Where(ticketPrice => ids.Contains(ticketPrice.Id))
-                        .ToListAsync();
+                    var ticketId = (int)ticketPrice.Id;
+                    var reservedTicketViewModel = @event.ReservedTicketsViewModel[ticketId];
 
-                    Guid reservationId = @event.Reservation.Id;
-                    var reservedTickets =
-                        (
-                            await db.ReservedTickets
-                                .Where(r => r.ReservationId == reservationId)
-                                .ToListAsync()
-                        )
-                        .GroupBy(t => t.TicketId)
-                        .ToDictionary(g=>g.Key, g=>g.Count());
+                    var currentReservedTicketQuantity = reservedTickets[ticketId];
+                    var currentReservedTicketTotalPrice = ticketPrice.Price * currentReservedTicketQuantity;
 
-                    var reservationTotalPrice = 0m;
+                    reservationTotalPrice += currentReservedTicketTotalPrice;
 
-                    foreach (var ticketPrice in ticketPrices)
-                    {
-                        var ticketId = (int)ticketPrice.Id;
-                        var reservedTicketViewModel = @event.ReservedTicketsViewModel[ticketId];
-
-                        var currentReservedTicketQuantity = reservedTickets[ticketId];
-                        var currentReservedTicketTotalPrice = ticketPrice.Price * currentReservedTicketQuantity;
-
-                        reservationTotalPrice += currentReservedTicketTotalPrice;
-
-                        reservedTicketViewModel.TicketPrice = ticketPrice.Price;
-                        reservedTicketViewModel.TotalPrice = currentReservedTicketTotalPrice;
-                    }
-
-                    @event.Reservation.TotalPrice = reservationTotalPrice;
-
-                    var allPaymentMethods = await db.PaymentMethods.ToListAsync();
-                    var pageViewModel = request.GetComposedResponseModel();
-                    pageViewModel.PaymentMethods = allPaymentMethods;
+                    reservedTicketViewModel.TicketPrice = ticketPrice.Price;
+                    reservedTicketViewModel.TotalPrice = currentReservedTicketTotalPrice;
                 }
+
+                @event.Reservation.TotalPrice = reservationTotalPrice;
+
+                var allPaymentMethods = await db.PaymentMethods.ToListAsync();
+                var pageViewModel = request.GetComposedResponseModel();
+                pageViewModel.PaymentMethods = allPaymentMethods;
             });
         }
     }

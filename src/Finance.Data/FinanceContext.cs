@@ -5,23 +5,13 @@ namespace Finance.Data
 {
     public class FinanceContext : DbContext
     {
-        public static FinanceContext Create()
-        {
-            var db = new FinanceContext();
-            db.Database.EnsureCreated();
-
-            return db;
-        }
-
-        private FinanceContext() { }
-
         public DbSet<TicketPrice> TicketPrices { get; set; }
         public DbSet<ReservedTicket> ReservedTickets { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\welcome-to-the-state-machine;Initial Catalog=Finance;Integrated Security=True");
+            optionsBuilder.UseNpgsql(@"Host=localhost;Port=6432;Username=db_user;Password=P@ssw0rd;Database=finance_database");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

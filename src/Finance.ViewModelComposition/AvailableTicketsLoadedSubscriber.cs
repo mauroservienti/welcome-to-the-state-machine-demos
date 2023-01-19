@@ -10,24 +10,13 @@ namespace Finance.ViewModelComposition
 {
     class AvailableTicketsLoadedSubscriber : ICompositionEventsSubscriber
     {
-        public bool Matches(RouteData routeData, string httpVerb, HttpRequest request)
-        {
-            var controller = (string)routeData.Values["controller"];
-            var action = (string)routeData.Values["action"];
-
-            return HttpMethods.IsGet(httpVerb)
-                   && controller.ToLowerInvariant() == "home"
-                   && action.ToLowerInvariant() == "index"
-                   && !routeData.Values.ContainsKey("id");
-        }
-
-        [HttpGet("/home/index")]
+        [HttpGet("/")]
         public void Subscribe(ICompositionEventsPublisher publisher)
         {
             publisher.Subscribe<AvailableTicketsLoaded>(async (@event, request) =>
             {
                 var ids = @event.AvailableTicketsViewModel.Keys.ToArray();
-                await using var db = Data.FinanceContext.Create();
+                await using var db = new Data.FinanceContext();
                 var ticketPrices = await db.TicketPrices
                     .Where(ticketPrice => ids.Contains(ticketPrice.Id))
                     .ToListAsync();

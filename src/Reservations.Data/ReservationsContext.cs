@@ -5,16 +5,6 @@ namespace Reservations.Data
 {
     public class ReservationsContext : DbContext
     {
-        public static ReservationsContext Create()
-        {
-            var db = new ReservationsContext();
-            db.Database.EnsureCreated();
-
-            return db;
-        }
-
-        private ReservationsContext() { }
-
         public DbSet<Reservation> Reservations { get; set; }
 
         public DbSet<AvailableTickets> AvailableTickets { get; set; }
@@ -23,7 +13,7 @@ namespace Reservations.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\welcome-to-the-state-machine;Initial Catalog=Reservations;Integrated Security=True");
+            optionsBuilder.UseNpgsql(@"Host=localhost;Port=8432;Username=db_user;Password=P@ssw0rd;Database=reservations_database");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

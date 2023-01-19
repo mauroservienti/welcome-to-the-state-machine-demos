@@ -12,13 +12,13 @@ namespace Reservations.ViewModelComposition
 {
     class AvailableTicketsLoadedSubscriber : ICompositionEventsSubscriber
     {
-        [HttpGet("/home/index")]
+        [HttpGet("/")]
         public void Subscribe(ICompositionEventsPublisher publisher)
         {
             publisher.Subscribe<AvailableTicketsLoaded>(async (@event, request) =>
             {
                 var ids = @event.AvailableTicketsViewModel.Keys.ToArray();
-                await using var db = Data.ReservationsContext.Create();
+                await using var db = new Data.ReservationsContext();
                 var availableTickets = await db.AvailableTickets
                     .Where(ticket => ids.Contains(ticket.Id))
                     .ToListAsync();

@@ -13,7 +13,7 @@ namespace Finance.PaymentGateway.Handlers
             Console.WriteLine($"Going to charge card for authorization '{message.AuthorizationId}' for reservation '{message.ReservationId}'", Color.Green);
             Console.WriteLine("Waiting 5\" before replying...", Color.Yellow);
 
-            await Task.Delay(5000);
+            await Task.Delay(5000, context.CancellationToken);
 
             await context.Reply(new CardChargedResponse()
             {

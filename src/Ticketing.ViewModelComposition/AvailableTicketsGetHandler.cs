@@ -15,20 +15,18 @@ namespace Ticketing.ViewModelComposition
         [HttpGet("/")]
         public async Task Handle(HttpRequest request)
         {
-            using (var db = Data.TicketingContext.Create())
+            await using var db = new Data.TicketingContext();
+            var allTickets = await db.Tickets.ToListAsync();
+            var availableProductsViewModel = MapToDictionary(allTickets);
+
+            var compositionContext = request.GetCompositionContext();
+            await compositionContext.RaiseEvent(new AvailableTicketsLoaded()
             {
-                var allTickets = await db.Tickets.ToListAsync();
-                var availableProductsViewModel = MapToDictionary(allTickets);
+                AvailableTicketsViewModel = availableProductsViewModel
+            });
 
-                var compositionContext = request.GetCompositionContext();
-                await compositionContext.RaiseEvent(new AvailableTicketsLoaded()
-                {
-                    AvailableTicketsViewModel = availableProductsViewModel
-                });
-
-                var vm = request.GetComposedResponseModel();
-                vm.AvailableTickets = availableProductsViewModel.Values.ToList();
-            }
+            var vm = request.GetComposedResponseModel();
+            vm.AvailableTickets = availableProductsViewModel.Values.ToList();
         }
 
         IDictionary<int, dynamic> MapToDictionary(IEnumerable<Data.Models.Ticket> allTickets)
