@@ -9,11 +9,5 @@ namespace Website.Controllers
         {
             return View();
         }
-
-        [HttpGet("home/error")]
-        public IActionResult Error()
-        {
-            return View();
-        }
     }
 }
