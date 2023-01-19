@@ -6,25 +6,16 @@ using Shipping.Data;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Shipping.ViewModelComposition
 {
-    class ReservedTicketsLoadedSubscriber : ISubscribeToCompositionEvents
+    class ReservedTicketsLoadedSubscriber : ICompositionEventsSubscriber
     {
-        public bool Matches(RouteData routeData, string httpVerb, HttpRequest request)
+        [HttpGet("/reservations")]
+        public void Subscribe(ICompositionEventsPublisher publisher)
         {
-            var controller = (string)routeData.Values["controller"];
-            var action = (string)routeData.Values["action"];
-
-            return HttpMethods.IsGet(httpVerb)
-                   && controller.ToLowerInvariant() == "reservations"
-                   && action.ToLowerInvariant() == "index"
-                   && !routeData.Values.ContainsKey("id");
-        }
-
-        public void Subscribe(IPublishCompositionEvents publisher)
-        {
-            publisher.Subscribe<ReservedTicketsLoaded>((requestId, pageViewModel, @event, rd, req) =>
+            publisher.Subscribe<ReservedTicketsLoaded>((@event, httpRequest) =>
             {
                 dynamic shipAtHome = new ExpandoObject();
                 shipAtHome.Id = DeliveryOptions.ShipAtHome;
@@ -34,6 +25,7 @@ namespace Shipping.ViewModelComposition
                 collectAtTheVenue.Id = DeliveryOptions.CollectAtTheVenue;
                 collectAtTheVenue.Description = "Collect at the Venue.";
 
+                var pageViewModel = httpRequest.GetComposedResponseModel();
                 pageViewModel.DeliveryOptions = new List<dynamic>()
                 {
                     shipAtHome,

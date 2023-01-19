@@ -47,7 +47,8 @@ namespace Reservations.ViewModelComposition
 
             var reservedTicketsViewModel = MapToDictionary(reservedTickets);
 
-            await vm.RaiseEvent(new ReservedTicketsLoaded()
+            var compositionContext = request.GetCompositionContext();
+            await compositionContext.RaiseEvent(new ReservedTicketsLoaded()
             {
                 Reservation = vm.Reservation,
                 ReservedTicketsViewModel = reservedTicketsViewModel

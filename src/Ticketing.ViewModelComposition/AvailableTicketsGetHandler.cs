@@ -20,12 +20,13 @@ namespace Ticketing.ViewModelComposition
                 var allTickets = await db.Tickets.ToListAsync();
                 var availableProductsViewModel = MapToDictionary(allTickets);
 
-                var vm = request.GetComposedResponseModel();
-                await vm.RaiseEvent(new AvailableTicketsLoaded()
+                var compositionContext = request.GetCompositionContext();
+                await compositionContext.RaiseEvent(new AvailableTicketsLoaded()
                 {
                     AvailableTicketsViewModel = availableProductsViewModel
                 });
 
+                var vm = request.GetComposedResponseModel();
                 vm.AvailableTickets = availableProductsViewModel.Values.ToList();
             }
         }
