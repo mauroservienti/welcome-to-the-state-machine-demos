@@ -7,7 +7,7 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.5" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
     <PackageReference Include="ServiceComposer.AspNetCore" Version="2.0.0" />
     <PackageReference Include="NServiceBus" Version="8.0.3" />
