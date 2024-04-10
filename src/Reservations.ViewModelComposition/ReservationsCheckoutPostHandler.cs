@@ -17,7 +17,7 @@ namespace Reservations.ViewModelComposition
             this.messageSession = messageSession;
         }
 
-        [HttpPost("/reservations/checkedout")]
+        [HttpPost("/reservations/checkout")]
         public Task Handle(HttpRequest request)
         {
             /*
