@@ -15,7 +15,6 @@ namespace Website
             services.AddViewModelComposition(options =>
             {
                 options.EnableCompositionOverControllers(true);
-                options.EnableWriteSupport();
             });
         }
 
