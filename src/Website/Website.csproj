@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
-    <PackageReference Include="ServiceComposer.AspNetCore" Version="4.0.0" />
+    <PackageReference Include="ServiceComposer.AspNetCore" Version="4.1.0" />
     <PackageReference Include="NServiceBus" Version="9.2.3" />
     <PackageReference Include="NServiceBus.Extensions.Hosting" Version="3.0.0" />
   </ItemGroup>
