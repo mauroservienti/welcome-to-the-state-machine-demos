@@ -51,3 +51,9 @@ services:
       env_file: 
          - shipping-service-database.env
       network_mode: service:rabbit
+
+   website-database:
+      image: postgres
+      env_file: 
+         - website-database.env
+      network_mode: service:rabbit

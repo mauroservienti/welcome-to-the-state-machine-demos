@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using Npgsql;
 using NpgsqlTypes;
+using NServiceBus.TransactionalSession;
 
 namespace NServiceBus
 {
@@ -32,6 +33,20 @@ namespace NServiceBus
         {
             ApplyCommonConfiguration(endpointConfiguration, configureRouting);
 
+            ConfigureSqlPersistence(endpointConfiguration, sqlPersistenceConnectionString, tablePrefix);
+
+            endpointConfiguration.EnableOutbox();
+        }
+
+        public static void ApplyWebsiteConfigurationWithPersistence(this EndpointConfiguration endpointConfiguration, string sqlPersistenceConnectionString)
+        {
+            ApplyCommonConfiguration(endpointConfiguration);
+
+            ConfigureSqlPersistence(endpointConfiguration, sqlPersistenceConnectionString);
+        }
+
+        private static void ConfigureSqlPersistence(EndpointConfiguration endpointConfiguration, string sqlPersistenceConnectionString, string tablePrefix = null)
+        {
             var persistence = endpointConfiguration.UsePersistence<SqlPersistence>();
             var dialect = persistence.SqlDialect<SqlDialect.PostgreSql>();
             if (!string.IsNullOrWhiteSpace(tablePrefix))
@@ -48,7 +63,7 @@ namespace NServiceBus
             persistence.ConnectionBuilder(
                 connectionBuilder: () => new NpgsqlConnection(sqlPersistenceConnectionString));
 
-            endpointConfiguration.EnableOutbox();
+            persistence.EnableTransactionalSession();
         }
     }
 }

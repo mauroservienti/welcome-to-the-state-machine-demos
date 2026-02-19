@@ -24,6 +24,7 @@ namespace Website
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseMiddleware<NServiceBusTransactionalSessionMiddleware>();
             app.UseMiddleware<ReservationMiddleware>();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
