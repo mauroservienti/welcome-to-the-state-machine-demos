@@ -129,6 +129,29 @@ namespace Policies.Tests
         }
 
         [Fact]
+        public async Task Handle_BothPaymentMethodAndCheckout_SendsInitiatePaymentProcessing()
+        {
+            var reservationId = Guid.NewGuid();
+            var saga = CreateSaga(d =>
+            {
+                d.ReservationId = reservationId;
+                d.PaymentMethodSet = true;
+                d.PaymentMethodId = 1;
+            });
+            var context = new TestableMessageHandlerContext();
+
+            await saga.Handle(new TestableReservationCheckedout { ReservationId = reservationId }, context);
+
+            var sentMessage = context.SentMessages
+                .Select(m => m.Message)
+                .OfType<InitiatePaymentProcessing>()
+                .SingleOrDefault();
+
+            Assert.NotNull(sentMessage);
+            Assert.Equal(reservationId, sentMessage.ReservationId);
+        }
+
+        [Fact]
         public async Task Handle_CardAuthorizedResponse_SetsCardAuthorizedAndPublishesPaymentAuthorized()
         {
             var reservationId = Guid.NewGuid();

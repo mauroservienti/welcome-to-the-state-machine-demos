@@ -190,6 +190,27 @@ namespace Policies.Tests
             Assert.Empty(context.SentMessages);
         }
 
+        [Fact]
+        public async Task Handle_AllConditionsMet_CollectAtTheVenue_DoesNotPublishOrderShipped()
+        {
+            var reservationId = Guid.NewGuid();
+            var orderId = Guid.NewGuid();
+            var saga = CreateSaga(d =>
+            {
+                d.ReservationId = reservationId;
+                d.OrderId = orderId;
+                d.OrderCreated = true;
+                d.PaymentSucceeded = true;
+                d.DeliveryOptionDefined = true;
+                d.DeliveryOption = DeliveryOptions.CollectAtTheVenue;
+            });
+            var context = new TestableMessageHandlerContext();
+
+            await saga.Handle(new TestablePaymentSucceeded { ReservationId = reservationId, OrderId = orderId }, context);
+
+            Assert.Empty(context.PublishedMessages);
+        }
+
         class TestableOrderCreated : IOrderCreated
         {
             public Guid ReservationId { get; set; }
