@@ -42,10 +42,6 @@ namespace Reservations.Service.Handlers
                 };
                 db.Reservations.Add(reservation);
             }
-            else if (reservation.ReservedTickets.Any(rt => rt.TicketId == message.TicketId))
-            {
-                return;
-            }
 
             reservation.ReservedTickets.Add(new ReservedTicket()
             {

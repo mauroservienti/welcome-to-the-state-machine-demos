@@ -58,24 +58,6 @@ namespace Policies.Tests
         }
 
         [Fact]
-        public async Task Handle_MarkTicketAsReserved_DuplicateMessage_DoesNotAddDuplicateTicket()
-        {
-            var dbName = Guid.NewGuid().ToString("N");
-            var reservationId = Guid.NewGuid();
-            var ticketId = 42;
-            var handler = new MarkTicketAsReservedHandler(() => CreateReservationsContext(dbName));
-            var context = new TestableMessageHandlerContext();
-            var message = new MarkTicketAsReserved { ReservationId = reservationId, TicketId = ticketId };
-
-            await handler.Handle(message, context);
-            await handler.Handle(message, context);
-
-            await using var db = CreateReservationsContext(dbName);
-            var reservation = await db.Reservations.Include(r => r.ReservedTickets).SingleAsync();
-            Assert.Single(reservation.ReservedTickets);
-        }
-
-        [Fact]
         public async Task Handle_CheckoutReservation_PublishesReservationCheckedout_AndRemovesReservation()
         {
             var dbName = Guid.NewGuid().ToString("N");
@@ -106,17 +88,6 @@ namespace Policies.Tests
 
             await using var verifyDb = CreateReservationsContext(dbName);
             Assert.Empty(verifyDb.Reservations);
-        }
-
-        [Fact]
-        public async Task Handle_CheckoutReservation_MissingReservation_DoesNotPublishMessages()
-        {
-            var handler = new CheckoutReservationHandler(() => CreateReservationsContext(Guid.NewGuid().ToString("N")));
-            var context = new TestableMessageHandlerContext();
-
-            await handler.Handle(new CheckoutReservation { ReservationId = Guid.NewGuid() }, context);
-
-            Assert.Empty(context.PublishedMessages);
         }
 
         [Fact]
@@ -165,23 +136,6 @@ namespace Policies.Tests
             var storedTicket = await db.ReservedTickets.SingleAsync();
             Assert.Equal(reservationId, storedTicket.ReservationId);
             Assert.Equal(ticketId, storedTicket.TicketId);
-        }
-
-        [Fact]
-        public async Task Handle_StoreReservedTicket_DuplicateMessage_DoesNotAddDuplicateTicket()
-        {
-            var dbName = Guid.NewGuid().ToString("N");
-            var reservationId = Guid.NewGuid();
-            var ticketId = 7;
-            var handler = new StoreReservedTicketHandler(() => CreateFinanceContext(dbName));
-            var context = new TestableMessageHandlerContext();
-            var message = new StoreReservedTicket { ReservationId = reservationId, TicketId = ticketId };
-
-            await handler.Handle(message, context);
-            await handler.Handle(message, context);
-
-            await using var db = CreateFinanceContext(dbName);
-            Assert.Single(db.ReservedTickets);
         }
 
         [Fact]

@@ -42,12 +42,7 @@ namespace Reservations.Service.Handlers
                  * expiration timeout is expired. In such scenario there won't
                  * be any reservation to checkout and the incoming message is 
                  * simply "lost", or leads to a failure.
-             */
-            if (reservation == null)
-            {
-                return;
-            }
-
+                 */
             await context.Publish(new ReservationCheckedout()
             {
                 ReservationId = message.ReservationId,
