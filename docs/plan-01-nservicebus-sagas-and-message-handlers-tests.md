@@ -46,10 +46,13 @@ PR: https://github.com/mauroservienti/welcome-to-the-state-machine-demos/pull/45
   - `Shipping.Service`
 - Added in-memory EF support/hooks to enable deterministic handler tests.
 
-### Not covered yet
-- Saga-focused work (`ReservationPolicy`, `PaymentPolicy`, `ShippingPolicy`) from this plan.
-- Negative/edge-case and idempotency coverage.
-- Meeting the full Plan 1 done criteria.
+### Completed after PR #453
+- Added saga-focused tests for:
+  - `ReservationPolicy`
+  - `PaymentPolicy`
+  - `ShippingPolicy`
+- Added edge/idempotency coverage for duplicate-message and missing-data handler scenarios.
+- Plan 1 done criteria are now satisfied in `Policies.Tests`.
 
 ### Summary
-PR #453 handled the Plan 1 kickoff and a meaningful subset of handler coverage, but Plan 1 is only partially complete overall.
+PR #453 handled the Plan 1 kickoff and a meaningful subset of handler coverage; subsequent work completed the remaining saga and edge/idempotency coverage to satisfy Plan 1.

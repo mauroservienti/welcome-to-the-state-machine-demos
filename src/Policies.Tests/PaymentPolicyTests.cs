@@ -60,6 +60,7 @@ namespace Policies.Tests
             }, context);
 
             Assert.True(saga.Data.PaymentMethodSet);
+            Assert.Equal(reservationId, saga.Data.ReservationId);
             Assert.Equal(paymentMethodId, saga.Data.PaymentMethodId);
         }
 

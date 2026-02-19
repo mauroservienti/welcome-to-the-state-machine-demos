@@ -28,6 +28,7 @@ namespace Shipping.Service.Policies
         {
             Console.WriteLine($"DeliveryOption {message.DeliveryOption} set for reservation '{message.ReservationId}'. Verifying if shipment can started...", Color.Green);
 
+            Data.ReservationId = message.ReservationId;
             Data.DeliveryOption = message.DeliveryOption;
             Data.DeliveryOptionDefined = true;
 
