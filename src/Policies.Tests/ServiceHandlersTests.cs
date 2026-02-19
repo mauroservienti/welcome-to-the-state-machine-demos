@@ -49,6 +49,7 @@ namespace Policies.Tests
             await handler.Handle(new MarkTicketAsReserved { ReservationId = reservationId, TicketId = ticketId }, context);
 
             await using var db = CreateReservationsContext(dbName);
+            Assert.Single(db.Reservations);
             var reservation = await db.Reservations.Include(r => r.ReservedTickets).SingleAsync();
 
             Assert.Equal(reservationId, reservation.Id);
@@ -146,6 +147,8 @@ namespace Policies.Tests
             await handler.Handle(new StoreReservationForVenueDelivery { ReservationId = Guid.NewGuid(), OrderId = Guid.NewGuid() }, context);
 
             Assert.Empty(context.RepliedMessages);
+            Assert.Empty(context.SentMessages);
+            Assert.Empty(context.PublishedMessages);
         }
 
         class TestableReservationCheckedout : IReservationCheckedout
