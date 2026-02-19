@@ -35,6 +35,7 @@ namespace Policies.Tests
             }, context);
 
             Assert.True(saga.Data.DeliveryOptionDefined);
+            Assert.Equal(reservationId, saga.Data.ReservationId);
             Assert.Equal(DeliveryOptions.ShipAtHome, saga.Data.DeliveryOption);
         }
 

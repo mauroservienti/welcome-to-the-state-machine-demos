@@ -42,6 +42,7 @@ namespace Finance.Service.Policies
         {
             Console.WriteLine($"Adding payment method '{message.PaymentMethodId}' to reservation '{message.ReservationId}'.", Color.Green);
 
+            Data.ReservationId = message.ReservationId;
             Data.PaymentMethodId = message.PaymentMethodId;
             Data.PaymentMethodSet = true;
 
