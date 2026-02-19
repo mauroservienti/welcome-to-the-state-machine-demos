@@ -13,6 +13,17 @@ namespace Reservations.Service.Handlers
 {
     class ReservationCheckedoutHandler : IHandleMessages<IReservationCheckedout>
     {
+        readonly Func<ReservationsContext> contextFactory;
+
+        public ReservationCheckedoutHandler() : this(() => new ReservationsContext())
+        {
+        }
+
+        internal ReservationCheckedoutHandler(Func<ReservationsContext> contextFactory)
+        {
+            this.contextFactory = contextFactory;
+        }
+
         public async Task Handle(IReservationCheckedout message, IMessageHandlerContext context)
         {
             /*
@@ -26,9 +37,9 @@ namespace Reservations.Service.Handlers
              * purpose of hosting this message handler. If Sales had more
              * responsibilities in the demo it would have deserved its own
              * endpoint.
-             */
+            */
             Console.WriteLine($"Ready to create order for reservation '{message.ReservationId}'.", Color.Green);
-            await using var db = new ReservationsContext();
+            await using var db = contextFactory();
             var order = new Order
             {
                 Id = Guid.NewGuid(),

@@ -5,6 +5,14 @@ namespace Reservations.Data
 {
     public class ReservationsContext : DbContext
     {
+        public ReservationsContext()
+        {
+        }
+
+        public ReservationsContext(DbContextOptions<ReservationsContext> options) : base(options)
+        {
+        }
+
         public DbSet<Reservation> Reservations { get; set; }
 
         public DbSet<AvailableTickets> AvailableTickets { get; set; }
@@ -13,7 +21,10 @@ namespace Reservations.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"Host=localhost;Port=8432;Username=db_user;Password=P@ssw0rd;Database=reservations_database");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql(@"Host=localhost;Port=8432;Username=db_user;Password=P@ssw0rd;Database=reservations_database");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
