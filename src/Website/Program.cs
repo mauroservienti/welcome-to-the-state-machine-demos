@@ -15,8 +15,9 @@ namespace Website
             Host.CreateDefaultBuilder(args)
                 .UseNServiceBus(ctx =>
                 {
+                    const string connectionString = @"Host=localhost;Port=11432;Username=db_user;Password=P@ssw0rd;Database=website_database";
                     var config = new EndpointConfiguration("Webapp");
-                    config.ApplyCommonConfiguration();
+                    config.ApplyWebsiteConfigurationWithPersistence(connectionString);
 
                     return config;
                 })

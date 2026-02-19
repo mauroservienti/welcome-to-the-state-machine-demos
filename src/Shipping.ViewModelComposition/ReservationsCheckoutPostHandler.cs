@@ -1,6 +1,6 @@
 ﻿using Shipping.Messages.Commands;
 using Microsoft.AspNetCore.Http;
-using NServiceBus;
+using NServiceBus.TransactionalSession;
 using ServiceComposer.AspNetCore;
 using System;
 using System.Threading.Tasks;
@@ -11,11 +11,11 @@ namespace Shipping.ViewModelComposition
 {
     class ReservationsCheckoutPostHandler : ICompositionRequestsHandler
     {
-        private readonly IMessageSession messageSession;
+        private readonly ITransactionalSession transactionalSession;
 
-        public ReservationsCheckoutPostHandler(IMessageSession messageSession)
+        public ReservationsCheckoutPostHandler(ITransactionalSession transactionalSession)
         {
-            this.messageSession = messageSession;
+            this.transactionalSession = transactionalSession;
         }
 
         [HttpPost("/reservations/checkout")]
@@ -45,7 +45,7 @@ namespace Shipping.ViewModelComposition
              * In a production environment routing should be configured
              * at startup by the host/infrastructure.
              */
-            return messageSession.Send("Shipping.Service", message);
+            return transactionalSession.Send("Shipping.Service", message, request.HttpContext.RequestAborted);
         }
     }
 }
