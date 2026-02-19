@@ -34,3 +34,22 @@ Increase confidence in saga orchestration and handler behavior by extending the 
 - Every saga has happy-path and completion tests.
 - Each message handler has at least one behavior test.
 - Tests run in CI with `dotnet test` without external infrastructure dependencies.
+
+## Status check for PR #453
+PR: https://github.com/mauroservienti/welcome-to-the-state-machine-demos/pull/453
+
+### Covered by PR #453
+- Added infrastructure-free handler behavior tests in `Policies.Tests` using `xUnit` + `NServiceBus.Testing`.
+- Added tests for handlers in all three scoped service areas:
+  - `Reservations.Service`
+  - `Finance.Service`
+  - `Shipping.Service`
+- Added in-memory EF support/hooks to enable deterministic handler tests.
+
+### Not covered yet
+- Saga-focused work (`ReservationPolicy`, `PaymentPolicy`, `ShippingPolicy`) from this plan.
+- Negative/edge-case and idempotency coverage.
+- Meeting the full Plan 1 done criteria.
+
+### Summary
+PR #453 handled the Plan 1 kickoff and a meaningful subset of handler coverage, but Plan 1 is only partially complete overall.
