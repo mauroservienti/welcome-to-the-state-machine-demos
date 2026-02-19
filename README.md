@@ -40,7 +40,7 @@ The solution (`src/welcome-to-the-state-machine-demos.sln`) is organized around 
 | `Finance.Service` | Finance business service and saga orchestration participants. |
 | `Finance.ViewModelComposition` | Finance contribution to composed website view models. |
 | `NServiceBus.Shared` | Shared NServiceBus setup/supporting infrastructure code. |
-| `Policies.Tests` | Tests for service/saga policy behavior. |
+| `Policies.Tests` | Tests for saga policies and regular NServiceBus message handlers. |
 | `Reservations.Data` | Reservations data access and persistence model. |
 | `Reservations.Messages.Commands` | Reservations command message contracts. |
 | `Reservations.Messages.Events` | Reservations event message contracts. |

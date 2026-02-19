@@ -23,6 +23,7 @@
     <ProjectReference Include="..\Reservations.Service\Reservations.Service.csproj" />
     <ProjectReference Include="..\Finance.Service\Finance.Service.csproj" />
     <ProjectReference Include="..\Shipping.Service\Shipping.Service.csproj" />
+    <ProjectReference Include="..\Finance.PaymentGateway\Finance.PaymentGateway.csproj" />
   </ItemGroup>
 
 </Project>
