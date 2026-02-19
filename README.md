@@ -11,19 +11,57 @@ The demo assumes some knowledge of `service boundaries` and the role of `ViewMod
 
 An exhaustive dissertation about `ViewModel Composition` is available on my blog in the [ViewModel Composition series](https://milestone.topics.it/categories/view-model-composition).
 
+## Current status
+
+- The solution currently targets **.NET 10**.
+- The recommended way to run the demos is via the provided **VS Code Dev Container**.
+- Build and startup automation are provided via `.vscode/tasks.json` and `.vscode/launch.json`.
+- The Website project restores client-side libraries via **LibMan/cdnjs**, so internet access is required while building.
+
 ## Requirements
 
 The following requirements must be met to run the demos successfully:
 
 - [Visual Studio Code](https://code.visualstudio.com/) and the [Dev containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
-- [Docker](https://www.docker.com/get-started) must be pre-installed on the machine.
-- The repository `devcontainer` setup requires `docker-compose` to be installed on the machine.
+- [Docker](https://www.docker.com/get-started) must be pre-installed on the machine, including Docker Compose support.
+
+## What this solution contains
+
+The solution (`src/welcome-to-the-state-machine-demos.sln`) is organized around services, message contracts, data access, UI composition, and supporting infrastructure.
+
+| Project | Role |
+| --- | --- |
+| `CreateRequiredDatabases` | Utility app that creates the PostgreSQL databases required by the demos. |
+| `Finance.Data` | Finance data access and persistence model. |
+| `Finance.Messages.Commands` | Finance command message contracts. |
+| `Finance.Messages.Events` | Finance event message contracts. |
+| `Finance.PaymentGateway.Messages` | Message contracts exchanged with the payment gateway endpoint. |
+| `Finance.PaymentGateway` | Simulated external payment gateway endpoint. |
+| `Finance.Service` | Finance business service and saga orchestration participants. |
+| `Finance.ViewModelComposition` | Finance contribution to composed website view models. |
+| `NServiceBus.Shared` | Shared NServiceBus setup/supporting infrastructure code. |
+| `Policies.Tests` | Tests for service/saga policy behavior. |
+| `Reservations.Data` | Reservations data access and persistence model. |
+| `Reservations.Messages.Commands` | Reservations command message contracts. |
+| `Reservations.Messages.Events` | Reservations event message contracts. |
+| `Reservations.Service` | Reservations business service and saga orchestration participants. |
+| `Reservations.ViewModelComposition.Events` | Events used by view-model composition components. |
+| `Reservations.ViewModelComposition` | Reservations contribution to composed website view models. |
+| `Shipping.Data` | Shipping data access and persistence model. |
+| `Shipping.Messages.Commands` | Shipping command message contracts. |
+| `Shipping.Messages.Events` | Shipping event message contracts. |
+| `Shipping.Service` | Shipping business service and saga orchestration participants. |
+| `Shipping.ViewModelComposition` | Shipping contribution to composed website view models. |
+| `Ticketing.Data` | Ticketing read model data access for the composed UI. |
+| `Ticketing.ViewModelComposition.Events` | Ticketing-focused events for UI composition workflows. |
+| `Ticketing.ViewModelComposition` | Ticketing-level composition logic that aggregates service contributions. |
+| `Website` | ASP.NET Core front-end hosting the ticketing user experience. |
 
 ## How to configure Visual Studio Code to run the demos
 
 - Clone the repository
   - On Windows, make sure to clone on a short path, e.g., `c:\dev`, to avoid any "path too long" error
-- Open one of the demo folders in Visual Studio Code
+- Open the repository root folder in Visual Studio Code
 - Make sure Docker is running
   - If you're using Docker for Windows with Hyper-V, make sure that the cloned folder, or a parent folder, is mapped in Docker
 - Open the Visual Studio Code command palette (`F1` on all supported operating systems, for more information on VS Code keyboard shortcuts, refer to [this page](https://www.arungudelli.com/microsoft/visual-studio-code-keyboard-shortcut-cheat-sheet-windows-mac-linux/))
@@ -67,8 +105,8 @@ To execute the demo, open the root folder in VS Code, press `F1`, and search for
 
 Once the demo content has been reopened in the dev container:
 
-1. Press `F1`, search for `Run task`, and execute the desired task to build the solution or to build the solution and deploy the required data
-2. Go to the `Run and Debug` VS Code section and select the command you want to execute.
+1. Press `F1`, search for `Run task`, and execute `Build & create databases` (or run `Build solution` first and `Create databases` after).
+2. Go to the `Run and Debug` VS Code section and start one of the available demo compounds (for example, `Demo - (build & deploy data)`).
 
 ### Disclaimer
 
