@@ -14,7 +14,7 @@ Increase confidence in saga orchestration and handler behavior by extending the 
   - `Shipping.Service` handlers
 
 ## Test design
-1. Keep using `xUnit` + `NServiceBus.Testing` (`TestableMessageHandlerContext` and saga testing APIs).
+1. Keep using `xUnit` + `NServiceBus.Testing` (`TestableMessageHandlerContext`, saga testing APIs, and if needed the `TestableSaga<TSaga>` [approach](https://docs.particular.net/nservicebus/testing/saga-scenario-testing)).
 2. Add one test class per handler/saga in a test project close to `Policies.Tests` conventions.
 3. For each saga:
    - verify correlation mapping
