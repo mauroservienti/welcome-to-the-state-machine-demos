@@ -26,7 +26,7 @@ namespace Shipping.Service.Policies
 
         public Task Handle(InitializeReservationShippingPolicy message, IMessageHandlerContext context)
         {
-            Console.WriteLine($"DeliveryOption {message.DeliveryOption} set for reservation '{message.ReservationId}'. Verifying if shipment can started...", Color.Green);
+            Console.WriteLine($"DeliveryOption {message.DeliveryOption} set for reservation '{message.ReservationId}'. Verifying if shipment can be started...", Color.Green);
 
             Data.ReservationId = message.ReservationId;
             Data.DeliveryOption = message.DeliveryOption;
