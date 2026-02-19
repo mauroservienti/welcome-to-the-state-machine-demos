@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using ServiceComposer.AspNetCore;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -12,10 +13,21 @@ namespace Ticketing.ViewModelComposition
 {
     class AvailableTicketsGetHandler : ICompositionRequestsHandler
     {
+        readonly Func<Data.TicketingContext> contextFactory;
+
+        public AvailableTicketsGetHandler() : this(() => new Data.TicketingContext())
+        {
+        }
+
+        internal AvailableTicketsGetHandler(Func<Data.TicketingContext> contextFactory)
+        {
+            this.contextFactory = contextFactory;
+        }
+
         [HttpGet("/")]
         public async Task Handle(HttpRequest request)
         {
-            await using var db = new Data.TicketingContext();
+            await using var db = contextFactory();
             var allTickets = await db.Tickets.ToListAsync();
             var availableProductsViewModel = MapToDictionary(allTickets);
 

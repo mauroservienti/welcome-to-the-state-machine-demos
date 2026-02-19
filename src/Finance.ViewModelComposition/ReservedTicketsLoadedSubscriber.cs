@@ -9,13 +9,24 @@ namespace Finance.ViewModelComposition
 {
     class ReservedTicketsLoadedSubscriber : ICompositionEventsSubscriber
     {
+        readonly Func<Data.FinanceContext> contextFactory;
+
+        public ReservedTicketsLoadedSubscriber() : this(() => new Data.FinanceContext())
+        {
+        }
+
+        internal ReservedTicketsLoadedSubscriber(Func<Data.FinanceContext> contextFactory)
+        {
+            this.contextFactory = contextFactory;
+        }
+
         [HttpGet("/reservations")]
         public void Subscribe(ICompositionEventsPublisher publisher)
         {
             publisher.Subscribe<ReservedTicketsLoaded>(async (@event, request) =>
             {
                 var ids = @event.ReservedTicketsViewModel.Keys.ToArray();
-                await using var db = new Data.FinanceContext();
+                await using var db = contextFactory();
                 var ticketPrices = await db.TicketPrices
                     .Where(ticketPrice => ids.Contains(ticketPrice.Id))
                     .ToListAsync();

@@ -29,4 +29,6 @@ jobs:
       - name: Build solution
         run: dotnet build "src/welcome-to-the-state-machine-demos.sln" --configuration Release
       - name: Run tests
-        run: dotnet test "src/Policies.Tests/Policies.Tests.csproj" --configuration Release
+        run: |
+          dotnet test "src/Policies.Tests/Policies.Tests.csproj" --configuration Release
+          dotnet test "src/ViewModelComposition.Tests/ViewModelComposition.Tests.csproj" --configuration Release

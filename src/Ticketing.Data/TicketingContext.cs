@@ -5,11 +5,22 @@ namespace Ticketing.Data
 {
     public class TicketingContext : DbContext
     {
+        public TicketingContext()
+        {
+        }
+
+        public TicketingContext(DbContextOptions<TicketingContext> options) : base(options)
+        {
+        }
+
         public DbSet<Ticket> Tickets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Username=db_user;Password=P@ssw0rd;Database=ticketing_database");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Username=db_user;Password=P@ssw0rd;Database=ticketing_database");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

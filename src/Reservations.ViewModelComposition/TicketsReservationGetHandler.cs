@@ -13,6 +13,17 @@ namespace Reservations.ViewModelComposition
 {
     class TicketsReservationGetHandler : ICompositionRequestsHandler
     {
+        readonly Func<Data.ReservationsContext> contextFactory;
+
+        public TicketsReservationGetHandler() : this(() => new Data.ReservationsContext())
+        {
+        }
+
+        internal TicketsReservationGetHandler(Func<Data.ReservationsContext> contextFactory)
+        {
+            this.contextFactory = contextFactory;
+        }
+
         [HttpGet("/reservations")]
         [HttpGet("/reservations/review")]
         public async Task Handle(HttpRequest request)
@@ -26,7 +37,7 @@ namespace Reservations.ViewModelComposition
             }
 
             var reservationId = new Guid(request.Cookies["reservation-id"]);
-            await using var db = new Data.ReservationsContext();
+            await using var db = contextFactory();
             var reservation = await db.Reservations
                 .Where(r => r.Id == reservationId)
                 .Include(r => r.ReservedTickets)
