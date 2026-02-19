@@ -54,5 +54,20 @@ namespace Policies.Tests
             Assert.NotNull(reply);
             Assert.Equal(reservationId, reply.ReservationId);
         }
+
+        [Fact]
+        public async Task Handle_ReleaseCardAuthorization_DoesNotReply()
+        {
+            var handler = new ReleaseCardAuthorizationHandler();
+            var context = new TestableMessageHandlerContext();
+
+            await handler.Handle(new ReleaseCardAuthorization
+            {
+                ReservationId = Guid.NewGuid(),
+                AuthorizationId = Guid.NewGuid()
+            }, context);
+
+            Assert.Empty(context.RepliedMessages);
+        }
     }
 }
