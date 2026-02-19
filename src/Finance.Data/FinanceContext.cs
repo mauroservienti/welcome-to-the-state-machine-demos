@@ -5,13 +5,24 @@ namespace Finance.Data
 {
     public class FinanceContext : DbContext
     {
+        public FinanceContext()
+        {
+        }
+
+        public FinanceContext(DbContextOptions<FinanceContext> options) : base(options)
+        {
+        }
+
         public DbSet<TicketPrice> TicketPrices { get; set; }
         public DbSet<ReservedTicket> ReservedTickets { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"Host=localhost;Port=6432;Username=db_user;Password=P@ssw0rd;Database=finance_database");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql(@"Host=localhost;Port=6432;Username=db_user;Password=P@ssw0rd;Database=finance_database");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

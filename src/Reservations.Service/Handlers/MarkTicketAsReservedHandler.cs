@@ -3,6 +3,7 @@ using NServiceBus;
 using Reservations.Data;
 using Reservations.Data.Models;
 using Reservations.Service.Messages;
+using System;
 using System.Linq;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -12,11 +13,22 @@ namespace Reservations.Service.Handlers
 {
     class MarkTicketAsReservedHandler : IHandleMessages<MarkTicketAsReserved>
     {
+        readonly Func<ReservationsContext> contextFactory;
+
+        public MarkTicketAsReservedHandler() : this(() => new ReservationsContext())
+        {
+        }
+
+        internal MarkTicketAsReservedHandler(Func<ReservationsContext> contextFactory)
+        {
+            this.contextFactory = contextFactory;
+        }
+
         public async Task Handle(MarkTicketAsReserved message, IMessageHandlerContext context)
         {
             Console.WriteLine($"Going to mark ticket '{message.TicketId}' as reserved.", Color.Green);
 
-            await using var db = new ReservationsContext();
+            await using var db = contextFactory();
             var reservation = await db.Reservations
                 .Where(r=>r.Id==message.ReservationId)
                 .Include(r=>r.ReservedTickets)

@@ -3,6 +3,7 @@ using NServiceBus;
 using Reservations.Data;
 using Reservations.Messages.Commands;
 using Reservations.Service.Messages;
+using System;
 using System.Linq;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -12,11 +13,22 @@ namespace Reservations.Service.Handlers
 {
     class CheckoutReservationHandler : IHandleMessages<CheckoutReservation>
     {
+        readonly Func<ReservationsContext> contextFactory;
+
+        public CheckoutReservationHandler() : this(() => new ReservationsContext())
+        {
+        }
+
+        internal CheckoutReservationHandler(Func<ReservationsContext> contextFactory)
+        {
+            this.contextFactory = contextFactory;
+        }
+
         public async Task Handle(CheckoutReservation message, IMessageHandlerContext context)
         {
             Console.WriteLine($"Going to check-out reservation '{message.ReservationId}'.", Color.Green);
 
-            await using var db = new ReservationsContext();
+            await using var db = contextFactory();
             var reservation = await db.Reservations
                 .Where(r => r.Id == message.ReservationId)
                 .Include(r => r.ReservedTickets)
