@@ -30,6 +30,7 @@ Test the complete reservation-to-payment-to-shipping workflow across services wi
    - happy path
    - payment failure path (authorization/charge failure)
    - duplicate message resilience for one critical step
+3. Ensure no messages end up in the `error` queue by spinning up a queue listener for the error queue. A message in the error queue results in a failing test for the happy path, or might be the expected result for a failure path
 
 ## CI strategy (Linux only)
 1. Add a Linux-only workflow job for integration tests:
