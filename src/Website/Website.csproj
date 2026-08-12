@@ -5,31 +5,35 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="3.0.114" />
-    <PackageReference Include="ServiceComposer.AspNetCore" Version="5.2.1" />
-    <PackageReference Include="NServiceBus" Version="10.2.8" />
-    <PackageReference Include="NServiceBus.Extensions.Hosting" Version="4.1.0" />
+    <!-- 🌟 Versions removed to align with Central Package Management -->
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" />
+    <PackageReference Include="Particular.PlatformSample" />
+    <PackageReference Include="ServiceComposer.AspNetCore" />
+    <PackageReference Include="NServiceBus" />
+    <PackageReference Include="NServiceBus.Extensions.Hosting" />
+    <PackageReference Include="NServiceBus.TransactionalSession" />
+    <PackageReference Include="NServiceBus.Persistence.Sql" />
+    <PackageReference Include="NServiceBus.Persistence.Sql.TransactionalSession" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Finance.ViewModelComposition\Finance.ViewModelComposition.csproj" />
-    <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
     <ProjectReference Include="..\Reservations.ViewModelComposition\Reservations.ViewModelComposition.csproj" />
-    <ProjectReference Include="..\Shipping.ViewModelComposition\Shipping.ViewModelComposition.csproj" />
     <ProjectReference Include="..\Ticketing.ViewModelComposition\Ticketing.ViewModelComposition.csproj" />
-  </ItemGroup>
-
+    <ProjectReference Include="..\Finance.ViewModelComposition\Finance.ViewModelComposition.csproj" />
+    <ProjectReference Include="..\AspireDemo.ServiceDefaults\AspireDemo.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\ITOps.Infrastructure\ITOps.Infrastructure.csproj" />
+    <ProjectReference Include="..\Shipping.ViewModelComposition\Shipping.ViewModelComposition.csproj" />
+   
+  </ItemGroup> 
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\bootstrap\dist\css\" />
     <Folder Include="wwwroot\lib\bootstrap\dist\js\" />
     <Folder Include="wwwroot\lib\jquery\dist\" />
   </ItemGroup>
-
 
   <ItemGroup>
     <Content Update="Views\_ViewImports.cshtml">

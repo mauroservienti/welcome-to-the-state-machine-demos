@@ -3,7 +3,7 @@ using NServiceBus;
 using Reservations.Messages.Events;
 using Shipping.Data;
 using Shipping.Messages.Commands;
-using Shipping.Service.Messages;
+using Shipping.Service.Messages.Events;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;

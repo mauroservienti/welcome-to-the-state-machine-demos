@@ -13,22 +13,18 @@ namespace Reservations.Service.Handlers
 {
     class CheckoutReservationHandler : IHandleMessages<CheckoutReservation>
     {
-        readonly Func<ReservationsContext> contextFactory;
+        readonly ReservationsContext db;
 
-        public CheckoutReservationHandler() : this(() => new ReservationsContext())
+        public CheckoutReservationHandler(ReservationsContext db)
         {
+            this.db = db;        
         }
 
-        internal CheckoutReservationHandler(Func<ReservationsContext> contextFactory)
-        {
-            this.contextFactory = contextFactory;
-        }
 
         public async Task Handle(CheckoutReservation message, IMessageHandlerContext context)
         {
             Console.WriteLine($"Going to check-out reservation '{message.ReservationId}'.", Color.Green);
 
-            await using var db = contextFactory();
             var reservation = await db.Reservations
                 .Where(r => r.Id == message.ReservationId)
                 .Include(r => r.ReservedTickets)
@@ -52,7 +48,6 @@ namespace Reservations.Service.Handlers
             });
 
             db.Reservations.Remove(reservation);
-            await db.SaveChangesAsync(context.CancellationToken);
 
             Console.WriteLine($"ReservationCheckedout event published and reservation removed from db.", Color.Green);
         }

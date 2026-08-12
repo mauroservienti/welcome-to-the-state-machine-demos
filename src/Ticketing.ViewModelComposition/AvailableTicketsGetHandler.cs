@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Ticketing.ViewModelComposition.Events;
 using Microsoft.AspNetCore.Mvc;
+using ITOps.Infrastructure;
 
 namespace Ticketing.ViewModelComposition
 {
@@ -15,7 +16,7 @@ namespace Ticketing.ViewModelComposition
     {
         readonly Func<Data.TicketingContext> contextFactory;
 
-        public AvailableTicketsGetHandler() : this(() => new Data.TicketingContext())
+        public AvailableTicketsGetHandler() : this(TicketingContextFactory.Create())
         {
         }
 

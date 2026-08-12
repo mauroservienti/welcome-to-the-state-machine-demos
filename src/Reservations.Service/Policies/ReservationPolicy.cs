@@ -27,7 +27,7 @@ namespace Reservations.Service.Policies
 
         public async Task Handle(ReserveTicket message, IMessageHandlerContext context)
         {
-            Console.WriteLine($"Adding ticket '{message.TicketId}' to reservation '{message.ReservationId}'.", Color.Green);
+            Console.WriteLine($"Reservation Adding ticket '{message.TicketId}' to reservation '{message.ReservationId}'.", Color.Green);
 
             Data.ReservationId = message.ReservationId;
 

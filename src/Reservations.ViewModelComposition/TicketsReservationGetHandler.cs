@@ -15,7 +15,7 @@ namespace Reservations.ViewModelComposition
     {
         readonly Func<Data.ReservationsContext> contextFactory;
 
-        public TicketsReservationGetHandler() : this(() => new Data.ReservationsContext())
+        public TicketsReservationGetHandler() : this(ReservationsContextFactory.Create())
         {
         }
 

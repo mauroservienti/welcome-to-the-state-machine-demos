@@ -11,7 +11,7 @@ namespace Ticketing.ViewModelComposition
     {
         readonly Func<Data.TicketingContext> contextFactory;
 
-        public ReservedTicketsLoadedSubscriber() : this(() => new Data.TicketingContext())
+        public ReservedTicketsLoadedSubscriber() : this(TicketingContextFactory.Create())
         {
         }
 
