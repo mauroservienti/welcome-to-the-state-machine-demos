@@ -13,22 +13,18 @@ namespace Reservations.Service.Handlers
 {
     class MarkTicketAsReservedHandler : IHandleMessages<MarkTicketAsReserved>
     {
-        readonly Func<ReservationsContext> contextFactory;
+        
+        readonly ReservationsContext db;
 
-        public MarkTicketAsReservedHandler() : this(() => new ReservationsContext())
+        public MarkTicketAsReservedHandler(ReservationsContext db)
         {
-        }
-
-        internal MarkTicketAsReservedHandler(Func<ReservationsContext> contextFactory)
-        {
-            this.contextFactory = contextFactory;
+            this.db = db;
         }
 
         public async Task Handle(MarkTicketAsReserved message, IMessageHandlerContext context)
         {
             Console.WriteLine($"Going to mark ticket '{message.TicketId}' as reserved.", Color.Green);
 
-            await using var db = contextFactory();
             var reservation = await db.Reservations
                 .Where(r=>r.Id==message.ReservationId)
                 .Include(r=>r.ReservedTickets)
@@ -48,8 +44,6 @@ namespace Reservations.Service.Handlers
                 ReservationId = message.ReservationId,
                 TicketId = message.TicketId
             });
-
-            await db.SaveChangesAsync(context.CancellationToken);
 
             Console.WriteLine($"Ticket '{message.TicketId}' reserved to reservation '{message.ReservationId}'.", Color.Green);
         }

@@ -14,7 +14,7 @@ namespace Reservations.ViewModelComposition
     {
         readonly Func<Data.ReservationsContext> contextFactory;
 
-        public AvailableTicketsLoadedSubscriber() : this(() => new Data.ReservationsContext())
+        public AvailableTicketsLoadedSubscriber() : this(ReservationsContextFactory.Create())
         {
         }
 
@@ -25,7 +25,8 @@ namespace Reservations.ViewModelComposition
 
         [HttpGet("/")]
         public void Subscribe(ICompositionEventsPublisher publisher)
-        {
+        {   
+            //TODO: Uncomment this when the Ticketing microservice is ready to publish events
             publisher.Subscribe<AvailableTicketsLoaded>(async (@event, request) =>
             {
                 var ids = @event.AvailableTicketsViewModel.Keys.ToArray();

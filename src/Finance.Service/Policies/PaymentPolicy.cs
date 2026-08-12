@@ -1,6 +1,7 @@
 ﻿using Finance.Messages.Commands;
 using Finance.PaymentGateway.Messages;
-using Finance.Service.Messages;
+using Finance.Service.Messages.Commands;
+using Finance.Service.Messages.Events;
 using NServiceBus;
 using Reservations.Messages.Events;
 using System;
@@ -121,6 +122,7 @@ namespace Finance.Service.Policies
         public Task Handle(IOrderCreated message, IMessageHandlerContext context)
         {
             Console.WriteLine($"Order '{message.OrderId}' for reservation '{message.ReservationId}' created, going to confirm card payment.", Color.Green);
+            Console.WriteLine($"ORDER '{message.OrderId}' for reservation '{message.ReservationId}' created, AuthorizationId: {Data.PaymentAuthorizationId}", Color.Green);
 
             Data.OrderId = message.OrderId;
             return context.Send(new ChargeCard()

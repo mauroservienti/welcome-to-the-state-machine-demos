@@ -23,7 +23,14 @@ namespace Reservations.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql(@"Host=localhost;Port=8432;Username=db_user;Password=P@ssw0rd;Database=reservations_database");
+
+                throw new System.InvalidOperationException(
+                    "ReservationsContext Critical Error: This DbContext was instantiated without any active configurations. " +
+                    "Ensure the host project registers this context via Dependency Injection, or that the calling " +
+                    "view model composition handler explicitly provides a configured DbContextOptions block.");
+                
+                //optionsBuilder.UseNpgsql(@"Host=localhost;Port=8432;Username=db_user;Password=P@ssw0rd;Database=reservations_database");
+                //optionsBuilder.UseNpgsql(@"Host=localhost;Port=5499;Username=postgres;Password=P@ssw0rd;Database=reservation-db;");
             }
         }
 

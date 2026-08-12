@@ -7,20 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Colorful.Console" Version="1.2.15" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11" />
-    <PackageReference Include="NServiceBus" Version="10.2.8" />
-    <PackageReference Include="NServiceBus.Extensions.Hosting" Version="4.1.0" />
-    <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="5.0.1" />
-    <PackageReference Include="NServiceBus.SagaAudit" Version="6.0.1" />
+    <PackageReference Include="Colorful.Console" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="NServiceBus" />
+    <PackageReference Include="NServiceBus.Extensions.Hosting" />
+    <!-- <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="5.0.1" /> -->
+    <PackageReference Include="NServiceBus.SagaAudit" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Finance.Messages.Events\Finance.Messages.Events.csproj" />
-    <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
     <ProjectReference Include="..\Reservations.Messages.Events\Reservations.Messages.Events.csproj" />
     <ProjectReference Include="..\Shipping.Messages.Commands\Shipping.Messages.Commands.csproj" />
     <ProjectReference Include="..\Shipping.Messages.Events\Shipping.Messages.Events.csproj" />
+    <ProjectReference Include="..\AspireDemo.ServiceDefaults\AspireDemo.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

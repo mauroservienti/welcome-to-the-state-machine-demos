@@ -19,7 +19,14 @@ namespace Ticketing.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Username=db_user;Password=P@ssw0rd;Database=ticketing_database");
+                // 🪓 FAIL HARD: The context refuses to guess or fall back to local ports!
+                throw new System.InvalidOperationException(
+                    "TicketingContext Critical Error: This DbContext was instantiated without any active configurations. " +
+                    "Ensure the host project registers this context via Dependency Injection, or that the calling " +
+                    "view model composition handler explicitly provides a configured DbContextOptions block.");
+                
+                //optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Username=db_user;Password=P@ssw0rd;Database=ticketing_database");
+                //optionsBuilder.UseNpgsql(@"Host=localhost;Port=5499;Username=postgres;Password=P@ssw0rd;Database=ticketing-db;");
             }
         }
 

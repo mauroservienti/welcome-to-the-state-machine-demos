@@ -1,4 +1,5 @@
-﻿using Finance.Data.Models;
+﻿using System;
+using Finance.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Finance.Data
@@ -21,7 +22,14 @@ namespace Finance.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql(@"Host=localhost;Port=6432;Username=db_user;Password=P@ssw0rd;Database=finance_database");
+                throw new InvalidOperationException(
+                    "FinanceContext Critical Error: This DbContext was instantiated without any active configurations. " +
+                    "Ensure the host project registers this context via Dependency Injection, or that the calling " +
+                    "view model composition handler explicitly provides a configured DbContextOptions block.");
+                
+                // optionsBuilder.UseNpgsql(@"Host=localhost;Port=6432;Username=db_user;Password=P@ssw0rd;Database=finance_database");
+                //optionsBuilder.UseNpgsql(@"Host=localhost;Port=5499;Username=postgres;Password=P@ssw0rd;Database=finance-db;");
+            
             }
         }
 

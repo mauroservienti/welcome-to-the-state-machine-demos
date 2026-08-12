@@ -1,38 +1,17 @@
-﻿using NServiceBus;
-using System;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Hosting;
+using NServiceBus;
+using System.Threading.Tasks;
 
-namespace Shipping.Service
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            var serviceName = typeof(Program).Namespace;
-            Console.Title = serviceName;
+// 🌟 Modernized .NET Host Builder: Rips out the obsolete self-hosting loops!
+var builder = Host.CreateApplicationBuilder();
 
-            CreateHostBuilder(serviceName, args).Build().Run();
-        }
+builder.AddServiceDefaults();
 
-        static IHostBuilder CreateHostBuilder(string serviceName, string[] args)
-        {
-            var builder = Host.CreateDefaultBuilder(args)
-                .ConfigureLogging((ctx, logging) =>
-                {
-                    logging.AddConfiguration(ctx.Configuration.GetSection("Logging"));
-                    logging.AddConsole();
-                })
-                .UseNServiceBus(ctx =>
-                {
-                    const string connectionString = @"Host=localhost;Port=10432;Username=db_user;Password=P@ssw0rd;Database=shipping_service_database";
-                    var config = new EndpointConfiguration(serviceName);
-                    config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix:"Shipping");
+// Centralized NServiceBus initializer: Points outbox tables to shipping-db
+builder.AddNServiceBusEndpoint(
+    name: "Shipping.Service", 
+    persistenceDbName: "shipping-db", 
+    tablePrefix: "shipping");
 
-                    return config;
-                });
-
-            return builder;
-        }
-    }
-}
+// Build and execute the standard, non-blocking asynchronous host worker lifecycle
+await builder.Build().RunAsync();

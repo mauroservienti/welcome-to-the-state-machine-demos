@@ -45,6 +45,9 @@ namespace Finance.ViewModelComposition
              * In a production environment routing should be configured
              * at startup by the host/infrastructure.
              */
+            
+            // transactionalSession.Send("Finance.Service", message, request.HttpContext.RequestAborted);
+            // transactionalSession.Send("Finance.Service", message, request.HttpContext.RequestAborted);
             return transactionalSession.Send("Finance.Service", message, request.HttpContext.RequestAborted);
         }
     }

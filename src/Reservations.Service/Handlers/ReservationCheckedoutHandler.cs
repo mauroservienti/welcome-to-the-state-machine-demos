@@ -13,15 +13,11 @@ namespace Reservations.Service.Handlers
 {
     class ReservationCheckedoutHandler : IHandleMessages<IReservationCheckedout>
     {
-        readonly Func<ReservationsContext> contextFactory;
+        readonly ReservationsContext db;
 
-        public ReservationCheckedoutHandler() : this(() => new ReservationsContext())
+        public ReservationCheckedoutHandler(ReservationsContext db)
         {
-        }
-
-        internal ReservationCheckedoutHandler(Func<ReservationsContext> contextFactory)
-        {
-            this.contextFactory = contextFactory;
+            this.db = db;
         }
 
         public async Task Handle(IReservationCheckedout message, IMessageHandlerContext context)
@@ -39,7 +35,6 @@ namespace Reservations.Service.Handlers
              * endpoint.
             */
             Console.WriteLine($"Ready to create order for reservation '{message.ReservationId}'.", Color.Green);
-            await using var db = contextFactory();
             var order = new Order
             {
                 Id = Guid.NewGuid(),
@@ -71,7 +66,6 @@ namespace Reservations.Service.Handlers
             });
 
             db.Orders.Add(order);
-            await db.SaveChangesAsync(context.CancellationToken);
 
             Console.WriteLine($"Order '{order.Id}' created, IOrderCreated event published.", Color.Green);
         }

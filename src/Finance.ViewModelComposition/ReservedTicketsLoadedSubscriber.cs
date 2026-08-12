@@ -11,7 +11,7 @@ namespace Finance.ViewModelComposition
     {
         readonly Func<Data.FinanceContext> contextFactory;
 
-        public ReservedTicketsLoadedSubscriber() : this(() => new Data.FinanceContext())
+        public ReservedTicketsLoadedSubscriber() : this(FinanceContextFactory.Create())
         {
         }
 

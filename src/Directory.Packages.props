@@ -1,0 +1,53 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- 🗄️ Core Database & Entity Framework Stack (.NET 10 Alignment) -->
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.8" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.10" />
+    <PackageVersion Include="Npgsql" Version="10.0.3" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+    <!-- 🛠️ Hosting & Service Discovery Engine Infrastructure -->
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.0.0" />
+    <!-- 🐋 .NET Aspire Components (Matched to your 13.4.3 AppHost SDK) -->
+    <PackageVersion Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="13.4.3" />
+    <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="13.4.3" />
+    <PackageVersion Include="Aspire.Hosting.RabbitMQ" Version="13.4.3" />
+    <!-- ✉️ NServiceBus & Particular Software Service Platform -->
+    <PackageVersion Include="Particular.Aspire.Hosting.ServicePlatform" Version="1.0.0" />
+    <PackageVersion Include="NServiceBus.Extensions.Hosting" Version="4.1.0" />
+    <PackageVersion Include="NServiceBus.Heartbeat" Version="6.0.1" />
+    <PackageVersion Include="NServiceBus.Metrics.ServiceControl" Version="6.0.1" />
+    <PackageVersion Include="NServiceBus.Persistence.Sql" Version="9.0.1" />
+    <PackageVersion Include="NServiceBus.RabbitMQ" Version="11.0.0" />
+    <PackageVersion Include="NServiceBus.SagaAudit" Version="6.0.1" />
+    <PackageVersion Include="NServiceBus.MessageInterfaces" Version="1.0.0" />
+    <!-- 📊 OpenTelemetry Observability Stack -->
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.15.3" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.15.3" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.11.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.11.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.11.0" />
+    <!-- 🛡️ Transitive Pinning: Globally squashes the telemetry memory bug warning -->
+    <PackageVersion Include="OpenTelemetry.Api" Version="1.15.3" />
+    <!-- 🛡️ Transitive Pinning: Fixes all 11 MessagePack security vulnerability warnings -->
+    <PackageVersion Include="MessagePack" Version="2.5.301" />
+    <!-- 🔹 Web Portal & Composition Engine Specific Tags -->
+    <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
+    <PackageVersion Include="Microsoft.Web.LibraryManager.Build" Version="3.0.114" />
+    <PackageVersion Include="Particular.PlatformSample" Version="4.25.0" />
+    <PackageVersion Include="ServiceComposer.AspNetCore" Version="5.2.1" />
+    <PackageVersion Include="NServiceBus" Version="10.2.7" />
+    <PackageVersion Include="NServiceBus.TransactionalSession" Version="4.1.0" />
+    <PackageVersion Include="NuGet.Packaging" Version="6.12.5" />
+    <PackageVersion Include="NuGet.Protocol" Version="6.12.5" />
+    <PackageVersion Include="Colorful.Console" Version="1.2.15" />
+    <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
+    <!-- 🔹 Specific Transactional Session integration for Postgres/SQL persistence -->
+    <PackageVersion Include="NServiceBus.Persistence.Sql.TransactionalSession" Version="9.0.1" />
+  </ItemGroup>
+</Project>

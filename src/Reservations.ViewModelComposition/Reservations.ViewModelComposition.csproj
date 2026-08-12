@@ -5,10 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="NServiceBus" Version="10.2.8" />
-    <PackageReference Include="NServiceBus.TransactionalSession" Version="4.1.0" />
-    <PackageReference Include="ServiceComposer.AspNetCore" Version="5.2.1" />
+    <!-- <PackageReference Include="Microsoft.CSharp"  /> -->
+    <PackageReference Include="NServiceBus" />
+    <PackageReference Include="NServiceBus.TransactionalSession" />
+    <PackageReference Include="ServiceComposer.AspNetCore" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +16,7 @@
     <ProjectReference Include="..\Reservations.Messages.Commands\Reservations.Messages.Commands.csproj" />
     <ProjectReference Include="..\Reservations.ViewModelComposition.Events\Reservations.ViewModelComposition.Events.csproj" />
     <ProjectReference Include="..\Ticketing.ViewModelComposition.Events\Ticketing.ViewModelComposition.Events.csproj" />
+    <ProjectReference Include="..\ITOps.Infrastructure\ITOps.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

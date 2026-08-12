@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Core Hosting infrastructure package -->
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    
+    <!-- Changed to 10.0.4 to match what Aspire 13.0.1 expects -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" />
+    
+    <!-- Let this target the stable 13.0.1 version your build environment picked -->
+    <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" />
+
+    <!-- Project references -->
+    <ProjectReference Include="..\Reservations.Data\Reservations.Data.csproj" />
+    <ProjectReference Include="..\Ticketing.Data\Ticketing.Data.csproj" />
+    <ProjectReference Include="..\Finance.Data\Finance.Data.csproj" />
+  </ItemGroup>
+
+</Project>
