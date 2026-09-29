@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Finance.PaymentGateway.Messages\Finance.PaymentGateway.Messages.csproj" />
     <ProjectReference Include="..\NServiceBus.Shared\NServiceBus.Shared.csproj" />
+    <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

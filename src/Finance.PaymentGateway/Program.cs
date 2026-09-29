@@ -1,26 +1,31 @@
-﻿using NServiceBus;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using NServiceBus;
 using System;
-using System.Threading.Tasks;
 
 namespace Finance.PaymentGateway
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             var serviceName = typeof(Program).Namespace;
             Console.Title = serviceName;
 
-            const string connectionString = @"Host=localhost;Port=7432;Username=db_user;Password=P@ssw0rd;Database=finance_service_database";
+            var builder = Host.CreateApplicationBuilder(args);
+            builder.AddServiceDefaults();
+
+            // Connection strings are injected by .NET Aspire, defaults target the dev container
+            var connectionString = builder.Configuration.GetConnectionString("finance-paymentgateway-database")
+                ?? @"Host=localhost;Port=7432;Username=db_user;Password=P@ssw0rd;Database=finance_service_database";
+
             var config = new EndpointConfiguration(serviceName);
-            config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix:"FinPayGate");
-            
-            var endpointInstance = await Endpoint.Start(config);
+            config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix: "FinPayGate", configuration: builder.Configuration);
 
-            Console.WriteLine($"{serviceName} started. Press any key to stop.");
-            Console.ReadLine();
+            builder.Services.AddNServiceBusEndpoint(config);
 
-            await endpointInstance.Stop();
+            builder.Build().Run();
         }
     }
 }

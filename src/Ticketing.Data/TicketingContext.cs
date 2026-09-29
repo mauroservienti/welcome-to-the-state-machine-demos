@@ -19,7 +19,10 @@ namespace Ticketing.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Username=db_user;Password=P@ssw0rd;Database=ticketing_database");
+                // When running via .NET Aspire the connection string is injected as an environment variable
+                var connectionString = System.Environment.GetEnvironmentVariable("ConnectionStrings__ticketing-database")
+                    ?? @"Host=localhost;Port=5432;Username=db_user;Password=P@ssw0rd;Database=ticketing_database";
+                optionsBuilder.UseNpgsql(connectionString);
             }
         }
 
