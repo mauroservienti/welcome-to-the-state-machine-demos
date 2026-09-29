@@ -21,7 +21,10 @@ namespace Finance.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql(@"Host=localhost;Port=6432;Username=db_user;Password=P@ssw0rd;Database=finance_database");
+                // When running via .NET Aspire the connection string is injected as an environment variable
+                var connectionString = System.Environment.GetEnvironmentVariable("ConnectionStrings__finance-database")
+                    ?? @"Host=localhost;Port=6432;Username=db_user;Password=P@ssw0rd;Database=finance_database";
+                optionsBuilder.UseNpgsql(connectionString);
             }
         }
 

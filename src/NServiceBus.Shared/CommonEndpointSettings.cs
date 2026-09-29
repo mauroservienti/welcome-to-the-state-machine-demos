@@ -7,7 +7,9 @@ namespace NServiceBus
 {
     public static class CommonEndpointSettings
     {
-        public static void ApplyCommonConfiguration(this EndpointConfiguration endpointConfiguration, Action<RoutingSettings<RabbitMQTransport>> configureRouting = null)
+        const string DefaultTransportConnectionString = "host=localhost";
+
+        public static void ApplyCommonConfiguration(this EndpointConfiguration endpointConfiguration, Action<RoutingSettings<RabbitMQTransport>> configureRouting = null, string transportConnectionString = null)
         {
             endpointConfiguration.EnableInstallers();
             
@@ -15,7 +17,7 @@ namespace NServiceBus
             
             var routeSettings = endpointConfiguration.UseTransport(new RabbitMQTransport(
                     RoutingTopology.Conventional(QueueType.Classic),
-                    "host=localhost"
+                    transportConnectionString ?? DefaultTransportConnectionString
                 )
             );
             configureRouting?.Invoke(routeSettings);
@@ -29,18 +31,18 @@ namespace NServiceBus
             messageConventions.DefiningCommandsAs(t => t.Namespace != null && t.Namespace.EndsWith(".Messages.Commands"));
         }
 
-        public static void ApplyCommonConfigurationWithPersistence(this EndpointConfiguration endpointConfiguration, string sqlPersistenceConnectionString, string tablePrefix = null, Action<RoutingSettings<RabbitMQTransport>> configureRouting = null)
+        public static void ApplyCommonConfigurationWithPersistence(this EndpointConfiguration endpointConfiguration, string sqlPersistenceConnectionString, string tablePrefix = null, Action<RoutingSettings<RabbitMQTransport>> configureRouting = null, string transportConnectionString = null)
         {
-            ApplyCommonConfiguration(endpointConfiguration, configureRouting);
+            ApplyCommonConfiguration(endpointConfiguration, configureRouting, transportConnectionString);
 
             ConfigureSqlPersistence(endpointConfiguration, sqlPersistenceConnectionString, tablePrefix);
 
             endpointConfiguration.EnableOutbox();
         }
 
-        public static void ApplyWebsiteConfigurationWithPersistence(this EndpointConfiguration endpointConfiguration, string sqlPersistenceConnectionString)
+        public static void ApplyWebsiteConfigurationWithPersistence(this EndpointConfiguration endpointConfiguration, string sqlPersistenceConnectionString, string transportConnectionString = null)
         {
-            ApplyCommonConfiguration(endpointConfiguration);
+            ApplyCommonConfiguration(endpointConfiguration, transportConnectionString: transportConnectionString);
 
             ConfigureSqlPersistence(endpointConfiguration, sqlPersistenceConnectionString);
         }

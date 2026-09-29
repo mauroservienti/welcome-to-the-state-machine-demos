@@ -108,6 +108,23 @@ Once the demo content has been reopened in the dev container:
 1. Press `F1`, search for `Run task`, and execute `Build & create databases` (or run `Build solution` first and `Create databases` after).
 2. Go to the `Run and Debug` VS Code section and start one of the available demo compounds (for example, `Demo - (build & deploy data)`).
 
+## How to run the demos using .NET Aspire
+
+As an alternative to the dev container, the demos can be run locally using [.NET Aspire](https://aspire.dev/). The only requirements are the .NET 10 SDK and a running Docker instance.
+
+```shell
+dotnet run --project src/AppHost/AppHost.csproj
+```
+
+The Aspire AppHost:
+
+- starts RabbitMQ and a PostgreSQL server (with pgAdmin), hosting one database per logical store, as the dev container does;
+- runs `CreateRequiredDatabases` and waits for it to complete before starting the endpoints that depend on the created tables;
+- starts all endpoints and the website, exporting logs, traces, and metrics (including NServiceBus ones) to the Aspire dashboard;
+- starts the [Particular Service Platform](https://particular.net/service-platform) (ServiceControl and ServicePulse), ingesting audited and failed messages.
+
+Connection strings are provided by Aspire; when running outside of Aspire, all projects fall back to the dev container defaults.
+
 ### Disclaimer
 
 This demo is built using [NServiceBus Sagas](https://docs.particular.net/nservicebus/sagas/); I work for [Particular Software](https://particular.net/), the makers of NServiceBus.

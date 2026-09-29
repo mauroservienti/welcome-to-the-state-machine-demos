@@ -19,6 +19,7 @@
     <ProjectReference Include="..\Reservations.Data\Reservations.Data.csproj" />
     <ProjectReference Include="..\Reservations.Messages.Commands\Reservations.Messages.Commands.csproj" />
     <ProjectReference Include="..\Reservations.Messages.Events\Reservations.Messages.Events.csproj" />
+    <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

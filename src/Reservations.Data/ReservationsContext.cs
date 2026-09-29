@@ -23,7 +23,10 @@ namespace Reservations.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql(@"Host=localhost;Port=8432;Username=db_user;Password=P@ssw0rd;Database=reservations_database");
+                // When running via .NET Aspire the connection string is injected as an environment variable
+                var connectionString = System.Environment.GetEnvironmentVariable("ConnectionStrings__reservations-database")
+                    ?? @"Host=localhost;Port=8432;Username=db_user;Password=P@ssw0rd;Database=reservations_database";
+                optionsBuilder.UseNpgsql(connectionString);
             }
         }
 

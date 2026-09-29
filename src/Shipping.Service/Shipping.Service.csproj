@@ -21,6 +21,7 @@
     <ProjectReference Include="..\Reservations.Messages.Events\Reservations.Messages.Events.csproj" />
     <ProjectReference Include="..\Shipping.Messages.Commands\Shipping.Messages.Commands.csproj" />
     <ProjectReference Include="..\Shipping.Messages.Events\Shipping.Messages.Events.csproj" />
+    <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>
