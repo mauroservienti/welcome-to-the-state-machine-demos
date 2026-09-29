@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Extensions.Configuration;
 using Npgsql;
 using NpgsqlTypes;
 using NServiceBus.TransactionalSession;
@@ -9,17 +10,29 @@ namespace NServiceBus
     {
         const string DefaultTransportConnectionString = "host=localhost";
 
-        public static void ApplyCommonConfiguration(this EndpointConfiguration endpointConfiguration, Action<RoutingSettings<RabbitMQTransport>> configureRouting = null, string transportConnectionString = null)
+        public static void ApplyCommonConfiguration(this EndpointConfiguration endpointConfiguration, Action<RoutingSettings<RabbitMQTransport>> configureRouting = null, IConfiguration configuration = null)
         {
             endpointConfiguration.EnableInstallers();
             
             endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
             
-            var routeSettings = endpointConfiguration.UseTransport(new RabbitMQTransport(
-                    RoutingTopology.Conventional(QueueType.Classic),
-                    transportConnectionString ?? DefaultTransportConnectionString
-                )
+            // When running via .NET Aspire, the transport and management API
+            // settings are provided via configuration; defaults target the dev container
+            var transport = new RabbitMQTransport(
+                RoutingTopology.Conventional(QueueType.Classic),
+                configuration?.GetConnectionString("transport") ?? DefaultTransportConnectionString
             );
+
+            var managementApiUrl = configuration?["RabbitMQ:ManagementApi:Url"];
+            if (!string.IsNullOrWhiteSpace(managementApiUrl))
+            {
+                transport.ManagementApiConfiguration = new ManagementApiConfiguration(
+                    managementApiUrl,
+                    configuration["RabbitMQ:ManagementApi:UserName"],
+                    configuration["RabbitMQ:ManagementApi:Password"]);
+            }
+
+            var routeSettings = endpointConfiguration.UseTransport(transport);
             configureRouting?.Invoke(routeSettings);
 
             endpointConfiguration.AuditProcessedMessagesTo("audit");
@@ -31,18 +44,18 @@ namespace NServiceBus
             messageConventions.DefiningCommandsAs(t => t.Namespace != null && t.Namespace.EndsWith(".Messages.Commands"));
         }
 
-        public static void ApplyCommonConfigurationWithPersistence(this EndpointConfiguration endpointConfiguration, string sqlPersistenceConnectionString, string tablePrefix = null, Action<RoutingSettings<RabbitMQTransport>> configureRouting = null, string transportConnectionString = null)
+        public static void ApplyCommonConfigurationWithPersistence(this EndpointConfiguration endpointConfiguration, string sqlPersistenceConnectionString, string tablePrefix = null, Action<RoutingSettings<RabbitMQTransport>> configureRouting = null, IConfiguration configuration = null)
         {
-            ApplyCommonConfiguration(endpointConfiguration, configureRouting, transportConnectionString);
+            ApplyCommonConfiguration(endpointConfiguration, configureRouting, configuration);
 
             ConfigureSqlPersistence(endpointConfiguration, sqlPersistenceConnectionString, tablePrefix);
 
             endpointConfiguration.EnableOutbox();
         }
 
-        public static void ApplyWebsiteConfigurationWithPersistence(this EndpointConfiguration endpointConfiguration, string sqlPersistenceConnectionString, string transportConnectionString = null)
+        public static void ApplyWebsiteConfigurationWithPersistence(this EndpointConfiguration endpointConfiguration, string sqlPersistenceConnectionString, IConfiguration configuration = null)
         {
-            ApplyCommonConfiguration(endpointConfiguration, transportConnectionString: transportConnectionString);
+            ApplyCommonConfiguration(endpointConfiguration, configuration: configuration);
 
             ConfigureSqlPersistence(endpointConfiguration, sqlPersistenceConnectionString);
         }

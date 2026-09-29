@@ -16,10 +16,9 @@ namespace Website
             // Connection strings are injected by .NET Aspire, defaults target the dev container
             var connectionString = builder.Configuration.GetConnectionString("website-database")
                 ?? @"Host=localhost;Port=11432;Username=db_user;Password=P@ssw0rd;Database=website_database";
-            var transportConnectionString = builder.Configuration.GetConnectionString("transport");
 
             var config = new EndpointConfiguration("Webapp");
-            config.ApplyWebsiteConfigurationWithPersistence(connectionString, transportConnectionString);
+            config.ApplyWebsiteConfigurationWithPersistence(connectionString, builder.Configuration);
             builder.Services.AddNServiceBusEndpoint(config);
 
             var startup = new Startup();

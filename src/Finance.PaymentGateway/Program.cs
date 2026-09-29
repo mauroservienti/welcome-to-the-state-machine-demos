@@ -17,12 +17,11 @@ namespace Finance.PaymentGateway
             builder.AddServiceDefaults();
 
             // Connection strings are injected by .NET Aspire, defaults target the dev container
-            var connectionString = builder.Configuration.GetConnectionString("finance-service-database")
+            var connectionString = builder.Configuration.GetConnectionString("finance-paymentgateway-database")
                 ?? @"Host=localhost;Port=7432;Username=db_user;Password=P@ssw0rd;Database=finance_service_database";
-            var transportConnectionString = builder.Configuration.GetConnectionString("transport");
 
             var config = new EndpointConfiguration(serviceName);
-            config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix: "FinPayGate", transportConnectionString: transportConnectionString);
+            config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix: "FinPayGate", configuration: builder.Configuration);
 
             builder.Services.AddNServiceBusEndpoint(config);
 

@@ -19,10 +19,9 @@ namespace Shipping.Service
             // Connection strings are injected by .NET Aspire, defaults target the dev container
             var connectionString = builder.Configuration.GetConnectionString("shipping-service-database")
                 ?? @"Host=localhost;Port=10432;Username=db_user;Password=P@ssw0rd;Database=shipping_service_database";
-            var transportConnectionString = builder.Configuration.GetConnectionString("transport");
 
             var config = new EndpointConfiguration(serviceName);
-            config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix: "Shipping", transportConnectionString: transportConnectionString);
+            config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix: "Shipping", configuration: builder.Configuration);
 
             builder.Services.AddNServiceBusEndpoint(config);
 

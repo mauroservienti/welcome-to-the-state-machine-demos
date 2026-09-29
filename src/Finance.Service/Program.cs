@@ -20,10 +20,9 @@ namespace Finance.Service
             // Connection strings are injected by .NET Aspire, defaults target the dev container
             var connectionString = builder.Configuration.GetConnectionString("finance-service-database")
                 ?? @"Host=localhost;Port=7432;Username=db_user;Password=P@ssw0rd;Database=finance_service_database";
-            var transportConnectionString = builder.Configuration.GetConnectionString("transport");
 
             var config = new EndpointConfiguration(serviceName);
-            config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix: "Finance", transportConnectionString: transportConnectionString, configureRouting: routing =>
+            config.ApplyCommonConfigurationWithPersistence(connectionString, tablePrefix: "Finance", configuration: builder.Configuration, configureRouting: routing =>
             {
                 routing.RouteToEndpoint(typeof(AuthorizeCard), "Finance.PaymentGateway");
                 routing.RouteToEndpoint(typeof(ReleaseCardAuthorization), "Finance.PaymentGateway");
