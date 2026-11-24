@@ -69,6 +69,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppHost", "AppHost\AppHost.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDefaults", "ServiceDefaults\ServiceDefaults.csproj", "{19D9CC5C-120E-4C54-B203-D8898677C35A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndToEndTests", "EndToEndTests\EndToEndTests.csproj", "{2B239089-1ADA-44EE-A419-3D4FF104BB01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -415,6 +417,18 @@ Global
 		{19D9CC5C-120E-4C54-B203-D8898677C35A}.Release|x64.Build.0 = Release|Any CPU
 		{19D9CC5C-120E-4C54-B203-D8898677C35A}.Release|x86.ActiveCfg = Release|Any CPU
 		{19D9CC5C-120E-4C54-B203-D8898677C35A}.Release|x86.Build.0 = Release|Any CPU
+		{2B239089-1ADA-44EE-A419-3D4FF104BB01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B239089-1ADA-44EE-A419-3D4FF104BB01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B239089-1ADA-44EE-A419-3D4FF104BB01}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2B239089-1ADA-44EE-A419-3D4FF104BB01}.Debug|x64.Build.0 = Debug|Any CPU
+		{2B239089-1ADA-44EE-A419-3D4FF104BB01}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2B239089-1ADA-44EE-A419-3D4FF104BB01}.Debug|x86.Build.0 = Debug|Any CPU
+		{2B239089-1ADA-44EE-A419-3D4FF104BB01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B239089-1ADA-44EE-A419-3D4FF104BB01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B239089-1ADA-44EE-A419-3D4FF104BB01}.Release|x64.ActiveCfg = Release|Any CPU
+		{2B239089-1ADA-44EE-A419-3D4FF104BB01}.Release|x64.Build.0 = Release|Any CPU
+		{2B239089-1ADA-44EE-A419-3D4FF104BB01}.Release|x86.ActiveCfg = Release|Any CPU
+		{2B239089-1ADA-44EE-A419-3D4FF104BB01}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
