@@ -12,10 +12,7 @@ namespace Website
             services.AddRouting();
             services.AddControllersWithViews();
 
-            services.AddViewModelComposition(options =>
-            {
-                options.EnableCompositionOverControllers(true);
-            });
+            services.AddViewModelComposition();
         }
 
         public void Configure(IApplicationBuilder app)
@@ -29,7 +26,8 @@ namespace Website
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers()
+                    .WithCompositionOverControllers();
                 endpoints.MapCompositionHandlers();
             });
         }
