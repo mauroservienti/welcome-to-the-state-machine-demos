@@ -31,8 +31,8 @@ namespace ViewModelComposition.Tests
         {
             var reservationId = Guid.NewGuid();
             var ticketId = 5;
-            var session = new FakeTransactionalSession();
-            var handler = new ReservationsReservePostHandler(session);
+            var messages = new FakeOutgoingMessages();
+            var handler = new ReservationsReservePostHandler(messages);
 
             var (request, _, _) = TestRequestBuilder.Build(
                 cookies => cookies["reservation-id"] = reservationId.ToString(),
@@ -40,7 +40,7 @@ namespace ViewModelComposition.Tests
 
             await handler.Handle(request);
 
-            var msg = session.SentMessages.OfType<StoreReservedTicket>().SingleOrDefault();
+            var msg = messages.SentMessages.OfType<StoreReservedTicket>().SingleOrDefault();
             Assert.NotNull(msg);
             Assert.Equal(reservationId, msg.ReservationId);
             Assert.Equal(ticketId, msg.TicketId);
@@ -53,8 +53,8 @@ namespace ViewModelComposition.Tests
         {
             var reservationId = Guid.NewGuid();
             var paymentMethodId = 2;
-            var session = new FakeTransactionalSession();
-            var handler = new ReservationsCheckoutPostHandler(session);
+            var messages = new FakeOutgoingMessages();
+            var handler = new ReservationsCheckoutPostHandler(messages);
 
             var (request, _, _) = TestRequestBuilder.Build(cookies =>
             {
@@ -64,7 +64,7 @@ namespace ViewModelComposition.Tests
 
             await handler.Handle(request);
 
-            var msg = session.SentMessages.OfType<InitializeReservationPaymentPolicy>().SingleOrDefault();
+            var msg = messages.SentMessages.OfType<InitializeReservationPaymentPolicy>().SingleOrDefault();
             Assert.NotNull(msg);
             Assert.Equal(reservationId, msg.ReservationId);
             Assert.Equal(paymentMethodId, msg.PaymentMethodId);

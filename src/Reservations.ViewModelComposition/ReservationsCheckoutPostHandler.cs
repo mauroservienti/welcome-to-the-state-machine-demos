@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
-using NServiceBus.TransactionalSession;
+using Heyi;
+using NServiceBus;
 using Reservations.Messages.Commands;
 using ServiceComposer.AspNetCore;
 using System;
@@ -10,11 +11,11 @@ namespace Reservations.ViewModelComposition
 {
     class ReservationsCheckoutPostHandler : ICompositionRequestsHandler
     {
-        private readonly ITransactionalSession transactionalSession;
+        private readonly IOutgoingMessages messages;
 
-        public ReservationsCheckoutPostHandler(ITransactionalSession transactionalSession)
+        public ReservationsCheckoutPostHandler(IOutgoingMessages messages)
         {
-            this.transactionalSession = transactionalSession;
+            this.messages = messages;
         }
 
         [HttpPost("/reservations/checkout")]
@@ -43,7 +44,9 @@ namespace Reservations.ViewModelComposition
              * In a production environment routing should be configured
              * at startup by the host/infrastructure.
              */
-            return transactionalSession.Send("Reservations.Service", message, request.HttpContext.RequestAborted);
+            var options = new SendOptions();
+            options.SetDestination("Reservations.Service");
+            return messages.Send(message, options, request.HttpContext.RequestAborted);
         }
     }
 }

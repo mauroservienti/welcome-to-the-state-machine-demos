@@ -100,8 +100,8 @@ namespace ViewModelComposition.Tests
         {
             var reservationId = Guid.NewGuid();
             var ticketId = 7;
-            var session = new FakeTransactionalSession();
-            var handler = new ReservationsReservePostHandler(session);
+            var messages = new FakeOutgoingMessages();
+            var handler = new ReservationsReservePostHandler(messages);
 
             var (request, _, _) = TestRequestBuilder.Build(
                 cookies => cookies["reservation-id"] = reservationId.ToString(),
@@ -109,7 +109,7 @@ namespace ViewModelComposition.Tests
 
             await handler.Handle(request);
 
-            var msg = session.SentMessages.OfType<ReserveTicket>().SingleOrDefault();
+            var msg = messages.SentMessages.OfType<ReserveTicket>().SingleOrDefault();
             Assert.NotNull(msg);
             Assert.Equal(reservationId, msg.ReservationId);
             Assert.Equal(ticketId, msg.TicketId);
@@ -121,15 +121,15 @@ namespace ViewModelComposition.Tests
         public async Task ReservationsCheckoutPostHandler_SendsCheckoutReservationCommand()
         {
             var reservationId = Guid.NewGuid();
-            var session = new FakeTransactionalSession();
-            var handler = new ReservationsCheckoutPostHandler(session);
+            var messages = new FakeOutgoingMessages();
+            var handler = new ReservationsCheckoutPostHandler(messages);
 
             var (request, _, _) = TestRequestBuilder.Build(
                 cookies => cookies["reservation-id"] = reservationId.ToString());
 
             await handler.Handle(request);
 
-            var msg = session.SentMessages.OfType<CheckoutReservation>().SingleOrDefault();
+            var msg = messages.SentMessages.OfType<CheckoutReservation>().SingleOrDefault();
             Assert.NotNull(msg);
             Assert.Equal(reservationId, msg.ReservationId);
         }

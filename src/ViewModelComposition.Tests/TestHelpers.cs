@@ -1,7 +1,7 @@
+using Heyi;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using NServiceBus;
-using NServiceBus.TransactionalSession;
 using ServiceComposer.AspNetCore;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -29,48 +29,26 @@ namespace ViewModelComposition.Tests
         public IList<ModelBindingArgument> GetArguments<T>(ICompositionEventsHandler<T> owner) => [];
     }
 
-    class FakeTransactionalSession : ITransactionalSession
+    class FakeOutgoingMessages : IOutgoingMessages
     {
         readonly List<object> sentMessages = new();
 
         public IReadOnlyList<object> SentMessages => sentMessages;
 
-        public NServiceBus.Persistence.ISynchronizedStorageSession SynchronizedStorageSession =>
-            throw new NotSupportedException("SynchronizedStorageSession is not available in test context.");
-
-        public string SessionId => "test-session-id";
-
-        public Task Open(OpenSessionOptions options, CancellationToken cancellationToken = default)
-            => Task.CompletedTask;
-
-        public Task Send(object message, SendOptions sendOptions,
-            CancellationToken cancellationToken = default)
+        public Task Send(object message, SendOptions? options = null, CancellationToken cancellationToken = default)
         {
             sentMessages.Add(message);
             return Task.CompletedTask;
         }
 
-        public Task Send<T>(Action<T> messageConstructor, SendOptions sendOptions,
-            CancellationToken cancellationToken = default)
+        public Task SendLocal(object message, SendOptions? options = null, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("Message constructor overload not supported in tests; use the object-based Send overload instead.");
+            sentMessages.Add(message);
+            return Task.CompletedTask;
         }
 
-        public Task Publish(object message, PublishOptions publishOptions,
-            CancellationToken cancellationToken = default)
+        public Task Publish(object message, PublishOptions? options = null, CancellationToken cancellationToken = default)
             => Task.CompletedTask;
-
-        public Task Publish<T>(Action<T> messageConstructor, PublishOptions publishOptions,
-            CancellationToken cancellationToken = default)
-        {
-            throw new NotSupportedException("Message constructor overload not supported in tests; use the object-based Publish overload instead.");
-        }
-
-        public Task Commit(CancellationToken cancellationToken = default)
-            => Task.CompletedTask;
-
-        public void Dispose() { }
-        public ValueTask DisposeAsync() => ValueTask.CompletedTask;
     }
 
     /// <summary>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using NServiceBus.TransactionalSession;
 using Reservations.ViewModelComposition.Middlewares;
 using ServiceComposer.AspNetCore;
 
@@ -13,6 +14,7 @@ namespace Website
             services.AddControllersWithViews();
 
             services.AddViewModelComposition();
+            services.AddHeyi(options => options.OpenSessionOptions(() => new SqlPersistenceOpenSessionOptions()));
         }
 
         public void Configure(IApplicationBuilder app)
@@ -21,12 +23,15 @@ namespace Website
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseMiddleware<NServiceBusTransactionalSessionMiddleware>();
             app.UseMiddleware<ReservationMiddleware>();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
+                // Heyi wraps each controller action and the composition handlers composing over it
+                // in one transactional session: their messages are sent only if the request succeeds.
+                // Composition over controllers must be the innermost endpoint filter, so it goes last.
                 endpoints.MapControllers()
+                    .WithTransactionalSession()
                     .WithCompositionOverControllers();
                 endpoints.MapCompositionHandlers();
             });
