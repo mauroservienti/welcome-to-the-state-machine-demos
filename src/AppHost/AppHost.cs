@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Particular.Aspire.Hosting.ServicePlatform.Transport;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -26,9 +27,18 @@ var reservationsServiceDatabase = postgres.AddDatabase("reservations-service-dat
 var shippingServiceDatabase = postgres.AddDatabase("shipping-service-database", "shipping_service_database");
 var websiteDatabase = postgres.AddDatabase("website-database", "website_database");
 
-var platform = builder.AddParticularPlatform("particular")
-    .WithTransportRabbitMQ(RabbitMqRouting.ClassicConventionalRouting, transport)
-    .AddDefaultComponents();
+/*
+ * The Particular platform (ServiceControl, ServicePulse) is for monitoring and isn't
+ * needed to run the system. The end-to-end tests disable it, with ParticularPlatform:Enabled=false.
+ */
+Func<IResourceBuilder<ProjectResource>, IResourceBuilder<ProjectResource>> withParticularPlatform = project => project;
+if (builder.Configuration.GetValue("ParticularPlatform:Enabled", true))
+{
+    var platform = builder.AddParticularPlatform("particular")
+        .WithTransportRabbitMQ(RabbitMqRouting.ClassicConventionalRouting, transport)
+        .AddDefaultComponents();
+    withParticularPlatform = project => project.WithParticularPlatform(platform);
+}
 
 // NServiceBus.RabbitMQ uses the management API too, which Aspire exposes on a random port
 IResourceBuilder<ProjectResource> WithTransport(IResourceBuilder<ProjectResource> project) => project
@@ -42,33 +52,28 @@ var createRequiredDatabases = builder.AddProject<Projects.CreateRequiredDatabase
     .WithReference(financeDatabase).WaitFor(financeDatabase)
     .WithReference(reservationsDatabase).WaitFor(reservationsDatabase);
 
-WithTransport(builder.AddProject<Projects.Finance_PaymentGateway>("finance-paymentgateway"))
-    .WithReference(paymentGatewayDatabase).WaitFor(paymentGatewayDatabase)
-    .WithParticularPlatform(platform);
+withParticularPlatform(WithTransport(builder.AddProject<Projects.Finance_PaymentGateway>("finance-paymentgateway"))
+    .WithReference(paymentGatewayDatabase).WaitFor(paymentGatewayDatabase));
 
-WithTransport(builder.AddProject<Projects.Finance_Service>("finance-service"))
+withParticularPlatform(WithTransport(builder.AddProject<Projects.Finance_Service>("finance-service"))
     .WithReference(financeServiceDatabase).WaitFor(financeServiceDatabase)
     .WithReference(financeDatabase)
-    .WaitForCompletion(createRequiredDatabases)
-    .WithParticularPlatform(platform);
+    .WaitForCompletion(createRequiredDatabases));
 
-WithTransport(builder.AddProject<Projects.Reservations_Service>("reservations-service"))
+withParticularPlatform(WithTransport(builder.AddProject<Projects.Reservations_Service>("reservations-service"))
     .WithReference(reservationsServiceDatabase).WaitFor(reservationsServiceDatabase)
     .WithReference(reservationsDatabase)
-    .WaitForCompletion(createRequiredDatabases)
-    .WithParticularPlatform(platform);
+    .WaitForCompletion(createRequiredDatabases));
 
-WithTransport(builder.AddProject<Projects.Shipping_Service>("shipping-service"))
-    .WithReference(shippingServiceDatabase).WaitFor(shippingServiceDatabase)
-    .WithParticularPlatform(platform);
+withParticularPlatform(WithTransport(builder.AddProject<Projects.Shipping_Service>("shipping-service"))
+    .WithReference(shippingServiceDatabase).WaitFor(shippingServiceDatabase));
 
-WithTransport(builder.AddProject<Projects.Website>("website"))
+withParticularPlatform(WithTransport(builder.AddProject<Projects.Website>("website"))
     .WithReference(websiteDatabase).WaitFor(websiteDatabase)
     .WithReference(ticketingDatabase)
     .WithReference(financeDatabase)
     .WithReference(reservationsDatabase)
     .WaitForCompletion(createRequiredDatabases)
-    .WithParticularPlatform(platform)
-    .WithExternalHttpEndpoints();
+    .WithExternalHttpEndpoints());
 
 builder.Build().Run();
