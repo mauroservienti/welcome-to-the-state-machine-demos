@@ -29,4 +29,23 @@ jobs:
       - name: Build solution
         run: dotnet build "src/welcome-to-the-state-machine-demos.sln" --configuration Release
       - name: Run tests
-        run: dotnet test "src/welcome-to-the-state-machine-demos.sln" --configuration Release
+        run: dotnet test "src/welcome-to-the-state-machine-demos.sln" --configuration Release --no-build --filter "Category!=EndToEnd"
+
+  e2e-tests:
+    name: End-to-end tests (Linux)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v6.1.0
+        with:
+          dotnet-version: 10.0.x
+      - name: Build
+        run: dotnet build src/EndToEndTests --configuration Release
+      - name: End-to-end tests
+        run: dotnet test src/EndToEndTests --configuration Release --no-build --logger "console;verbosity=normal"
