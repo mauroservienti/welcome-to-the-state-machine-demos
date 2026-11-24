@@ -20,8 +20,8 @@ namespace ViewModelComposition.Tests
         public async Task ReservationsCheckoutPostHandler_SendsInitializeReservationShippingPolicyCommand()
         {
             var reservationId = Guid.NewGuid();
-            var session = new FakeTransactionalSession();
-            var handler = new ReservationsCheckoutPostHandler(session);
+            var messages = new FakeOutgoingMessages();
+            var handler = new ReservationsCheckoutPostHandler(messages);
 
             var (request, _, _) = TestRequestBuilder.Build(cookies =>
             {
@@ -31,7 +31,7 @@ namespace ViewModelComposition.Tests
 
             await handler.Handle(request);
 
-            var msg = session.SentMessages.OfType<InitializeReservationShippingPolicy>().SingleOrDefault();
+            var msg = messages.SentMessages.OfType<InitializeReservationShippingPolicy>().SingleOrDefault();
             Assert.NotNull(msg);
             Assert.Equal(reservationId, msg.ReservationId);
             Assert.Equal(DeliveryOptions.ShipAtHome, msg.DeliveryOption);
@@ -41,8 +41,8 @@ namespace ViewModelComposition.Tests
         public async Task ReservationsCheckoutPostHandler_CollectAtTheVenue_SendsCorrectDeliveryOption()
         {
             var reservationId = Guid.NewGuid();
-            var session = new FakeTransactionalSession();
-            var handler = new ReservationsCheckoutPostHandler(session);
+            var messages = new FakeOutgoingMessages();
+            var handler = new ReservationsCheckoutPostHandler(messages);
 
             var (request, _, _) = TestRequestBuilder.Build(cookies =>
             {
@@ -52,7 +52,7 @@ namespace ViewModelComposition.Tests
 
             await handler.Handle(request);
 
-            var msg = session.SentMessages.OfType<InitializeReservationShippingPolicy>().SingleOrDefault();
+            var msg = messages.SentMessages.OfType<InitializeReservationShippingPolicy>().SingleOrDefault();
             Assert.NotNull(msg);
             Assert.Equal(DeliveryOptions.CollectAtTheVenue, msg.DeliveryOption);
         }

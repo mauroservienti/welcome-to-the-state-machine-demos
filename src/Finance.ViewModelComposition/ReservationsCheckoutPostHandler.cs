@@ -1,6 +1,7 @@
 using Finance.Messages.Commands;
 using Microsoft.AspNetCore.Http;
-using NServiceBus.TransactionalSession;
+using Heyi;
+using NServiceBus;
 using ServiceComposer.AspNetCore;
 using System;
 using System.Threading.Tasks;
@@ -10,11 +11,11 @@ namespace Finance.ViewModelComposition
 {
     class ReservationsCheckoutPostHandler : ICompositionRequestsHandler
     {
-        private readonly ITransactionalSession transactionalSession;
+        private readonly IOutgoingMessages messages;
 
-        public ReservationsCheckoutPostHandler(ITransactionalSession transactionalSession)
+        public ReservationsCheckoutPostHandler(IOutgoingMessages messages)
         {
-            this.transactionalSession = transactionalSession;
+            this.messages = messages;
         }
 
         [HttpPost("/reservations/checkout")]
@@ -44,7 +45,9 @@ namespace Finance.ViewModelComposition
              * In a production environment routing should be configured
              * at startup by the host/infrastructure.
              */
-            return transactionalSession.Send("Finance.Service", message, request.HttpContext.RequestAborted);
+            var options = new SendOptions();
+            options.SetDestination("Finance.Service");
+            return messages.Send(message, options, request.HttpContext.RequestAborted);
         }
     }
 }
